@@ -50,6 +50,8 @@ const NSTimeInterval DataControllerOperationDuration = 0.3;
         [self setNeedsloadDataForPage:page];
     }
     
+    [self preloadNextPageIfNeededForOriginalIndex:index];
+    
     return dataPage[index%_pageSize];
 }
 - (NSUInteger)loadedCount {
@@ -114,6 +116,19 @@ const NSTimeInterval DataControllerOperationDuration = 0.3;
     }];
 
     return loadingOperation;
+}
+- (void)preloadNextPageIfNeededForOriginalIndex:(NSUInteger)index {
+    
+    if (self.shouldLoadAutomatically && index%_pageSize+self.automaticPreloadMargin >= _pageSize) {
+        NSUInteger preloadPage = [self pageForIndex:index+self.automaticPreloadMargin];
+        
+        if (preloadPage < [self numberOfPages] && !_dataPages[@(preloadPage)]) {
+            [self setNeedsloadDataForPage:preloadPage];
+        }
+    }
+}
+- (NSUInteger)numberOfPages {
+    return ceil(_dataCount/(float)_pageSize);
 }
 
 @end

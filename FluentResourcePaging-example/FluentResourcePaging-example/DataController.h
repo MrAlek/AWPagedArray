@@ -24,6 +24,7 @@
 @property (nonatomic, readonly) NSUInteger pageSize;
 @property (nonatomic, readonly) NSUInteger loadedCount;
 @property (nonatomic) BOOL shouldLoadAutomatically;
+@property (nonatomic) NSUInteger automaticPreloadMargin;
 @property (nonatomic, weak) id<DataControllerDelegate> delegate;
 
 - (NSNumber *)dataAtIndex:(NSUInteger)index;

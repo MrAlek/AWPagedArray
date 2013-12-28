@@ -14,10 +14,12 @@ typedef NS_ENUM(NSInteger, ClassicPagingViewControllerLoadingStyle) {
     ClassicPagingViewControllerLoadingStyleAutomatic
 };
 
+const NSUInteger ClassicPagingTablePreloadMargin = 5;
 
 @interface ClassicPagingViewController ()<DataControllerDelegate>
 @property (nonatomic) DataController *dataController;
 @property (nonatomic) ClassicPagingViewControllerLoadingStyle loadingStyle;
+@property (weak, nonatomic) IBOutlet UISwitch *preloadSwitch;
 @end
 
 @implementation ClassicPagingViewController {
@@ -39,6 +41,8 @@ typedef NS_ENUM(NSInteger, ClassicPagingViewControllerLoadingStyle) {
         _dataController = [DataController new];
         _dataController.delegate = self;
         [_dataController loadDataAtIndex:0];
+        _dataController.shouldLoadAutomatically = self.preloadSwitch.on;
+        _dataController.automaticPreloadMargin = self.preloadSwitch.on ? ClassicPagingTablePreloadMargin : 0;
     }
     
     return _dataController;
@@ -53,6 +57,10 @@ typedef NS_ENUM(NSInteger, ClassicPagingViewControllerLoadingStyle) {
 #pragma mark - User interaction
 - (IBAction)loadingStyleSegmentChanged:(UISegmentedControl *)sender {
     self.loadingStyle = sender.selectedSegmentIndex;
+}
+- (IBAction)preloadSwitchChanged:(UISwitch *)sender {
+    self.dataController.shouldLoadAutomatically = sender.on;
+    self.dataController.automaticPreloadMargin = sender.on ? 5 : 0;
 }
 
 #pragma mark - Table view

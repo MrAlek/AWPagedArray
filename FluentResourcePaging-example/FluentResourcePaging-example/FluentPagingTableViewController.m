@@ -9,7 +9,10 @@
 #import "FluentPagingTableViewController.h"
 #import "DataController.h"
 
+const NSUInteger FluentPagingTablePreloadMargin = 5;
+
 @interface FluentPagingTableViewController ()<DataControllerDelegate>
+@property (weak, nonatomic) IBOutlet UISwitch *preloadSwitch;
 @property (nonatomic) DataController *dataController;
 @end
 
@@ -30,10 +33,17 @@
         _dataController = [DataController new];
         _dataController.delegate = self;
         _dataController.shouldLoadAutomatically = YES;
+        _dataController.automaticPreloadMargin = self.preloadSwitch.on ? FluentPagingTablePreloadMargin : 0;
     }
     
     return _dataController;
 }
+
+#pragma mark - User interaction
+- (IBAction)preloadSwitchChanged:(UISwitch *)sender {
+    self.dataController.automaticPreloadMargin = sender.on ? FluentPagingTablePreloadMargin : 0;
+}
+
 
 #pragma mark - Table view data source
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
@@ -42,7 +52,6 @@
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
     return self.dataController.dataCount;
 }
-
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     
     static NSString *CellIdentifier = @"data cell";

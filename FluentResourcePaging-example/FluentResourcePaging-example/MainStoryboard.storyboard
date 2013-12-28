@@ -24,7 +24,7 @@
             </objects>
             <point key="canvasLocation" x="-306" y="422"/>
         </scene>
-        <!--Fluent Paging Collection View Controller-->
+        <!--Fluent Paging Collection View Controller - Pre-loading-->
         <scene sceneID="9ax-uD-xLk">
             <objects>
                 <collectionViewController autoresizesArchivedViewToFullSize="NO" id="bnF-vs-COv" customClass="FluentPagingCollectionViewController" sceneMemberID="viewController">
@@ -70,13 +70,26 @@
                             <outlet property="delegate" destination="bnF-vs-COv" id="A1f-B1-xhR"/>
                         </connections>
                     </collectionView>
-                    <navigationItem key="navigationItem" id="w6f-0W-kNS"/>
+                    <navigationItem key="navigationItem" title="Pre-loading" id="w6f-0W-kNS">
+                        <barButtonItem key="rightBarButtonItem" style="plain" id="dN2-Zd-E25">
+                            <switch key="customView" opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" contentHorizontalAlignment="center" contentVerticalAlignment="center" id="Ksi-0b-mvg">
+                                <rect key="frame" x="255" y="6" width="51" height="31"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <connections>
+                                    <action selector="preloadSwitchChanged:" destination="bnF-vs-COv" eventType="valueChanged" id="3Hs-kg-Dfv"/>
+                                </connections>
+                            </switch>
+                        </barButtonItem>
+                    </navigationItem>
+                    <connections>
+                        <outlet property="preloadSwitch" destination="Ksi-0b-mvg" id="Def-u7-zLV"/>
+                    </connections>
                 </collectionViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Lgf-1d-yQa" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="853" y="1030"/>
         </scene>
-        <!--Fluent Paging Table View Controller-->
+        <!--Fluent Paging Table View Controller - Pre-loading-->
         <scene sceneID="7RJ-pR-h20">
             <objects>
                 <tableViewController id="ZMV-ak-IlA" customClass="FluentPagingTableViewController" sceneMemberID="viewController">
@@ -108,7 +121,20 @@
                             <outlet property="delegate" destination="ZMV-ak-IlA" id="smr-0n-DYX"/>
                         </connections>
                     </tableView>
-                    <navigationItem key="navigationItem" id="MsE-HQ-6a9"/>
+                    <navigationItem key="navigationItem" title="Pre-loading" id="MsE-HQ-6a9">
+                        <barButtonItem key="rightBarButtonItem" style="plain" id="ijf-Xu-Pmy">
+                            <switch key="customView" opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" contentHorizontalAlignment="center" contentVerticalAlignment="center" id="AmA-vM-N5i">
+                                <rect key="frame" x="255" y="6" width="51" height="31"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <connections>
+                                    <action selector="preloadSwitchChanged:" destination="ZMV-ak-IlA" eventType="valueChanged" id="Ir6-w9-LWM"/>
+                                </connections>
+                            </switch>
+                        </barButtonItem>
+                    </navigationItem>
+                    <connections>
+                        <outlet property="preloadSwitch" destination="AmA-vM-N5i" id="gnJ-tu-7io"/>
+                    </connections>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="G28-YO-4on" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
@@ -122,9 +148,36 @@
                         <rect key="frame" x="0.0" y="0.0" width="320" height="480"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <view key="tableHeaderView" contentMode="scaleToFill" id="NUD-QR-sVB">
+                            <rect key="frame" x="0.0" y="94" width="320" height="44"/>
+                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                            <subviews>
+                                <switch opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" contentHorizontalAlignment="center" contentVerticalAlignment="center" translatesAutoresizingMaskIntoConstraints="NO" id="8SA-nC-dHZ">
+                                    <rect key="frame" x="256" y="6" width="51" height="31"/>
+                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                    <connections>
+                                        <action selector="preloadSwitchChanged:" destination="IUt-u8-1Tv" eventType="valueChanged" id="0Da-F6-8Pf"/>
+                                    </connections>
+                                </switch>
+                                <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Pre-loading" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ior-CA-ZQ6">
+                                    <rect key="frame" x="15" y="11" width="89" height="21"/>
+                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                    <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                    <nil key="highlightedColor"/>
+                                </label>
+                            </subviews>
+                            <color key="backgroundColor" white="0.95000000000000007" alpha="1" colorSpace="calibratedWhite"/>
+                            <constraints>
+                                <constraint firstAttribute="centerY" secondItem="8SA-nC-dHZ" secondAttribute="centerY" constant="0.5" id="P6i-jx-wwK"/>
+                                <constraint firstItem="ior-CA-ZQ6" firstAttribute="leading" secondItem="NUD-QR-sVB" secondAttribute="leading" constant="15" id="YaJ-g2-DA2"/>
+                                <constraint firstAttribute="trailing" secondItem="8SA-nC-dHZ" secondAttribute="trailing" constant="15" id="ceP-6f-s7a"/>
+                                <constraint firstAttribute="centerY" secondItem="ior-CA-ZQ6" secondAttribute="centerY" constant="0.5" id="vMb-tS-H5H"/>
+                            </constraints>
+                        </view>
                         <prototypes>
                             <tableViewCell contentMode="scaleToFill" selectionStyle="none" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="data cell" textLabel="l39-lQ-FXW" style="IBUITableViewCellStyleDefault" id="TUj-E2-5AZ">
-                                <rect key="frame" x="0.0" y="116" width="320" height="60"/>
+                                <rect key="frame" x="0.0" y="160" width="320" height="60"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="TUj-E2-5AZ" id="Pj6-cm-jae">
                                     <rect key="frame" x="0.0" y="0.0" width="320" height="59"/>
@@ -141,7 +194,7 @@
                                 </tableViewCellContentView>
                             </tableViewCell>
                             <tableViewCell contentMode="scaleToFill" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="load more cell" textLabel="beL-Er-cI7" style="IBUITableViewCellStyleDefault" id="FPP-hC-qGw">
-                                <rect key="frame" x="0.0" y="176" width="320" height="60"/>
+                                <rect key="frame" x="0.0" y="220" width="320" height="60"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="FPP-hC-qGw" id="OCA-mg-Wxu">
                                     <rect key="frame" x="0.0" y="0.0" width="320" height="59"/>
@@ -150,7 +203,7 @@
                                         <label opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="left" text="Load more" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="beL-Er-cI7">
                                             <rect key="frame" x="15" y="0.0" width="290" height="59"/>
                                             <autoresizingMask key="autoresizingMask"/>
-                                            <fontDescription key="fontDescription" type="system" pointSize="18"/>
+                                            <fontDescription key="fontDescription" type="system" pointSize="20"/>
                                             <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
                                             <nil key="highlightedColor"/>
                                         </label>
@@ -158,7 +211,7 @@
                                 </tableViewCellContentView>
                             </tableViewCell>
                             <tableViewCell contentMode="scaleToFill" selectionStyle="none" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="loader cell" id="yKJ-iN-tJa">
-                                <rect key="frame" x="0.0" y="236" width="320" height="60"/>
+                                <rect key="frame" x="0.0" y="280" width="320" height="60"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="yKJ-iN-tJa" id="8r1-FK-A9e">
                                     <rect key="frame" x="0.0" y="0.0" width="320" height="59"/>
@@ -191,10 +244,13 @@
                             </connections>
                         </segmentedControl>
                     </navigationItem>
+                    <connections>
+                        <outlet property="preloadSwitch" destination="8SA-nC-dHZ" id="4p8-CV-GBL"/>
+                    </connections>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="0Te-Oe-RZC" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="831" y="-200"/>
+            <point key="canvasLocation" x="853" y="-200"/>
         </scene>
         <!--Navigation Controller - Classic paging-->
         <scene sceneID="2kH-Lu-dbN">

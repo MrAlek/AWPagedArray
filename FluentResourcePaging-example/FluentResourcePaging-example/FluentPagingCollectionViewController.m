@@ -10,7 +10,10 @@
 #import "DataController.h"
 #import "LabelCollectionViewCell.h"
 
+const NSUInteger FluentPagingCollectionViewPreloadMargin = 10;
+
 @interface FluentPagingCollectionViewController ()<DataControllerDelegate>
+@property (weak, nonatomic) IBOutlet UISwitch *preloadSwitch;
 @property (nonatomic) DataController *dataController;
 @end
 
@@ -28,12 +31,18 @@
 - (DataController *)dataController {
     
     if (!_dataController) {
-        _dataController = [DataController new];
+        _dataController = [[DataController alloc] initWithPageSize:40];
         _dataController.delegate = self;
         _dataController.shouldLoadAutomatically = YES;
+        _dataController.automaticPreloadMargin = self.preloadSwitch.on ? FluentPagingCollectionViewPreloadMargin : 0;
     }
     
     return _dataController;
+}
+
+#pragma mark - User interaction
+- (IBAction)preloadSwitchChanged:(UISwitch *)sender {
+    self.dataController.automaticPreloadMargin = sender.on ? FluentPagingCollectionViewPreloadMargin : 0;
 }
 
 #pragma mark - Collection view data source
