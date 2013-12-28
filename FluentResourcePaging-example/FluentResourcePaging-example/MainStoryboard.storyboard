@@ -8,7 +8,7 @@
         <scene sceneID="vMC-le-jjl">
             <objects>
                 <tabBarController definesPresentationContext="YES" id="pYl-9J-tqO" sceneMemberID="viewController">
-                    <simulatedTabBarMetrics key="simulatedBottomBarMetrics"/>
+                    <nil key="simulatedBottomBarMetrics"/>
                     <tabBar key="tabBar" contentMode="scaleToFill" id="k6c-EX-qEN">
                         <rect key="frame" x="129" y="330" width="163" height="49"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMinY="YES"/>
@@ -16,18 +16,18 @@
                     </tabBar>
                     <connections>
                         <segue destination="J5c-4K-w26" kind="relationship" relationship="viewControllers" id="DX1-qg-pkr"/>
-                        <segue destination="ZMV-ak-IlA" kind="relationship" relationship="viewControllers" id="prF-T0-8pm"/>
-                        <segue destination="bnF-vs-COv" kind="relationship" relationship="viewControllers" id="OHM-mv-dx6"/>
+                        <segue destination="Vw1-mv-CnT" kind="relationship" relationship="viewControllers" id="prF-T0-8pm"/>
+                        <segue destination="Spf-CK-npd" kind="relationship" relationship="viewControllers" id="OHM-mv-dx6"/>
                     </connections>
                 </tabBarController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="cVT-KV-2rb" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="-306" y="422"/>
         </scene>
-        <!--Collection View Controller - Fluent collection view-->
+        <!--Fluent Paging Collection View Controller-->
         <scene sceneID="9ax-uD-xLk">
             <objects>
-                <collectionViewController autoresizesArchivedViewToFullSize="NO" id="bnF-vs-COv" sceneMemberID="viewController">
+                <collectionViewController autoresizesArchivedViewToFullSize="NO" id="bnF-vs-COv" customClass="FluentPagingCollectionViewController" sceneMemberID="viewController">
                     <collectionView key="view" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" minimumZoomScale="0.0" maximumZoomScale="0.0" dataMode="prototypes" id="BP8-PZ-T3Q">
                         <rect key="frame" x="0.0" y="0.0" width="320" height="480"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -39,8 +39,8 @@
                             <inset key="sectionInset" minX="0.0" minY="0.0" maxX="0.0" maxY="0.0"/>
                         </collectionViewFlowLayout>
                         <cells>
-                            <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" id="L4s-qr-DJB">
-                                <rect key="frame" x="0.0" y="0.0" width="100" height="100"/>
+                            <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="data cell" id="L4s-qr-DJB" customClass="LabelCollectionViewCell">
+                                <rect key="frame" x="0.0" y="64" width="100" height="100"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
                                     <rect key="frame" x="0.0" y="0.0" width="100" height="100"/>
@@ -60,6 +60,9 @@
                                     <constraint firstAttribute="centerY" secondItem="Ahr-x7-Hcm" secondAttribute="centerY" id="LQw-BY-8VI"/>
                                     <constraint firstAttribute="centerX" secondItem="Ahr-x7-Hcm" secondAttribute="centerX" id="WFs-zu-nml"/>
                                 </constraints>
+                                <connections>
+                                    <outlet property="label" destination="Ahr-x7-Hcm" id="ecS-8h-QAb"/>
+                                </connections>
                             </collectionViewCell>
                         </cells>
                         <connections>
@@ -67,23 +70,23 @@
                             <outlet property="delegate" destination="bnF-vs-COv" id="A1f-B1-xhR"/>
                         </connections>
                     </collectionView>
-                    <tabBarItem key="tabBarItem" title="Fluent collection view" id="brJ-z6-0aJ"/>
+                    <navigationItem key="navigationItem" id="w6f-0W-kNS"/>
                 </collectionViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Lgf-1d-yQa" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="327" y="1030"/>
+            <point key="canvasLocation" x="853" y="1030"/>
         </scene>
-        <!--Table View Controller - Fluent table view-->
+        <!--Fluent Paging Table View Controller-->
         <scene sceneID="7RJ-pR-h20">
             <objects>
-                <tableViewController id="ZMV-ak-IlA" sceneMemberID="viewController">
+                <tableViewController id="ZMV-ak-IlA" customClass="FluentPagingTableViewController" sceneMemberID="viewController">
                     <tableView key="view" opaque="NO" clipsSubviews="YES" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="60" sectionHeaderHeight="22" sectionFooterHeight="22" id="1PR-Fs-ZE9">
                         <rect key="frame" x="0.0" y="0.0" width="320" height="480"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <prototypes>
                             <tableViewCell contentMode="scaleToFill" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="data cell" textLabel="BNq-xV-Zyu" style="IBUITableViewCellStyleDefault" id="xc4-YP-axw">
-                                <rect key="frame" x="0.0" y="22" width="320" height="60"/>
+                                <rect key="frame" x="0.0" y="86" width="320" height="60"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="xc4-YP-axw" id="0yo-Z2-5tx">
                                     <rect key="frame" x="0.0" y="0.0" width="320" height="59"/>
@@ -105,11 +108,11 @@
                             <outlet property="delegate" destination="ZMV-ak-IlA" id="smr-0n-DYX"/>
                         </connections>
                     </tableView>
-                    <tabBarItem key="tabBarItem" title="Fluent table view" id="Imn-LR-qay"/>
+                    <navigationItem key="navigationItem" id="MsE-HQ-6a9"/>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="G28-YO-4on" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="327" y="417"/>
+            <point key="canvasLocation" x="853" y="417"/>
         </scene>
         <!--Classic Paging View Controller-->
         <scene sceneID="vU1-m2-apR">
@@ -208,6 +211,44 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="rPf-dP-Ipv" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="327" y="-200"/>
+        </scene>
+        <!--Navigation Controller - Fluent table view-->
+        <scene sceneID="B81-27-pZi">
+            <objects>
+                <navigationController automaticallyAdjustsScrollViewInsets="NO" id="Vw1-mv-CnT" sceneMemberID="viewController">
+                    <tabBarItem key="tabBarItem" title="Fluent table view" id="Imn-LR-qay"/>
+                    <toolbarItems/>
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="Xha-df-ybO">
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                    </navigationBar>
+                    <nil name="viewControllers"/>
+                    <connections>
+                        <segue destination="ZMV-ak-IlA" kind="relationship" relationship="rootViewController" id="yVN-2I-RVa"/>
+                    </connections>
+                </navigationController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="gAu-dE-MV2" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="327" y="417"/>
+        </scene>
+        <!--Navigation Controller - Fluent collection view-->
+        <scene sceneID="lWr-e3-cKh">
+            <objects>
+                <navigationController automaticallyAdjustsScrollViewInsets="NO" id="Spf-CK-npd" sceneMemberID="viewController">
+                    <tabBarItem key="tabBarItem" title="Fluent collection view" id="brJ-z6-0aJ"/>
+                    <toolbarItems/>
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="wdn-FU-sxA">
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                    </navigationBar>
+                    <nil name="viewControllers"/>
+                    <connections>
+                        <segue destination="bnF-vs-COv" kind="relationship" relationship="rootViewController" id="HqI-05-vUm"/>
+                    </connections>
+                </navigationController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="ynE-2p-pm8" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="327" y="1030"/>
         </scene>
     </scenes>
     <simulatedMetricsContainer key="defaultSimulatedMetrics">

@@ -17,6 +17,9 @@
 		93262EC6186E45CC00B05C01 /* MainStoryboard.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 93262EC5186E45CC00B05C01 /* MainStoryboard.storyboard */; };
 		93262EC9186E4CFE00B05C01 /* DataController.m in Sources */ = {isa = PBXBuildFile; fileRef = 93262EC8186E4CFE00B05C01 /* DataController.m */; };
 		93262ECC186E5B0700B05C01 /* ClassicPagingViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 93262ECB186E5B0700B05C01 /* ClassicPagingViewController.m */; };
+		93262ECF186E731A00B05C01 /* FluentPagingTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 93262ECE186E731A00B05C01 /* FluentPagingTableViewController.m */; };
+		93848026186E75B80006006E /* FluentPagingCollectionViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 93848025186E75B80006006E /* FluentPagingCollectionViewController.m */; };
+		9384802C186E767E0006006E /* LabelCollectionViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 9384802B186E767E0006006E /* LabelCollectionViewCell.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -32,14 +35,17 @@
 		93262EA6186E457C00B05C01 /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
 		93262EA8186E457C00B05C01 /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
 		93262EAF186E457C00B05C01 /* XCTest.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = XCTest.framework; path = Library/Frameworks/XCTest.framework; sourceTree = DEVELOPER_DIR; };
-		93262EB7186E457C00B05C01 /* FluentResourcePaging-exampleTests-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "FluentResourcePaging-exampleTests-Info.plist"; sourceTree = "<group>"; };
-		93262EB9186E457C00B05C01 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
-		93262EBB186E457C00B05C01 /* FluentResourcePaging_exampleTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = FluentResourcePaging_exampleTests.m; sourceTree = "<group>"; };
 		93262EC5186E45CC00B05C01 /* MainStoryboard.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = MainStoryboard.storyboard; sourceTree = "<group>"; };
 		93262EC7186E4CFE00B05C01 /* DataController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DataController.h; sourceTree = "<group>"; };
 		93262EC8186E4CFE00B05C01 /* DataController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DataController.m; sourceTree = "<group>"; };
 		93262ECA186E5B0700B05C01 /* ClassicPagingViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ClassicPagingViewController.h; sourceTree = "<group>"; };
 		93262ECB186E5B0700B05C01 /* ClassicPagingViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ClassicPagingViewController.m; sourceTree = "<group>"; };
+		93262ECD186E731A00B05C01 /* FluentPagingTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FluentPagingTableViewController.h; sourceTree = "<group>"; };
+		93262ECE186E731A00B05C01 /* FluentPagingTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FluentPagingTableViewController.m; sourceTree = "<group>"; };
+		93848024186E75B80006006E /* FluentPagingCollectionViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FluentPagingCollectionViewController.h; sourceTree = "<group>"; };
+		93848025186E75B80006006E /* FluentPagingCollectionViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FluentPagingCollectionViewController.m; sourceTree = "<group>"; };
+		9384802A186E767E0006006E /* LabelCollectionViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LabelCollectionViewCell.h; sourceTree = "<group>"; };
+		9384802B186E767E0006006E /* LabelCollectionViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LabelCollectionViewCell.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -60,7 +66,6 @@
 			isa = PBXGroup;
 			children = (
 				93262E9C186E457C00B05C01 /* FluentResourcePaging-example */,
-				93262EB5186E457C00B05C01 /* FluentResourcePaging-exampleTests */,
 				93262E95186E457C00B05C01 /* Frameworks */,
 				93262E94186E457C00B05C01 /* Products */,
 			);
@@ -90,11 +95,17 @@
 			children = (
 				93262EA5186E457C00B05C01 /* AppDelegate.h */,
 				93262EA6186E457C00B05C01 /* AppDelegate.m */,
-				93262EC5186E45CC00B05C01 /* MainStoryboard.storyboard */,
 				93262EC7186E4CFE00B05C01 /* DataController.h */,
 				93262EC8186E4CFE00B05C01 /* DataController.m */,
 				93262ECA186E5B0700B05C01 /* ClassicPagingViewController.h */,
 				93262ECB186E5B0700B05C01 /* ClassicPagingViewController.m */,
+				93262ECD186E731A00B05C01 /* FluentPagingTableViewController.h */,
+				93262ECE186E731A00B05C01 /* FluentPagingTableViewController.m */,
+				93848024186E75B80006006E /* FluentPagingCollectionViewController.h */,
+				93848025186E75B80006006E /* FluentPagingCollectionViewController.m */,
+				9384802A186E767E0006006E /* LabelCollectionViewCell.h */,
+				9384802B186E767E0006006E /* LabelCollectionViewCell.m */,
+				93262EC5186E45CC00B05C01 /* MainStoryboard.storyboard */,
 				93262EA8186E457C00B05C01 /* Images.xcassets */,
 				93262E9D186E457C00B05C01 /* Supporting Files */,
 			);
@@ -108,24 +119,6 @@
 				93262E9F186E457C00B05C01 /* InfoPlist.strings */,
 				93262EA2186E457C00B05C01 /* main.m */,
 				93262EA4186E457C00B05C01 /* FluentResourcePaging-example-Prefix.pch */,
-			);
-			name = "Supporting Files";
-			sourceTree = "<group>";
-		};
-		93262EB5186E457C00B05C01 /* FluentResourcePaging-exampleTests */ = {
-			isa = PBXGroup;
-			children = (
-				93262EBB186E457C00B05C01 /* FluentResourcePaging_exampleTests.m */,
-				93262EB6186E457C00B05C01 /* Supporting Files */,
-			);
-			path = "FluentResourcePaging-exampleTests";
-			sourceTree = "<group>";
-		};
-		93262EB6186E457C00B05C01 /* Supporting Files */ = {
-			isa = PBXGroup;
-			children = (
-				93262EB7186E457C00B05C01 /* FluentResourcePaging-exampleTests-Info.plist */,
-				93262EB8186E457C00B05C01 /* InfoPlist.strings */,
 			);
 			name = "Supporting Files";
 			sourceTree = "<group>";
@@ -196,8 +189,11 @@
 			files = (
 				93262EA7186E457C00B05C01 /* AppDelegate.m in Sources */,
 				93262EA3186E457C00B05C01 /* main.m in Sources */,
+				9384802C186E767E0006006E /* LabelCollectionViewCell.m in Sources */,
+				93848026186E75B80006006E /* FluentPagingCollectionViewController.m in Sources */,
 				93262EC9186E4CFE00B05C01 /* DataController.m in Sources */,
 				93262ECC186E5B0700B05C01 /* ClassicPagingViewController.m in Sources */,
+				93262ECF186E731A00B05C01 /* FluentPagingTableViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -208,14 +204,6 @@
 			isa = PBXVariantGroup;
 			children = (
 				93262EA0186E457C00B05C01 /* en */,
-			);
-			name = InfoPlist.strings;
-			sourceTree = "<group>";
-		};
-		93262EB8186E457C00B05C01 /* InfoPlist.strings */ = {
-			isa = PBXVariantGroup;
-			children = (
-				93262EB9186E457C00B05C01 /* en */,
 			);
 			name = InfoPlist.strings;
 			sourceTree = "<group>";
@@ -340,6 +328,7 @@
 				93262EC1186E457C00B05C01 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};

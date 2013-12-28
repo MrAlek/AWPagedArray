@@ -44,6 +44,7 @@ typedef NS_ENUM(NSInteger, ClassicPagingViewControllerLoadingStyle) {
     return _dataController;
 }
 - (void)setLoadingStyle:(ClassicPagingViewControllerLoadingStyle)loadingStyle {
+    
     _loadingStyle = loadingStyle;
     _dataController = nil;
     [self.tableView reloadData];
