@@ -15,6 +15,7 @@
 		93262EA7186E457C00B05C01 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 93262EA6186E457C00B05C01 /* AppDelegate.m */; };
 		93262EA9186E457C00B05C01 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 93262EA8186E457C00B05C01 /* Images.xcassets */; };
 		93262EC6186E45CC00B05C01 /* MainStoryboard.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 93262EC5186E45CC00B05C01 /* MainStoryboard.storyboard */; };
+		93262EC9186E4CFE00B05C01 /* DataController.m in Sources */ = {isa = PBXBuildFile; fileRef = 93262EC8186E4CFE00B05C01 /* DataController.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -34,6 +35,8 @@
 		93262EB9186E457C00B05C01 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		93262EBB186E457C00B05C01 /* FluentResourcePaging_exampleTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = FluentResourcePaging_exampleTests.m; sourceTree = "<group>"; };
 		93262EC5186E45CC00B05C01 /* MainStoryboard.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = MainStoryboard.storyboard; sourceTree = "<group>"; };
+		93262EC7186E4CFE00B05C01 /* DataController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DataController.h; sourceTree = "<group>"; };
+		93262EC8186E4CFE00B05C01 /* DataController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DataController.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -85,6 +88,8 @@
 				93262EA5186E457C00B05C01 /* AppDelegate.h */,
 				93262EA6186E457C00B05C01 /* AppDelegate.m */,
 				93262EC5186E45CC00B05C01 /* MainStoryboard.storyboard */,
+				93262EC7186E4CFE00B05C01 /* DataController.h */,
+				93262EC8186E4CFE00B05C01 /* DataController.m */,
 				93262EA8186E457C00B05C01 /* Images.xcassets */,
 				93262E9D186E457C00B05C01 /* Supporting Files */,
 			);
@@ -186,6 +191,7 @@
 			files = (
 				93262EA7186E457C00B05C01 /* AppDelegate.m in Sources */,
 				93262EA3186E457C00B05C01 /* main.m in Sources */,
+				93262EC9186E4CFE00B05C01 /* DataController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
