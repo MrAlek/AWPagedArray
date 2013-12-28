@@ -9,15 +9,15 @@
 #import "ClassicPagingViewController.h"
 #import "DataController.h"
 
-typedef NS_ENUM(NSInteger, ClassicPagingViewControllerPagingMode) {
-    ClassicPagingViewControllerPagingModeManual,
-    ClassicPagingViewControllerPagingModeAutomatic
+typedef NS_ENUM(NSInteger, ClassicPagingViewControllerLoadingStyle) {
+    ClassicPagingViewControllerLoadingStyleManual,
+    ClassicPagingViewControllerLoadingStyleAutomatic
 };
 
 
 @interface ClassicPagingViewController ()<DataControllerDelegate>
 @property (nonatomic) DataController *dataController;
-@property (nonatomic) ClassicPagingViewControllerPagingMode pagingMode;
+@property (nonatomic) ClassicPagingViewControllerLoadingStyle loadingStyle;
 @end
 
 @implementation ClassicPagingViewController {
@@ -34,17 +34,24 @@ typedef NS_ENUM(NSInteger, ClassicPagingViewControllerPagingMode) {
 
 #pragma mark - Accessors
 - (DataController *)dataController {
+    
     if (!_dataController) {
         _dataController = [DataController new];
         _dataController.delegate = self;
         [_dataController loadDataAtIndex:0];
     }
+    
     return _dataController;
+}
+- (void)setLoadingStyle:(ClassicPagingViewControllerLoadingStyle)loadingStyle {
+    _loadingStyle = loadingStyle;
+    _dataController = nil;
+    [self.tableView reloadData];
 }
 
 #pragma mark - User interaction
 - (IBAction)loadingStyleSegmentChanged:(UISegmentedControl *)sender {
-    self.pagingMode = sender.selectedSegmentIndex;
+    self.loadingStyle = sender.selectedSegmentIndex;
 }
 
 #pragma mark - Table view
@@ -53,7 +60,7 @@ typedef NS_ENUM(NSInteger, ClassicPagingViewControllerPagingMode) {
     return 1;
 }
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
-    return self.dataController.loadedCount+1;
+    return MIN(self.dataController.loadedCount+1, self.dataController.dataCount);
 }
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     
@@ -66,8 +73,11 @@ typedef NS_ENUM(NSInteger, ClassicPagingViewControllerPagingMode) {
     
     if (index < self.dataController.loadedCount) {
         cellIdentifier = DataCellIdentifier;
+    } else if ([self.dataController isLoadingDataAtIndex:index] || self.loadingStyle == ClassicPagingViewControllerLoadingStyleAutomatic) {
+        cellIdentifier = LoaderCellIdentifier;
+        _loaderCellIndexPath = indexPath;
     } else {
-        cellIdentifier = [self.dataController isLoadingDataAtIndex:index] ? LoaderCellIdentifier : LoadMoreCellIdentifier;
+        cellIdentifier = LoadMoreCellIdentifier;
     }
     
     UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:cellIdentifier forIndexPath:indexPath];
@@ -89,18 +99,27 @@ typedef NS_ENUM(NSInteger, ClassicPagingViewControllerPagingMode) {
         [self.dataController loadDataAtIndex:indexPath.row];
     }
 }
+- (void)tableView:(UITableView *)tableView willDisplayCell:(UITableViewCell *)cell forRowAtIndexPath:(NSIndexPath *)indexPath {
+    if (self.loadingStyle == ClassicPagingViewControllerLoadingStyleAutomatic && [indexPath isEqual:_loaderCellIndexPath]) {
+        [self.dataController loadDataAtIndex:indexPath.row];
+    }
+}
 
 #pragma mark - Data controller delegate
 - (void)dataController:(DataController *)dataController willLoadDataAtIndexes:(NSIndexSet *)indexes {
-
-    _loaderCellIndexPath = [NSIndexPath indexPathForRow:dataController.loadedCount inSection:0];
-    [self.tableView reloadRowsAtIndexPaths:@[_loaderCellIndexPath] withRowAnimation:UITableViewRowAnimationFade];
+    
+    if (self.loadingStyle == ClassicPagingViewControllerLoadingStyleManual) {
+        [self.tableView reloadRowsAtIndexPaths:@[[NSIndexPath indexPathForRow:dataController.loadedCount inSection:0]] withRowAnimation:UITableViewRowAnimationFade];
+    }
 }
 - (void)dataController:(DataController *)dataController didLoadDataAtIndexes:(NSIndexSet *)indexes {
+    
     [self.tableView beginUpdates];
     [self.tableView reloadRowsAtIndexPaths:@[_loaderCellIndexPath] withRowAnimation:UITableViewRowAnimationFade];
     [indexes enumerateIndexesUsingBlock:^(NSUInteger idx, BOOL *stop) {
-        [self.tableView insertRowsAtIndexPaths:@[[NSIndexPath indexPathForRow:idx+1 inSection:0]] withRowAnimation:UITableViewRowAnimationFade];
+        if (idx < dataController.dataCount-1) {
+            [self.tableView insertRowsAtIndexPaths:@[[NSIndexPath indexPathForRow:idx+1 inSection:0]] withRowAnimation:UITableViewRowAnimationFade];
+        }
     }];
     [self.tableView endUpdates];
 }

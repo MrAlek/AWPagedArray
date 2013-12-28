@@ -14,14 +14,13 @@ const NSTimeInterval DataControllerOperationDuration = 0.3;
 
 @implementation DataController {
     NSMutableDictionary *_dataPages;
+    NSOperationQueue *_operationQueue;
     NSMutableDictionary *_dataLoadingOperations;
 }
 
 #pragma mark - Cleanup
 - (void)dealloc {
-    [_dataLoadingOperations enumerateKeysAndObjectsUsingBlock:^(id key, NSOperation *operation, BOOL *stop) {
-        [operation cancel];
-    }];
+    [_operationQueue.operations makeObjectsPerformSelector:@selector(cancel)];
 }
 
 #pragma mark - Initialization
@@ -36,6 +35,7 @@ const NSTimeInterval DataControllerOperationDuration = 0.3;
         _pageSize = pageSize;
         _dataPages = [NSMutableDictionary dictionary];
         _dataLoadingOperations = [NSMutableDictionary dictionary];
+        _operationQueue = [NSOperationQueue new];
     }
     return self;
 }
@@ -86,27 +86,31 @@ const NSTimeInterval DataControllerOperationDuration = 0.3;
     _dataLoadingOperations[@(page)] = loadingOperation;
     
     [self.delegate dataController:self willLoadDataAtIndexes:indexes];
-    [[NSOperationQueue mainQueue] addOperation:loadingOperation];
+    [_operationQueue addOperation:loadingOperation];
 }
 - (NSOperation *)loadingOperationForPage:(NSUInteger)page indexes:(NSIndexSet *)indexes {
     // Load new data, remember to not retain self in block since we store the operation
     __weak typeof(self) weakSelf = self;
     NSOperation *loadingOperation = [NSBlockOperation blockOperationWithBlock:^{
-        typeof(self) strongSelf = weakSelf;
         
-        // Simulate waiting
+        // Simulate waiting (in background)
         [NSThread sleepForTimeInterval:DataControllerOperationDuration];
         
-        [strongSelf->_dataLoadingOperations removeObjectForKey:@(page)];
-        
-        // Generate data
-        NSMutableArray *dataPage = [NSMutableArray array];
-        [indexes enumerateIndexesUsingBlock:^(NSUInteger idx, BOOL *stop) {
-            [dataPage addObject:@(idx+1)];
+        // Now go to main queue and deliver
+        [[NSOperationQueue mainQueue] addOperationWithBlock:^{
+            typeof(self) strongSelf = weakSelf;
+
+            [strongSelf->_dataLoadingOperations removeObjectForKey:@(page)];
+            
+            // Generate data
+            NSMutableArray *dataPage = [NSMutableArray array];
+            [indexes enumerateIndexesUsingBlock:^(NSUInteger idx, BOOL *stop) {
+                [dataPage addObject:@(idx+1)];
+            }];
+            strongSelf->_dataPages[@(page)] = dataPage;
+            
+            [self.delegate dataController:self didLoadDataAtIndexes:indexes];
         }];
-        strongSelf->_dataPages[@(page)] = dataPage;
-        
-        [self.delegate dataController:self didLoadDataAtIndexes:indexes];
     }];
 
     return loadingOperation;
