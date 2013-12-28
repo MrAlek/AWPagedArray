@@ -52,6 +52,9 @@ const NSTimeInterval DataControllerOperationDuration = 0.3;
     
     return dataPage[index%_pageSize];
 }
+- (NSUInteger)loadedCount {
+    return _dataPages.count*_pageSize;
+}
 
 #pragma mark - Private methods
 - (NSUInteger)pageForIndex:(NSUInteger)index {
