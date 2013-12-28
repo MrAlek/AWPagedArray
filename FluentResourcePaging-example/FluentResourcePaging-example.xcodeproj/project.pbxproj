@@ -16,6 +16,7 @@
 		93262EA9186E457C00B05C01 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 93262EA8186E457C00B05C01 /* Images.xcassets */; };
 		93262EC6186E45CC00B05C01 /* MainStoryboard.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 93262EC5186E45CC00B05C01 /* MainStoryboard.storyboard */; };
 		93262EC9186E4CFE00B05C01 /* DataController.m in Sources */ = {isa = PBXBuildFile; fileRef = 93262EC8186E4CFE00B05C01 /* DataController.m */; };
+		93262ECC186E5B0700B05C01 /* ClassicPagingViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 93262ECB186E5B0700B05C01 /* ClassicPagingViewController.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -37,6 +38,8 @@
 		93262EC5186E45CC00B05C01 /* MainStoryboard.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = MainStoryboard.storyboard; sourceTree = "<group>"; };
 		93262EC7186E4CFE00B05C01 /* DataController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DataController.h; sourceTree = "<group>"; };
 		93262EC8186E4CFE00B05C01 /* DataController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DataController.m; sourceTree = "<group>"; };
+		93262ECA186E5B0700B05C01 /* ClassicPagingViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ClassicPagingViewController.h; sourceTree = "<group>"; };
+		93262ECB186E5B0700B05C01 /* ClassicPagingViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ClassicPagingViewController.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -90,6 +93,8 @@
 				93262EC5186E45CC00B05C01 /* MainStoryboard.storyboard */,
 				93262EC7186E4CFE00B05C01 /* DataController.h */,
 				93262EC8186E4CFE00B05C01 /* DataController.m */,
+				93262ECA186E5B0700B05C01 /* ClassicPagingViewController.h */,
+				93262ECB186E5B0700B05C01 /* ClassicPagingViewController.m */,
 				93262EA8186E457C00B05C01 /* Images.xcassets */,
 				93262E9D186E457C00B05C01 /* Supporting Files */,
 			);
@@ -192,6 +197,7 @@
 				93262EA7186E457C00B05C01 /* AppDelegate.m in Sources */,
 				93262EA3186E457C00B05C01 /* main.m in Sources */,
 				93262EC9186E4CFE00B05C01 /* DataController.m in Sources */,
+				93262ECC186E5B0700B05C01 /* ClassicPagingViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

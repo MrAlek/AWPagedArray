@@ -23,8 +23,11 @@
 @property (nonatomic, readonly) NSUInteger dataCount;
 @property (nonatomic, readonly) NSUInteger pageSize;
 @property (nonatomic, readonly) NSUInteger loadedCount;
+@property (nonatomic) BOOL shouldLoadAutomatically;
 @property (nonatomic, weak) id<DataControllerDelegate> delegate;
 
 - (NSNumber *)dataAtIndex:(NSUInteger)index;
+- (BOOL)isLoadingDataAtIndex:(NSUInteger)index;
+- (void)loadDataAtIndex:(NSUInteger)index;
 
 @end

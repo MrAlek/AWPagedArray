@@ -46,7 +46,7 @@ const NSTimeInterval DataControllerOperationDuration = 0.3;
     NSUInteger page = [self pageForIndex:index];
     NSArray *dataPage = _dataPages[@(page)];
     
-    if (!dataPage) {
+    if (!dataPage && self.shouldLoadAutomatically) {
         [self setNeedsloadDataForPage:page];
     }
     
@@ -54,6 +54,14 @@ const NSTimeInterval DataControllerOperationDuration = 0.3;
 }
 - (NSUInteger)loadedCount {
     return _dataPages.count*_pageSize;
+}
+
+#pragma mark - Other public methods
+- (BOOL)isLoadingDataAtIndex:(NSUInteger)index {
+    return (_dataLoadingOperations[@([self pageForIndex:index])]);
+}
+- (void)loadDataAtIndex:(NSUInteger)index {
+    [self setNeedsloadDataForPage:[self pageForIndex:index]];
 }
 
 #pragma mark - Private methods
@@ -65,7 +73,7 @@ const NSTimeInterval DataControllerOperationDuration = 0.3;
 }
 - (void)setNeedsloadDataForPage:(NSUInteger)page {
     
-    if (!_dataLoadingOperations[@(page)]) {
+    if (!_dataPages[@(page)] && !_dataLoadingOperations[@(page)]) {
         // Don't load data if there already is a loading operation in progress
         [self loadDataForPage:page];
     }
@@ -89,7 +97,7 @@ const NSTimeInterval DataControllerOperationDuration = 0.3;
         // Simulate waiting
         [NSThread sleepForTimeInterval:DataControllerOperationDuration];
         
-        strongSelf->_dataLoadingOperations[@(page)] = nil;
+        [strongSelf->_dataLoadingOperations removeObjectForKey:@(page)];
         
         // Generate data
         NSMutableArray *dataPage = [NSMutableArray array];
