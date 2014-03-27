@@ -93,7 +93,7 @@ const NSUInteger ClassicPagingTablePreloadMargin = 5;
     
     NSNumber *data = [self.dataController dataAtIndex:index];
     if (data) {
-        cell.textLabel.text = [NSString stringWithFormat:@"Content data %d", data.intValue];
+        cell.textLabel.text = [NSString stringWithFormat:@"Content data %ld", data.integerValue];
     }
     
     return cell;
