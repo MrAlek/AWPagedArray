@@ -20,6 +20,7 @@
 		93262ECF186E731A00B05C01 /* FluentPagingTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 93262ECE186E731A00B05C01 /* FluentPagingTableViewController.m */; };
 		93848026186E75B80006006E /* FluentPagingCollectionViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 93848025186E75B80006006E /* FluentPagingCollectionViewController.m */; };
 		9384802C186E767E0006006E /* LabelCollectionViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 9384802B186E767E0006006E /* LabelCollectionViewCell.m */; };
+		93A8207818E469B0002F6E66 /* MutablePagedArray.m in Sources */ = {isa = PBXBuildFile; fileRef = 93A8207718E469B0002F6E66 /* MutablePagedArray.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -46,6 +47,8 @@
 		93848025186E75B80006006E /* FluentPagingCollectionViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FluentPagingCollectionViewController.m; sourceTree = "<group>"; };
 		9384802A186E767E0006006E /* LabelCollectionViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LabelCollectionViewCell.h; sourceTree = "<group>"; };
 		9384802B186E767E0006006E /* LabelCollectionViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LabelCollectionViewCell.m; sourceTree = "<group>"; };
+		93A8207618E469B0002F6E66 /* MutablePagedArray.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MutablePagedArray.h; sourceTree = "<group>"; };
+		93A8207718E469B0002F6E66 /* MutablePagedArray.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MutablePagedArray.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -105,6 +108,8 @@
 				93848025186E75B80006006E /* FluentPagingCollectionViewController.m */,
 				9384802A186E767E0006006E /* LabelCollectionViewCell.h */,
 				9384802B186E767E0006006E /* LabelCollectionViewCell.m */,
+				93A8207618E469B0002F6E66 /* MutablePagedArray.h */,
+				93A8207718E469B0002F6E66 /* MutablePagedArray.m */,
 				93262EC5186E45CC00B05C01 /* MainStoryboard.storyboard */,
 				93262EA8186E457C00B05C01 /* Images.xcassets */,
 				93262E9D186E457C00B05C01 /* Supporting Files */,
@@ -187,6 +192,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				93A8207818E469B0002F6E66 /* MutablePagedArray.m in Sources */,
 				93262EA7186E457C00B05C01 /* AppDelegate.m in Sources */,
 				93262EA3186E457C00B05C01 /* main.m in Sources */,
 				9384802C186E767E0006006E /* LabelCollectionViewCell.m in Sources */,
