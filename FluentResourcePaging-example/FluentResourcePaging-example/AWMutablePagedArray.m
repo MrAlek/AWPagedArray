@@ -1,5 +1,5 @@
 //
-// MutablePagedArray.m
+// AWMutablePagedArray.m
 //
 // Copyright (c) 2014 Alek Åström
 //
@@ -22,9 +22,11 @@
 // THE SOFTWARE.
 //
 
-#import "MutablePagedArray.h"
+#import "AWMutablePagedArray.h"
 
-@implementation MutablePagedArray {
+NSString *const AWMutablePagedArrayObjectsPerPageMismatchException = @"AWMutablePagedArrayObjectsPerPageMismatchException";
+
+@implementation AWMutablePagedArray {
     NSUInteger _totalCount;
     NSUInteger _objectsPerPage;
     NSMutableDictionary *_pages;
@@ -51,7 +53,7 @@
         _pages[@(page)] = objects;
         _needsUpdateFastEnumerationCache = YES;
     } else {
-        [NSException raise:@"MutablePagedArrayObjectsPerPageMismatchException" format:@"Expected object count per page: %ld received: %ld", _objectsPerPage, objects.count];
+        [NSException raise:AWMutablePagedArrayObjectsPerPageMismatchException format:@"Expected object count per page: %ld received: %ld", _objectsPerPage, objects.count];
     }
 }
 

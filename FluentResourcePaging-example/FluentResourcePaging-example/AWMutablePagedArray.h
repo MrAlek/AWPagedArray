@@ -1,5 +1,5 @@
 //
-// MutablePagedArray.h
+// AWMutablePagedArray.h
 //
 // Copyright (c) 2014 Alek Åström
 //
@@ -24,10 +24,12 @@
 
 #import <Foundation/Foundation.h>
 
+FOUNDATION_EXPORT NSString *const AWMutablePagedArrayObjectsPerPageMismatchException;
+
 /**
  * This proxy class acts as an NSArray while using a mechanism for paging objects
  */
-@interface MutablePagedArray : NSArray
+@interface AWMutablePagedArray : NSArray
 
 /**
  * The designated initializer for this class
