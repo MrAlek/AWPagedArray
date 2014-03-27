@@ -27,14 +27,15 @@
 FOUNDATION_EXPORT NSString *const AWMutablePagedArrayObjectsPerPageMismatchException;
 
 /**
- * This proxy class acts as an NSArray while using a mechanism for paging objects
+ * This class acts as a proxy for NSArray, when data is loaded in batches, called "pages", similiar to what NSFetchRequest returns after setting the batchSize property
+ * @discussion The recommendation is to use this class in conjunction with a data controller class which populates the paged array with pages of data, while casting the paged array back as an NSArray to its owner.
+ * @see NSFetchRequest
  */
-@interface AWMutablePagedArray : NSArray
+@interface AWMutablePagedArray : NSProxy
 
 /**
  * The designated initializer for this class
- * @param count Total number of objects that is expected to be in the array
- * @param objectsPerPage The number of objects each page should have (except for the last page)
+ * Note that the parameters are part of immutable state
  */
 - (instancetype)initWithCount:(NSUInteger)count objectsPerPage:(NSUInteger)objectsPerPage;
 
@@ -42,7 +43,7 @@ FOUNDATION_EXPORT NSString *const AWMutablePagedArrayObjectsPerPageMismatchExcep
  * Sets objects for a specific page in the array
  * @param objects The objects in the page
  * @param page The page which these objects should be set for, pages start with index 1
- * @throws 
+ * @throws AWMutablePagedArrayObjectsPerPageMismatchException when page size mismatch the initialized objectsPerPage property
  */
 - (void)setObjects:(NSArray *)objects forPage:(NSUInteger)page;
 

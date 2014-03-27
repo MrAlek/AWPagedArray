@@ -55,21 +55,19 @@ const NSUInteger MutablePagedArrayObjectsPerPage = 6;
     [_pagedArray setObjects:_secondPage forPage:2];
     
 }
-- (void)tearDown
-{
-    // Put teardown code here. This method is called after the invocation of each test method in the class.
-    [super tearDown];
+- (NSArray *)array {
+    return (NSArray *)_pagedArray;
 }
 
 - (void)testSizeIsCorrect {
-    XCTAssertEqual(_pagedArray.count, MutablePagedArraySize, @"Paged array has wrong size");
+    XCTAssertEqual([self array].count, MutablePagedArraySize, @"Paged array has wrong size");
 }
 - (void)testObjectsPerPageIsCorrect {
     XCTAssertEqual(_pagedArray.objectsPerPage, MutablePagedArrayObjectsPerPage, @"Paged array has wrong objects per page count");
 }
 - (void)testReturnsRightObject {
     
-    XCTAssertEqualObjects(_pagedArray[0], _firstPage[0], @"Returns wrong object!");
+    XCTAssertEqualObjects([self array][0], _firstPage[0], @"Returns wrong object!");
 }
 - (void)testThrowsExceptionWhenSettingPageWithWrongSize {
     
@@ -84,7 +82,7 @@ const NSUInteger MutablePagedArrayObjectsPerPage = 6;
 - (void)testFastEnumeration {
     
     NSMutableArray *objects = [NSMutableArray array];
-    for (id object in _pagedArray) {
+    for (id object in [self array]) {
         [objects addObject:object];
     }
     
@@ -95,14 +93,14 @@ const NSUInteger MutablePagedArrayObjectsPerPage = 6;
 - (void)testFastEnumerationUpdatesAfterSettingNewPage {
     
     NSMutableArray *beforeObjects = [NSMutableArray array];
-    for (id object in _pagedArray) {
+    for (id object in [self array]) {
         [beforeObjects addObject:object];
     }
     
     [_pagedArray setObjects:_firstPage forPage:3];
     
     NSMutableArray *afterObjects = [NSMutableArray array];
-    for (id object in _pagedArray) {
+    for (id object in [self array]) {
         [afterObjects addObject:object];
     }
     
@@ -111,11 +109,32 @@ const NSUInteger MutablePagedArrayObjectsPerPage = 6;
 - (void)testIndexOfObjectReturnsRightIndex {
     
     NSNumber *testNumber = _secondPage[0];
-    XCTAssert(([_pagedArray indexOfObject:testNumber] == MutablePagedArrayObjectsPerPage), @"Paged array returned wrong index for object");
+    XCTAssert(([[self array] indexOfObject:testNumber] == MutablePagedArrayObjectsPerPage), @"Paged array returned wrong index for object");
 }
 - (void)testIndexOfObjectReturnsNSNotFoundWhenLookingForAnObjectNotInTheArray {
     
-    XCTAssert(([_pagedArray indexOfObject:@(NSNotFound)] == NSNotFound), @"Index returned for an object not present in the array");
+    XCTAssert(([[self array] indexOfObject:@(NSNotFound)] == NSNotFound), @"Index returned for an object not present in the array");
+}
+- (void)testObjectAtIndexForEmptyPageReturnsNSNull {
+    
+    id object = [[self array] objectAtIndex:MutablePagedArraySize-1];
+    XCTAssertEqualObjects([object class], [NSNull class], @"Array doesn't return NSNull for value not yet loaded");
+}
+- (void)testObjectAtIndexForTooLargeIndexReturnsNSRangeException {
+    
+    XCTAssertThrowsSpecificNamed([[self array] objectAtIndex:MutablePagedArraySize], NSException, NSRangeException, @"Paged array doesn't throw NSRangeException when accessing index beyond its size");
+}
+- (void)testMutableCopyWorks {
+    
+    NSMutableArray *mutableCopy = [[self array] mutableCopy];
+    [mutableCopy removeObjectsInArray:_secondPage];
+    
+    XCTAssertEqualObjects(mutableCopy, _firstPage, @"Mutable copy doesn't match original");
+    
+}
+- (void)testPagedArrayIsNSArray {
+    
+    XCTAssert([[self array] isKindOfClass:[NSArray class]], @"Paged array isn't an NSArray");
 }
 
 @end

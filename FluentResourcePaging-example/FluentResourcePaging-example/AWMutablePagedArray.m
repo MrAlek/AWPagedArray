@@ -31,19 +31,16 @@ NSString *const AWMutablePagedArrayObjectsPerPageMismatchException = @"AWMutable
     NSUInteger _objectsPerPage;
     NSMutableDictionary *_pages;
     
-    BOOL _needsUpdateFastEnumerationCache;
-    NSArray *_fastEnumerationCache;
+    BOOL _needsUpdateProxiedArray;
+    NSArray *_proxiedArray;
 }
 
 #pragma mark - Public methods
 - (instancetype)initWithCount:(NSUInteger)count objectsPerPage:(NSUInteger)objectsPerPage {
     
-    self = [super init];
-    if (self) {
-        _totalCount = count;
-        _objectsPerPage = objectsPerPage;
-        _pages = [[NSMutableDictionary alloc] initWithCapacity:[self _numberOfPages]];
-    }
+    _totalCount = count;
+    _objectsPerPage = objectsPerPage;
+    _pages = [[NSMutableDictionary alloc] initWithCapacity:[self _numberOfPages]];
     
     return self;
 }
@@ -51,13 +48,13 @@ NSString *const AWMutablePagedArrayObjectsPerPageMismatchException = @"AWMutable
     
     if (objects.count == _objectsPerPage || page == [self _numberOfPages]) {
         _pages[@(page)] = objects;
-        _needsUpdateFastEnumerationCache = YES;
+        _needsUpdateProxiedArray = YES;
     } else {
         [NSException raise:AWMutablePagedArrayObjectsPerPageMismatchException format:@"Expected object count per page: %ld received: %ld", _objectsPerPage, objects.count];
     }
 }
 
-#pragma mark - Overrides
+#pragma mark - NSArray overrides
 - (NSUInteger)count {
     return _totalCount;
 }
@@ -68,25 +65,34 @@ NSString *const AWMutablePagedArrayObjectsPerPageMismatchException = @"AWMutable
     
     NSArray *objectsForPage = _pages[@(page)];
     
-    return objectsForPage[indexInPage];
+    if (objectsForPage) {
+        return objectsForPage[indexInPage];
+    } else if (index < _totalCount) {
+        return [NSNull null];
+    } else {
+            
+        [NSException raise:NSRangeException format:@"index %ld beyond bounds [0 .. %ld]", index, _totalCount];
+        return nil;
+    }
 }
-- (NSUInteger)indexOfObject:(id)anObject {
-    
-    __block NSUInteger index = NSNotFound;
-    
-    [_pages enumerateKeysAndObjectsUsingBlock:^(NSNumber *page, NSArray *objectsForPage, BOOL *stop) {
-        
-        NSUInteger indexInPage = [objectsForPage indexOfObject:anObject];
-        if (indexInPage != NSNotFound) {
-            index = (page.unsignedIntegerValue-1)*_objectsPerPage+indexInPage;
-            *stop = YES;
-        }
-    }];
-    
-    return index;
+
+#pragma mark - Proxying
++ (Class)class {
+    return [NSArray class];
 }
-- (NSUInteger)countByEnumeratingWithState:(NSFastEnumerationState *)state objects:(id __unsafe_unretained [])buffer count:(NSUInteger)len {
-    return [[self _fastEnumerationCache] countByEnumeratingWithState:state objects:buffer count:len];
+- (void)forwardInvocation:(NSInvocation *)anInvocation {
+    
+    [anInvocation setTarget:[self _proxiedArray]];
+    [anInvocation invoke];
+    return;
+}
+- (NSMethodSignature *)methodSignatureForSelector:(SEL)sel {
+    return [[self _proxiedArray] methodSignatureForSelector:sel];
+}
++ (BOOL)respondsToSelector:(SEL)aSelector {
+    
+    id proxy = [[[self class] alloc] init];
+    return [proxy respondsToSelector:aSelector];
 }
 
 #pragma mark - Private methods
@@ -94,15 +100,15 @@ NSString *const AWMutablePagedArrayObjectsPerPageMismatchException = @"AWMutable
     
     return ceil(_totalCount/_objectsPerPage);
 }
-- (NSArray *)_fastEnumerationCache {
+- (NSArray *)_proxiedArray {
     
-    if (!_fastEnumerationCache || _needsUpdateFastEnumerationCache) {
+    if (!_proxiedArray || _needsUpdateProxiedArray) {
         
-        _fastEnumerationCache = [self _concatinatedPages];
-        _needsUpdateFastEnumerationCache = NO;
+        _proxiedArray = [self _concatinatedPages];
+        _needsUpdateProxiedArray = NO;
     }
     
-    return _fastEnumerationCache;
+    return _proxiedArray;
 }
 - (NSArray *)_concatinatedPages {
     
@@ -114,5 +120,6 @@ NSString *const AWMutablePagedArrayObjectsPerPageMismatchException = @"AWMutable
     
     return objects;
 }
+
 
 @end
