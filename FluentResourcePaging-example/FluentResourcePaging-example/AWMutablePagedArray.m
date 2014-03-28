@@ -97,7 +97,6 @@ NSString *const AWMutablePagedArrayObjectsPerPageMismatchException = @"AWMutable
 
 #pragma mark - Private methods
 - (NSUInteger)_numberOfPages {
-    
     return ceil(_totalCount/_objectsPerPage);
 }
 - (NSArray *)_proxiedArray {
