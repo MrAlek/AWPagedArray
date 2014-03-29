@@ -49,4 +49,9 @@ FOUNDATION_EXPORT NSString *const AWMutablePagedArrayObjectsPerPageMismatchExcep
 
 @property (nonatomic, readonly) NSUInteger objectsPerPage;
 
+/**
+ * Contains NSArray instances of pages, backing the data
+ */
+@property (nonatomic, readonly) NSDictionary *pages;
+
 @end
