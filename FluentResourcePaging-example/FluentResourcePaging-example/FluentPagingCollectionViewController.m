@@ -50,7 +50,7 @@ const NSUInteger FluentPagingCollectionViewPreloadMargin = 10;
     return 1;
 }
 - (NSInteger)collectionView:(UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section {
-    return self.dataController.dataCount;
+    return self.dataController.dataObjects.count;
 }
 - (UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath {
     
@@ -58,9 +58,13 @@ const NSUInteger FluentPagingCollectionViewPreloadMargin = 10;
     
     LabelCollectionViewCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:CellIdentifier forIndexPath:indexPath];
     
-    NSNumber *data = [self.dataController dataAtIndex:indexPath.row];
+    id data = self.dataController.dataObjects[indexPath.row];
     
-    cell.label.text = data ? [NSString stringWithFormat:@"%d", data.intValue] : nil;
+    if ([data isKindOfClass:[NSNumber class]]) {
+        cell.label.text = [data description];
+    } else {
+        cell.label.text = nil;
+    }
     
     return cell;
 }

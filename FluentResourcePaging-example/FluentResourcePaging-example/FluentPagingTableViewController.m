@@ -50,7 +50,7 @@ const NSUInteger FluentPagingTablePreloadMargin = 5;
     return 1;
 }
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
-    return self.dataController.dataCount;
+    return self.dataController.dataObjects.count;
 }
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     
@@ -58,9 +58,13 @@ const NSUInteger FluentPagingTablePreloadMargin = 5;
     
     UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier forIndexPath:indexPath];
     
-    NSNumber *data = [self.dataController dataAtIndex:indexPath.row];
+    id data = self.dataController.dataObjects[indexPath.row];
     
-    cell.textLabel.text = data ? [NSString stringWithFormat:@"Content data %d", data.intValue] : nil;
+    if ([data isKindOfClass:[NSNumber class]]) {
+        cell.textLabel.text = [data description];
+    } else {
+        cell.textLabel.text = nil;
+    }
     
     return cell;
 }

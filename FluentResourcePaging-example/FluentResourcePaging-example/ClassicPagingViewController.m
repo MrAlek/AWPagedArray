@@ -40,7 +40,7 @@ const NSUInteger ClassicPagingTablePreloadMargin = 5;
     if (!_dataController) {
         _dataController = [DataController new];
         _dataController.delegate = self;
-        [_dataController loadDataAtIndex:0];
+        [_dataController loadDataForIndex:0];
         _dataController.shouldLoadAutomatically = self.preloadSwitch.on;
         _dataController.automaticPreloadMargin = self.preloadSwitch.on ? ClassicPagingTablePreloadMargin : 0;
     }
@@ -69,7 +69,7 @@ const NSUInteger ClassicPagingTablePreloadMargin = 5;
     return 1;
 }
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
-    return MIN(self.dataController.loadedCount+1, self.dataController.dataCount);
+    return MIN(self.dataController.loadedCount+1, self.dataController.dataObjects.count);
 }
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     
@@ -91,9 +91,14 @@ const NSUInteger ClassicPagingTablePreloadMargin = 5;
     
     UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:cellIdentifier forIndexPath:indexPath];
     
-    NSNumber *data = [self.dataController dataAtIndex:index];
-    if (data) {
-        cell.textLabel.text = [NSString stringWithFormat:@"Content data %ld", data.integerValue];
+    if (cellIdentifier == DataCellIdentifier) {
+        id data = self.dataController.dataObjects[indexPath.row];
+        
+        if ([data isKindOfClass:[NSNumber class]]) {
+            cell.textLabel.text = [data description];
+        } else {
+            cell.textLabel.text = nil;
+        }
     }
     
     return cell;
@@ -105,12 +110,12 @@ const NSUInteger ClassicPagingTablePreloadMargin = 5;
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
     
     if (indexPath.row == self.dataController.loadedCount) {
-        [self.dataController loadDataAtIndex:indexPath.row];
+        [self.dataController loadDataForIndex:indexPath.row];
     }
 }
 - (void)tableView:(UITableView *)tableView willDisplayCell:(UITableViewCell *)cell forRowAtIndexPath:(NSIndexPath *)indexPath {
     if (self.loadingStyle == ClassicPagingViewControllerLoadingStyleAutomatic && [indexPath isEqual:_loaderCellIndexPath]) {
-        [self.dataController loadDataAtIndex:indexPath.row];
+        [self.dataController loadDataForIndex:indexPath.row];
     }
 }
 
@@ -126,7 +131,7 @@ const NSUInteger ClassicPagingTablePreloadMargin = 5;
     [self.tableView beginUpdates];
     [self.tableView reloadRowsAtIndexPaths:@[_loaderCellIndexPath] withRowAnimation:UITableViewRowAnimationFade];
     [indexes enumerateIndexesUsingBlock:^(NSUInteger idx, BOOL *stop) {
-        if (idx < dataController.dataCount-1) {
+        if (idx < dataController.dataObjects.count-1) {
             [self.tableView insertRowsAtIndexPaths:@[[NSIndexPath indexPathForRow:idx+1 inSection:0]] withRowAnimation:UITableViewRowAnimationFade];
         }
     }];

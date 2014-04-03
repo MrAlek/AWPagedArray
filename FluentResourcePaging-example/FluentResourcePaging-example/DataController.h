@@ -20,15 +20,16 @@
 
 - (instancetype)initWithPageSize:(NSUInteger)pageSize;
 
-@property (nonatomic, readonly) NSUInteger dataCount;
+@property (nonatomic, weak) id<DataControllerDelegate> delegate;
+
+@property (nonatomic, readonly) NSArray *dataObjects;
+
 @property (nonatomic, readonly) NSUInteger pageSize;
 @property (nonatomic, readonly) NSUInteger loadedCount;
 @property (nonatomic) BOOL shouldLoadAutomatically;
 @property (nonatomic) NSUInteger automaticPreloadMargin;
-@property (nonatomic, weak) id<DataControllerDelegate> delegate;
 
-- (NSNumber *)dataAtIndex:(NSUInteger)index;
 - (BOOL)isLoadingDataAtIndex:(NSUInteger)index;
-- (void)loadDataAtIndex:(NSUInteger)index;
+- (void)loadDataForIndex:(NSUInteger)index;
 
 @end

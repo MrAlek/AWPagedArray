@@ -40,18 +40,24 @@ NSString *const AWMutablePagedArrayObjectsPerPageMismatchException = @"AWMutable
     
     _totalCount = count;
     _objectsPerPage = objectsPerPage;
-    _pages = [[NSMutableDictionary alloc] initWithCapacity:[self _numberOfPages]];
+    _pages = [[NSMutableDictionary alloc] initWithCapacity:[self numberOfPages]];
     
     return self;
 }
 - (void)setObjects:(NSArray *)objects forPage:(NSUInteger)page {
     
-    if (objects.count == _objectsPerPage || page == [self _numberOfPages]) {
+    if (objects.count == _objectsPerPage || page == self.numberOfPages) {
         _pages[@(page)] = objects;
         _needsUpdateProxiedArray = YES;
     } else {
         [NSException raise:AWMutablePagedArrayObjectsPerPageMismatchException format:@"Expected object count per page: %ld received: %ld", _objectsPerPage, objects.count];
     }
+}
+- (NSUInteger)pageForIndex:(NSUInteger)index {
+    return index/_objectsPerPage + 1;
+}
+- (NSDictionary *)pages {
+    return _pages;
 }
 
 #pragma mark - NSArray overrides
@@ -60,20 +66,31 @@ NSString *const AWMutablePagedArrayObjectsPerPageMismatchException = @"AWMutable
 }
 - (id)objectAtIndex:(NSUInteger)index {
     
-    NSUInteger page = index/_objectsPerPage + 1;
+    NSUInteger page = [self pageForIndex:index];
     NSUInteger indexInPage = index%_objectsPerPage;
     
     NSArray *objectsForPage = _pages[@(page)];
     
+    id returnValue;
+    
     if (objectsForPage) {
-        return objectsForPage[indexInPage];
+        returnValue = objectsForPage[indexInPage];
     } else if (index < _totalCount) {
-        return [NSNull null];
+        returnValue = [NSNull null];
     } else {
             
         [NSException raise:NSRangeException format:@"index %ld beyond bounds [0 .. %ld]", index, _totalCount];
-        return nil;
+        returnValue = nil;
     }
+    
+    [self.delegate pagedArray:self
+              willAccessIndex:index
+                        value:returnValue];
+    
+    return returnValue;
+}
+- (id)objectAtIndexedSubscript:(NSUInteger)index {
+    return [self objectAtIndex:index];
 }
 
 #pragma mark - Proxying
@@ -96,7 +113,7 @@ NSString *const AWMutablePagedArrayObjectsPerPageMismatchException = @"AWMutable
 }
 
 #pragma mark - Private methods
-- (NSUInteger)_numberOfPages {
+- (NSUInteger)numberOfPages {
     return ceil(_totalCount/_objectsPerPage);
 }
 - (NSArray *)_proxiedArray {

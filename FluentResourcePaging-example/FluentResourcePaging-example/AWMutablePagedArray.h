@@ -26,6 +26,8 @@
 
 FOUNDATION_EXPORT NSString *const AWMutablePagedArrayObjectsPerPageMismatchException;
 
+@protocol AWMutablePagedArrayDelegate;
+
 /**
  * This class acts as a proxy for NSArray, when data is loaded in batches, called "pages", similiar to what NSFetchRequest returns after setting the batchSize property
  * @discussion The recommendation is to use this class in conjunction with a data controller class which populates the paged array with pages of data, while casting the paged array back as an NSArray to its owner.
@@ -47,11 +49,23 @@ FOUNDATION_EXPORT NSString *const AWMutablePagedArrayObjectsPerPageMismatchExcep
  */
 - (void)setObjects:(NSArray *)objects forPage:(NSUInteger)page;
 
+- (NSUInteger)pageForIndex:(NSUInteger)index;
+
 @property (nonatomic, readonly) NSUInteger objectsPerPage;
+@property (nonatomic, readonly) NSUInteger numberOfPages;
 
 /**
  * Contains NSArray instances of pages, backing the data
  */
 @property (nonatomic, readonly) NSDictionary *pages;
+
+@property (nonatomic, weak) id<AWMutablePagedArrayDelegate> delegate;
+
+@end
+
+
+@protocol AWMutablePagedArrayDelegate <NSObject>
+
+- (void)pagedArray:(AWMutablePagedArray *)pagedArray willAccessIndex:(NSUInteger)index value:(id)value;
 
 @end
