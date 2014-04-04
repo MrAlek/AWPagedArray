@@ -75,7 +75,7 @@ const NSUInteger MutablePagedArrayObjectsPerPage = 6;
 }
 - (void)testDoesNotThrowExceptionWhenSettingLastPageWithOddSize {
     
-    NSInteger lastPage = MutablePagedArraySize/MutablePagedArrayObjectsPerPage;
+    NSInteger lastPage = MutablePagedArraySize/MutablePagedArrayObjectsPerPage+1;
     
     XCTAssertNoThrow([_pagedArray setObjects:@[@(1)] forPage:lastPage], @"Paged array throws exception on last page!");
 }
@@ -144,7 +144,6 @@ const NSUInteger MutablePagedArrayObjectsPerPage = 6;
     
     XCTAssert([[self array] isKindOfClass:[NSArray class]], @"Paged array isn't an NSArray");
 }
-
 - (void)testArrayProxyActuallyContainsNullValues {
     
     for (id object in [self array]) {
@@ -155,15 +154,18 @@ const NSUInteger MutablePagedArrayObjectsPerPage = 6;
     
     XCTFail(@"Array proxy didn't contain null values for empty pages");
 }
-
 - (void)testArrayRealCountMatchesProxyCount {
     
-    NSInteger realCount = 0;
+    NSMutableArray *objects = [NSMutableArray array];
     for (id object in [self array]) {
-        realCount++;
+        [objects addObject:object];
     }
     
-    XCTAssertEqual(realCount, [[self array] count], @"Real count doesn't match proxy count");
+    XCTAssertEqual(objects.count, [[self array] count], @"Real count doesn't match proxy count");
+}
+- (void)testNumberOfPages {
+    
+    XCTAssertEqual([_pagedArray numberOfPages], 9, @"Wrong number of pages");
 }
 
 @end
