@@ -145,4 +145,15 @@ const NSUInteger MutablePagedArrayObjectsPerPage = 6;
     XCTAssert([[self array] isKindOfClass:[NSArray class]], @"Paged array isn't an NSArray");
 }
 
+- (void)testArrayProxyActuallyContainsNullValues {
+    
+    for (id object in [self array]) {
+        if ([object isKindOfClass:[NSNull class]]) {
+            return;
+        }
+    }
+    
+    XCTFail(@"Array proxy didn't contain null values for empty pages");
+}
+
 @end
