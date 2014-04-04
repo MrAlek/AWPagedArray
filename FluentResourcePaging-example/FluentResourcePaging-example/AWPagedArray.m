@@ -117,7 +117,7 @@ NSString *const AWPagedArrayObjectsPerPageMismatchException = @"AWPagedArrayObje
 
 #pragma mark - Private methods
 - (NSUInteger)numberOfPages {
-    return ceil(_totalCount/_objectsPerPage);
+    return ceil((CGFloat)_totalCount/_objectsPerPage);
 }
 - (NSArray *)_proxiedArray {
     
@@ -138,22 +138,23 @@ NSString *const AWPagedArrayObjectsPerPageMismatchException = @"AWPagedArrayObje
         if (page) {
             [objects addObjectsFromArray:page];
         } else {
-            [objects addObjectsFromArray:[self _emptyPage]];
+            [objects addObjectsFromArray:[self _emptyPageForIndex:pageIndex]];
         }
     }
     
     return objects;
 }
-- (NSArray *)_emptyPage {
+- (NSArray *)_emptyPageForIndex:(NSUInteger)index {
     
     NSMutableArray *emptyPage = [[NSMutableArray alloc] initWithCapacity:_objectsPerPage];
     
-    for (int i = 0; i < _objectsPerPage; i++) {
+    NSUInteger pageLimit = (index == [self numberOfPages]) ? _totalCount%_objectsPerPage : _objectsPerPage;
+    
+    for (int i = 0; i < pageLimit; i++) {
         [emptyPage addObject:[NSNull null]];
     }
     
     return emptyPage;
 }
-
 
 @end
