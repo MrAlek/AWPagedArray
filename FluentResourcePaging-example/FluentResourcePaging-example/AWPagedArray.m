@@ -1,5 +1,5 @@
 //
-// AWMutablePagedArray.m
+// AWPagedArray.m
 //
 // Copyright (c) 2014 Alek Åström
 //
@@ -22,11 +22,11 @@
 // THE SOFTWARE.
 //
 
-#import "AWMutablePagedArray.h"
+#import "AWPagedArray.h"
 
-NSString *const AWMutablePagedArrayObjectsPerPageMismatchException = @"AWMutablePagedArrayObjectsPerPageMismatchException";
+NSString *const AWPagedArrayObjectsPerPageMismatchException = @"AWPagedArrayObjectsPerPageMismatchException";
 
-@implementation AWMutablePagedArray {
+@implementation AWPagedArray {
     NSUInteger _totalCount;
     NSUInteger _objectsPerPage;
     NSMutableDictionary *_pages;
@@ -50,7 +50,7 @@ NSString *const AWMutablePagedArrayObjectsPerPageMismatchException = @"AWMutable
         _pages[@(page)] = objects;
         _needsUpdateProxiedArray = YES;
     } else {
-        [NSException raise:AWMutablePagedArrayObjectsPerPageMismatchException format:@"Expected object count per page: %ld received: %ld", _objectsPerPage, objects.count];
+        [NSException raise:AWPagedArrayObjectsPerPageMismatchException format:@"Expected object count per page: %ld received: %ld", _objectsPerPage, objects.count];
     }
 }
 - (NSUInteger)pageForIndex:(NSUInteger)index {
@@ -92,6 +92,9 @@ NSString *const AWMutablePagedArrayObjectsPerPageMismatchException = @"AWMutable
 - (id)objectAtIndexedSubscript:(NSUInteger)index {
     return [self objectAtIndex:index];
 }
+- (NSString *)description {
+    return [[self _proxiedArray] description];
+}
 
 #pragma mark - Proxying
 + (Class)class {
@@ -130,11 +133,26 @@ NSString *const AWMutablePagedArrayObjectsPerPageMismatchException = @"AWMutable
     
     NSMutableArray *objects = [[NSMutableArray alloc] initWithCapacity:_totalCount];
     
-    [_pages enumerateKeysAndObjectsUsingBlock:^(id key, NSArray *page, BOOL *stop) {
-        [objects addObjectsFromArray:page];
-    }];
+    for (NSInteger pageIndex = 1; pageIndex <= [self numberOfPages]; pageIndex++) {
+        NSArray *page = _pages[@(pageIndex)];
+        if (page) {
+            [objects addObjectsFromArray:page];
+        } else {
+            [objects addObjectsFromArray:[self _emptyPage]];
+        }
+    }
     
     return objects;
+}
+- (NSArray *)_emptyPage {
+    
+    NSMutableArray *emptyPage = [[NSMutableArray alloc] initWithCapacity:_objectsPerPage];
+    
+    for (int i = 0; i < _objectsPerPage; i++) {
+        [emptyPage addObject:[NSNull null]];
+    }
+    
+    return emptyPage;
 }
 
 

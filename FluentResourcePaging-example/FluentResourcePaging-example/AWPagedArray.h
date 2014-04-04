@@ -1,5 +1,5 @@
 //
-// AWMutablePagedArray.h
+// AWPagedArray.h
 //
 // Copyright (c) 2014 Alek Åström
 //
@@ -24,16 +24,18 @@
 
 #import <Foundation/Foundation.h>
 
-FOUNDATION_EXPORT NSString *const AWMutablePagedArrayObjectsPerPageMismatchException;
+FOUNDATION_EXPORT NSString *const AWPagedArrayObjectsPerPageMismatchException;
 
-@protocol AWMutablePagedArrayDelegate;
+@protocol AWPagedArrayDelegate;
 
 /**
- * This class acts as a proxy for NSArray, when data is loaded in batches, called "pages", similiar to what NSFetchRequest returns after setting the batchSize property
+ * This class acts as a proxy for NSArray, when data is loaded in batches, called "pages".
  * @discussion The recommendation is to use this class in conjunction with a data controller class which populates the paged array with pages of data, while casting the paged array back as an NSArray to its owner.
- * @see NSFetchRequest
+ * 
+ * This class is inspired by NSFetchRequest's batching mechanism which returns a custom NSArray subclass.
+ * @see NSFetchRequest fetchBatchSize
  */
-@interface AWMutablePagedArray : NSProxy
+@interface AWPagedArray : NSProxy
 
 /**
  * The designated initializer for this class
@@ -45,7 +47,7 @@ FOUNDATION_EXPORT NSString *const AWMutablePagedArrayObjectsPerPageMismatchExcep
  * Sets objects for a specific page in the array
  * @param objects The objects in the page
  * @param page The page which these objects should be set for, pages start with index 1
- * @throws AWMutablePagedArrayObjectsPerPageMismatchException when page size mismatch the initialized objectsPerPage property
+ * @throws AWPagedArrayObjectsPerPageMismatchException when page size mismatch the initialized objectsPerPage property
  */
 - (void)setObjects:(NSArray *)objects forPage:(NSUInteger)page;
 
@@ -59,13 +61,13 @@ FOUNDATION_EXPORT NSString *const AWMutablePagedArrayObjectsPerPageMismatchExcep
  */
 @property (nonatomic, readonly) NSDictionary *pages;
 
-@property (nonatomic, weak) id<AWMutablePagedArrayDelegate> delegate;
+@property (nonatomic, weak) id<AWPagedArrayDelegate> delegate;
 
 @end
 
 
-@protocol AWMutablePagedArrayDelegate <NSObject>
+@protocol AWPagedArrayDelegate <NSObject>
 
-- (void)pagedArray:(AWMutablePagedArray *)pagedArray willAccessIndex:(NSUInteger)index value:(id)value;
+- (void)pagedArray:(AWPagedArray *)pagedArray willAccessIndex:(NSUInteger)index value:(id)value;
 
 @end

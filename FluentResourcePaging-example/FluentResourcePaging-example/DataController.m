@@ -7,16 +7,16 @@
 //
 
 #import "DataController.h"
-#import "AWMutablePagedArray.h"
+#import "AWPagedArray.h"
 
 const NSUInteger DataControllerDefaultPageSize = 20;
 const NSUInteger DataControllerDataCount = 200;
 const NSTimeInterval DataControllerOperationDuration = 0.3;
 
-@interface DataController () <AWMutablePagedArrayDelegate> @end
+@interface DataController () <AWPagedArrayDelegate> @end
 
 @implementation DataController {
-    AWMutablePagedArray *_pagedArray;
+    AWPagedArray *_pagedArray;
     NSOperationQueue *_operationQueue;
     NSMutableDictionary *_dataLoadingOperations;
 }
@@ -34,7 +34,7 @@ const NSTimeInterval DataControllerOperationDuration = 0.3;
 
     self = [super init];
     if (self) {
-        _pagedArray = [[AWMutablePagedArray alloc] initWithCount:DataControllerDataCount objectsPerPage:DataControllerDefaultPageSize];
+        _pagedArray = [[AWPagedArray alloc] initWithCount:DataControllerDataCount objectsPerPage:DataControllerDefaultPageSize];
         _pagedArray.delegate = self;
         _dataLoadingOperations = [NSMutableDictionary dictionary];
         _operationQueue = [NSOperationQueue new];
@@ -124,7 +124,7 @@ const NSTimeInterval DataControllerOperationDuration = 0.3;
 }
 
 #pragma mark - Paged array delegate
-- (void)pagedArray:(AWMutablePagedArray *)pagedArray willAccessIndex:(NSUInteger)index value:(id)value {
+- (void)pagedArray:(AWPagedArray *)pagedArray willAccessIndex:(NSUInteger)index value:(id)value {
 
     if ([value isKindOfClass:[NSNull class]]) {
         [self setShouldLoadDataForPage:[_pagedArray pageForIndex:index]];

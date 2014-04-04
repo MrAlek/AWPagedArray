@@ -1,5 +1,5 @@
 //
-// AWMutablePagedArrayTests.m
+// AWPagedArrayTests.m
 //
 // Copyright (c) 2014 Alek Åström
 //
@@ -23,16 +23,16 @@
 //
 
 #import <XCTest/XCTest.h>
-#import "AWMutablePagedArray.h"
+#import "AWPagedArray.h"
 
-@interface AWMutablePagedArrayTests : XCTestCase
+@interface AWPagedArrayTests : XCTestCase
 @end
 
 const NSUInteger MutablePagedArraySize = 50;
 const NSUInteger MutablePagedArrayObjectsPerPage = 6;
 
-@implementation AWMutablePagedArrayTests {
-    AWMutablePagedArray *_pagedArray;
+@implementation AWPagedArrayTests {
+    AWPagedArray *_pagedArray;
     NSMutableArray *_firstPage;
     NSMutableArray *_secondPage;
 }
@@ -40,7 +40,7 @@ const NSUInteger MutablePagedArrayObjectsPerPage = 6;
 - (void)setUp {
     [super setUp];
 
-    _pagedArray = [[AWMutablePagedArray alloc] initWithCount:MutablePagedArraySize objectsPerPage:MutablePagedArrayObjectsPerPage];
+    _pagedArray = [[AWPagedArray alloc] initWithCount:MutablePagedArraySize objectsPerPage:MutablePagedArrayObjectsPerPage];
     
     _firstPage = [NSMutableArray array];
     for (NSInteger i = 1; i <= MutablePagedArrayObjectsPerPage; i++) {
@@ -71,7 +71,7 @@ const NSUInteger MutablePagedArrayObjectsPerPage = 6;
 }
 - (void)testThrowsExceptionWhenSettingPageWithWrongSize {
     
-    XCTAssertThrowsSpecificNamed([_pagedArray setObjects:@[@1] forPage:1], NSException, AWMutablePagedArrayObjectsPerPageMismatchException, @"Paged array throws wrong exception");
+    XCTAssertThrowsSpecificNamed([_pagedArray setObjects:@[@1] forPage:1], NSException, AWPagedArrayObjectsPerPageMismatchException, @"Paged array throws wrong exception");
 }
 - (void)testDoesNotThrowExceptionWhenSettingLastPageWithOddSize {
     
@@ -83,7 +83,9 @@ const NSUInteger MutablePagedArrayObjectsPerPage = 6;
     
     NSMutableArray *objects = [NSMutableArray array];
     for (id object in [self array]) {
-        [objects addObject:object];
+        if (![object isKindOfClass:[NSNull class]]) {
+            [objects addObject:object];
+        }
     }
     
     NSArray *testObjects = [_firstPage arrayByAddingObjectsFromArray:_secondPage];
@@ -109,7 +111,8 @@ const NSUInteger MutablePagedArrayObjectsPerPage = 6;
 - (void)testIndexOfObjectReturnsRightIndex {
     
     NSNumber *testNumber = _secondPage[0];
-    XCTAssert(([[self array] indexOfObject:testNumber] == MutablePagedArrayObjectsPerPage), @"Paged array returned wrong index for object");
+    
+    XCTAssertEqual([[self array] indexOfObject:testNumber], MutablePagedArrayObjectsPerPage, @"Paged array returned wrong index for object");
 }
 - (void)testIndexOfObjectReturnsNSNotFoundWhenLookingForAnObjectNotInTheArray {
     
@@ -132,11 +135,12 @@ const NSUInteger MutablePagedArrayObjectsPerPage = 6;
     
     NSMutableArray *mutableCopy = [[self array] mutableCopy];
     [mutableCopy removeObjectsInArray:_secondPage];
+    [mutableCopy removeObjectIdenticalTo:[NSNull null]];
     
     XCTAssertEqualObjects(mutableCopy, _firstPage, @"Mutable copy doesn't match original");
     
 }
-- (void)testPagedArrayIsNSArray {
+- (void)testPagedArrayActsAsNSArray {
     
     XCTAssert([[self array] isKindOfClass:[NSArray class]], @"Paged array isn't an NSArray");
 }
