@@ -156,4 +156,14 @@ const NSUInteger MutablePagedArrayObjectsPerPage = 6;
     XCTFail(@"Array proxy didn't contain null values for empty pages");
 }
 
+- (void)testArrayRealCountMatchesProxyCount {
+    
+    NSInteger realCount = 0;
+    for (id object in [self array]) {
+        realCount++;
+    }
+    
+    XCTAssertEqual(realCount, [[self array] count], @"Real count doesn't match proxy count");
+}
+
 @end
