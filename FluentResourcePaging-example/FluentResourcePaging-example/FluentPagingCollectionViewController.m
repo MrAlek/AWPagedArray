@@ -53,12 +53,7 @@ const NSUInteger FluentPagingCollectionViewPreloadMargin = 10;
     LabelCollectionViewCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:CellIdentifier forIndexPath:indexPath];
     
     id data = self.dataController.dataObjects[indexPath.row];
-    
-    if ([data isKindOfClass:[NSNumber class]]) {
-        cell.label.text = [data description];
-    } else {
-        cell.label.text = nil;
-    }
+    [self _configureCell:cell forData:data animated:NO];
     
     return cell;
 }
@@ -69,13 +64,34 @@ const NSUInteger FluentPagingCollectionViewPreloadMargin = 10;
 }
 - (void)dataController:(DataController *)dataController didLoadDataAtIndexes:(NSIndexSet *)indexes {
     
-    [self.collectionView performBatchUpdates:^{
-        [indexes enumerateIndexesUsingBlock:^(NSUInteger idx, BOOL *stop) {
-            [self.collectionView reloadItemsAtIndexPaths:@[[NSIndexPath indexPathForRow:idx inSection:0]]];
-        }];
-    } completion:^(BOOL finished) {
+    [indexes enumerateIndexesUsingBlock:^(NSUInteger index, BOOL *stop) {
         
+        NSIndexPath *indexPath = [NSIndexPath indexPathForItem:index inSection:0];
+        
+        if ([self.collectionView.indexPathsForVisibleItems containsObject:indexPath]) {
+            
+            LabelCollectionViewCell *cell = (LabelCollectionViewCell *)[self.collectionView cellForItemAtIndexPath:indexPath];
+            [self _configureCell:cell forData:dataController.dataObjects[index] animated:YES];
+        }
     }];
+}
+
+#pragma mark - Private methods
+- (void)_configureCell:(LabelCollectionViewCell *)cell forData:(id)data animated:(BOOL)animated {
+    
+    if ([data isKindOfClass:[NSNumber class]]) {
+        
+        cell.label.text = [data description];
+
+        if (animated) {
+            cell.label.alpha = 0;
+            [UIView animateWithDuration:0.3 animations:^{
+                cell.label.alpha = 1;
+            }];
+        }
+    } else {
+        cell.label.text = nil;
+    }
 }
 
 @end
