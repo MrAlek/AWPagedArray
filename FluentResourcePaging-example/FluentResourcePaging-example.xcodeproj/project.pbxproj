@@ -58,6 +58,7 @@
 		93262ECB186E5B0700B05C01 /* ClassicPagingViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ClassicPagingViewController.m; sourceTree = "<group>"; };
 		93262ECD186E731A00B05C01 /* FluentPagingTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FluentPagingTableViewController.h; sourceTree = "<group>"; };
 		93262ECE186E731A00B05C01 /* FluentPagingTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FluentPagingTableViewController.m; sourceTree = "<group>"; };
+		9345345218EF4F3000A23A35 /* DataReceiver.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = DataReceiver.h; sourceTree = "<group>"; };
 		93848024186E75B80006006E /* FluentPagingCollectionViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FluentPagingCollectionViewController.h; sourceTree = "<group>"; };
 		93848025186E75B80006006E /* FluentPagingCollectionViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FluentPagingCollectionViewController.m; sourceTree = "<group>"; };
 		9384802A186E767E0006006E /* LabelCollectionViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LabelCollectionViewCell.h; sourceTree = "<group>"; };
@@ -128,6 +129,7 @@
 		93262E9C186E457C00B05C01 /* FluentResourcePaging-example */ = {
 			isa = PBXGroup;
 			children = (
+				9345345218EF4F3000A23A35 /* DataReceiver.h */,
 				93262EA5186E457C00B05C01 /* AppDelegate.h */,
 				93262EA6186E457C00B05C01 /* AppDelegate.m */,
 				93A4038818E48FFC00640CAD /* AWPagedArray.h */,

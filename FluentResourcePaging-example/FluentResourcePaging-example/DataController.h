@@ -11,6 +11,7 @@
 @class DataController;
 @protocol DataControllerDelegate<NSObject>
 
+@optional
 - (void)dataController:(DataController *)dataController willLoadDataAtIndexes:(NSIndexSet *)indexes;
 - (void)dataController:(DataController *)dataController didLoadDataAtIndexes:(NSIndexSet *)indexes;
 

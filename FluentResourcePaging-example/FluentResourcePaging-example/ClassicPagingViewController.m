@@ -17,7 +17,6 @@ typedef NS_ENUM(NSInteger, ClassicPagingViewControllerLoadingStyle) {
 const NSUInteger ClassicPagingTablePreloadMargin = 5;
 
 @interface ClassicPagingViewController ()<DataControllerDelegate>
-@property (nonatomic) DataController *dataController;
 @property (nonatomic) ClassicPagingViewControllerLoadingStyle loadingStyle;
 @property (weak, nonatomic) IBOutlet UISwitch *preloadSwitch;
 @end
@@ -25,32 +24,32 @@ const NSUInteger ClassicPagingTablePreloadMargin = 5;
 @implementation ClassicPagingViewController {
     NSIndexPath *_loaderCellIndexPath;
 }
-
-#pragma mark - View lifecycle
-- (void)viewWillAppear:(BOOL)animated {
-    [super viewWillAppear:animated];
-    
-    _dataController = nil;
-    [self.tableView reloadData];
-}
+@synthesize dataController = _dataController;
 
 #pragma mark - Accessors
-- (DataController *)dataController {
+- (void)setDataController:(DataController *)dataController {
     
-    if (!_dataController) {
-        _dataController = [DataController new];
-        _dataController.delegate = self;
+    if (dataController != _dataController) {
+        
+        _dataController = dataController;
         [_dataController loadDataForIndex:0];
-        _dataController.shouldLoadAutomatically = self.preloadSwitch.on;
-        _dataController.automaticPreloadMargin = self.preloadSwitch.on ? ClassicPagingTablePreloadMargin : 0;
+        _dataController.delegate = self;
+        
+        if ([self isViewLoaded]) {
+            
+            _dataController.shouldLoadAutomatically = self.preloadSwitch.on;
+            _dataController.automaticPreloadMargin = self.preloadSwitch.on ? ClassicPagingTablePreloadMargin : 0;
+            
+            [self.tableView reloadData];
+        }
     }
-    
-    return _dataController;
 }
 - (void)setLoadingStyle:(ClassicPagingViewControllerLoadingStyle)loadingStyle {
     
     _loadingStyle = loadingStyle;
-    _dataController = nil;
+    self.preloadSwitch.enabled = (loadingStyle == ClassicPagingViewControllerLoadingStyleAutomatic);
+    self.dataController.shouldLoadAutomatically = (loadingStyle == ClassicPagingViewControllerLoadingStyleAutomatic);
+    
     [self.tableView reloadData];
 }
 
@@ -59,8 +58,7 @@ const NSUInteger ClassicPagingTablePreloadMargin = 5;
     self.loadingStyle = sender.selectedSegmentIndex;
 }
 - (IBAction)preloadSwitchChanged:(UISwitch *)sender {
-    self.dataController.shouldLoadAutomatically = sender.on;
-    self.dataController.automaticPreloadMargin = sender.on ? 5 : 0;
+    self.dataController.automaticPreloadMargin = sender.on ? ClassicPagingTablePreloadMargin : 0;
 }
 
 #pragma mark - Table view

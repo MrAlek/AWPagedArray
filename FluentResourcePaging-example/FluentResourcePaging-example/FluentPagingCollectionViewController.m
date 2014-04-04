@@ -14,30 +14,24 @@ const NSUInteger FluentPagingCollectionViewPreloadMargin = 10;
 
 @interface FluentPagingCollectionViewController ()<DataControllerDelegate>
 @property (weak, nonatomic) IBOutlet UISwitch *preloadSwitch;
-@property (nonatomic) DataController *dataController;
 @end
 
 @implementation FluentPagingCollectionViewController
-
-#pragma mark - View lifecycle
-- (void)viewWillAppear:(BOOL)animated {
-    [super viewWillAppear:animated];
-    
-    _dataController = nil;
-    [self.collectionView reloadData];
-}
+@synthesize dataController = _dataController;
 
 #pragma mark - Accessors
-- (DataController *)dataController {
+- (void)setDataController:(DataController *)dataController {
     
-    if (!_dataController) {
-        _dataController = [[DataController alloc] initWithPageSize:40];
+    if (dataController != _dataController) {
+        _dataController = dataController;
         _dataController.delegate = self;
         _dataController.shouldLoadAutomatically = YES;
         _dataController.automaticPreloadMargin = self.preloadSwitch.on ? FluentPagingCollectionViewPreloadMargin : 0;
+        
+        if ([self isViewLoaded]) {
+            [self.collectionView reloadData];
+        }
     }
-    
-    return _dataController;
 }
 
 #pragma mark - User interaction

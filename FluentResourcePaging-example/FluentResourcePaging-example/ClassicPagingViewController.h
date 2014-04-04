@@ -7,7 +7,8 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "DataReceiver.h"
 
-@interface ClassicPagingViewController : UITableViewController
+@interface ClassicPagingViewController : UITableViewController <DataReceiver>
 
 @end

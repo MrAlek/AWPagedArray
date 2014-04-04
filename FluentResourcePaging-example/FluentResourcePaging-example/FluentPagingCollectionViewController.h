@@ -7,7 +7,8 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "DataReceiver.h"
 
-@interface FluentPagingCollectionViewController : UICollectionViewController
+@interface FluentPagingCollectionViewController : UICollectionViewController <DataReceiver>
 
 @end

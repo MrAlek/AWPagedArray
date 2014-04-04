@@ -79,7 +79,9 @@ const NSTimeInterval DataControllerOperationDuration = 0.3;
     NSOperation *loadingOperation = [self loadingOperationForPage:page indexes:indexes];
     _dataLoadingOperations[@(page)] = loadingOperation;
     
-    [self.delegate dataController:self willLoadDataAtIndexes:indexes];
+    if ([self.delegate respondsToSelector:@selector(dataController:willLoadDataAtIndexes:)]) {
+        [self.delegate dataController:self willLoadDataAtIndexes:indexes];
+    }
     [_operationQueue addOperation:loadingOperation];
 }
 - (NSOperation *)loadingOperationForPage:(NSUInteger)page indexes:(NSIndexSet *)indexes {
@@ -103,7 +105,9 @@ const NSTimeInterval DataControllerOperationDuration = 0.3;
             }];
             [strongSelf->_pagedArray setObjects:dataPage forPage:page];
             
-            [strongSelf.delegate dataController:self didLoadDataAtIndexes:indexes];
+            if ([strongSelf.delegate respondsToSelector:@selector(dataController:didLoadDataAtIndexes:)]) {
+                [strongSelf.delegate dataController:self didLoadDataAtIndexes:indexes];
+            }
         }];
     }];
 
@@ -126,7 +130,7 @@ const NSTimeInterval DataControllerOperationDuration = 0.3;
 #pragma mark - Paged array delegate
 - (void)pagedArray:(AWPagedArray *)pagedArray willAccessIndex:(NSUInteger)index value:(id)value {
 
-    if ([value isKindOfClass:[NSNull class]]) {
+    if ([value isKindOfClass:[NSNull class]] && self.shouldLoadAutomatically) {
         [self setShouldLoadDataForPage:[_pagedArray pageForIndex:index]];
     } else {
         [self preloadNextPageIfNeededForIndex:index];

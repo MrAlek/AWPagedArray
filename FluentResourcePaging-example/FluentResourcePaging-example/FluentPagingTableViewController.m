@@ -13,37 +13,30 @@ const NSUInteger FluentPagingTablePreloadMargin = 5;
 
 @interface FluentPagingTableViewController ()<DataControllerDelegate>
 @property (weak, nonatomic) IBOutlet UISwitch *preloadSwitch;
-@property (nonatomic) DataController *dataController;
 @end
 
 @implementation FluentPagingTableViewController
-
-#pragma mark - View lifecycle
-- (void)viewWillAppear:(BOOL)animated {
-    [super viewWillAppear:animated];
-    
-    _dataController = nil;
-    [self.tableView reloadData];
-}
+@synthesize dataController = _dataController;
 
 #pragma mark - Accessors
-- (DataController *)dataController {
+- (void)setDataController:(DataController *)dataController {
     
-    if (!_dataController) {
-        _dataController = [DataController new];
+    if (dataController != _dataController) {
+        _dataController = dataController;
         _dataController.delegate = self;
         _dataController.shouldLoadAutomatically = YES;
         _dataController.automaticPreloadMargin = self.preloadSwitch.on ? FluentPagingTablePreloadMargin : 0;
+        
+        if ([self isViewLoaded]) {
+            [self.tableView reloadData];
+        }
     }
-    
-    return _dataController;
 }
 
 #pragma mark - User interaction
 - (IBAction)preloadSwitchChanged:(UISwitch *)sender {
     self.dataController.automaticPreloadMargin = sender.on ? FluentPagingTablePreloadMargin : 0;
 }
-
 
 #pragma mark - Table view data source
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
@@ -70,9 +63,6 @@ const NSUInteger FluentPagingTablePreloadMargin = 5;
 }
 
 #pragma mark - Data controller delegate
-- (void)dataController:(DataController *)dataController willLoadDataAtIndexes:(NSIndexSet *)indexes {
-    
-}
 - (void)dataController:(DataController *)dataController didLoadDataAtIndexes:(NSIndexSet *)indexes {
     
     [self.tableView beginUpdates];
