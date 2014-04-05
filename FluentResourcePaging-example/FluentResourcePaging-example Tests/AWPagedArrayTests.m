@@ -123,7 +123,7 @@ const NSUInteger MutablePagedArrayObjectsPerPage = 6;
     id object = [[self array] objectAtIndex:MutablePagedArraySize-1];
     XCTAssertEqualObjects([object class], [NSNull class], @"Array doesn't return NSNull for value not yet loaded");
 }
-- (void)testNoThrowForLiteralSyntaxOutsideBounds {
+- (void)testNoThrowForLiteralSyntaxForEmptyIndex {
     
     XCTAssertNoThrow([self array][MutablePagedArraySize-1], @"Array shouldn't throw exception when using literal syntax for an empty index");
 }
