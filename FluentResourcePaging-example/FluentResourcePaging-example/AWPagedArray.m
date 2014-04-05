@@ -75,9 +75,6 @@ NSString *const AWPagedArrayObjectsPerPageMismatchException = @"AWPagedArrayObje
 - (id)objectAtIndexedSubscript:(NSUInteger)index {
     return [self objectAtIndex:index];
 }
-- (NSString *)description {
-    return [[self _proxiedArray] description];
-}
 
 #pragma mark - Proxying
 + (Class)class {
@@ -95,6 +92,9 @@ NSString *const AWPagedArrayObjectsPerPageMismatchException = @"AWPagedArrayObje
     
     id proxy = [[[self class] alloc] init];
     return [proxy respondsToSelector:aSelector];
+}
+- (NSString *)description {
+    return [[self _proxiedArray] description];
 }
 
 #pragma mark - Private methods
