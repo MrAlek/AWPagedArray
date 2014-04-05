@@ -47,6 +47,7 @@ NSString *const AWPagedArrayObjectsPerPageMismatchException = @"AWPagedArrayObje
 - (void)setObjects:(NSArray *)objects forPage:(NSUInteger)page {
     
     if (objects.count == _objectsPerPage || page == self.numberOfPages) {
+        
         _pages[@(page)] = objects;
         _needsUpdateProxiedArray = YES;
     } else {
@@ -61,33 +62,15 @@ NSString *const AWPagedArrayObjectsPerPageMismatchException = @"AWPagedArrayObje
 }
 
 #pragma mark - NSArray overrides
-- (NSUInteger)count {
-    return _totalCount;
-}
 - (id)objectAtIndex:(NSUInteger)index {
     
-    NSUInteger page = [self pageForIndex:index];
-    NSUInteger indexInPage = index%_objectsPerPage;
-    
-    NSArray *objectsForPage = _pages[@(page)];
-    
-    id returnValue;
-    
-    if (objectsForPage) {
-        returnValue = objectsForPage[indexInPage];
-    } else if (index < _totalCount) {
-        returnValue = [NSNull null];
-    } else {
-            
-        [NSException raise:NSRangeException format:@"index %ld beyond bounds [0 .. %ld]", index, _totalCount];
-        returnValue = nil;
-    }
+    id object = [[self _proxiedArray] objectAtIndex:index];
     
     [self.delegate pagedArray:self
               willAccessIndex:index
-                        value:returnValue];
+                        value:object];
     
-    return returnValue;
+    return object;
 }
 - (id)objectAtIndexedSubscript:(NSUInteger)index {
     return [self objectAtIndex:index];
@@ -104,7 +87,6 @@ NSString *const AWPagedArrayObjectsPerPageMismatchException = @"AWPagedArrayObje
     
     [anInvocation setTarget:[self _proxiedArray]];
     [anInvocation invoke];
-    return;
 }
 - (NSMethodSignature *)methodSignatureForSelector:(SEL)sel {
     return [[self _proxiedArray] methodSignatureForSelector:sel];
@@ -123,13 +105,13 @@ NSString *const AWPagedArrayObjectsPerPageMismatchException = @"AWPagedArrayObje
     
     if (!_proxiedArray || _needsUpdateProxiedArray) {
         
-        _proxiedArray = [self _concatinatedPages];
+        [self _generateProxiedArray];
         _needsUpdateProxiedArray = NO;
     }
     
     return _proxiedArray;
 }
-- (NSArray *)_concatinatedPages {
+- (void)_generateProxiedArray {
     
     NSMutableArray *objects = [[NSMutableArray alloc] initWithCapacity:_totalCount];
     
@@ -142,7 +124,7 @@ NSString *const AWPagedArrayObjectsPerPageMismatchException = @"AWPagedArrayObje
         }
     }
     
-    return objects;
+    _proxiedArray = objects;
 }
 - (NSArray *)_emptyPageForIndex:(NSUInteger)index {
     
