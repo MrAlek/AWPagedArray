@@ -131,7 +131,7 @@ const NSTimeInterval DataControllerOperationDuration = 0.3;
 - (void)pagedArray:(AWPagedArray *)pagedArray willAccessIndex:(NSUInteger)index value:(id)value {
 
     if ([value isKindOfClass:[NSNull class]] && self.shouldLoadAutomatically) {
-        [self setShouldLoadDataForPage:[_pagedArray pageForIndex:index]];
+        [self setShouldLoadDataForPage:[pagedArray pageForIndex:index]];
     } else {
         [self preloadNextPageIfNeededForIndex:index];
     }
