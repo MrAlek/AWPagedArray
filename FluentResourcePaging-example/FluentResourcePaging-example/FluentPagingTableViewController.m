@@ -45,16 +45,10 @@ const NSUInteger FluentPagingTablePreloadMargin = 5;
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     
     static NSString *CellIdentifier = @"data cell";
-    
     UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier forIndexPath:indexPath];
     
-    id data = self.dataProvider.dataObjects[indexPath.row];
-    
-    if ([data isKindOfClass:[NSNumber class]]) {
-        cell.textLabel.text = [data description];
-    } else {
-        cell.textLabel.text = nil;
-    }
+    id dataObject = self.dataProvider.dataObjects[indexPath.row];
+    [self _configureCell:cell forDataObject:dataObject];
     
     return cell;
 }
@@ -62,11 +56,30 @@ const NSUInteger FluentPagingTablePreloadMargin = 5;
 #pragma mark - Data controller delegate
 - (void)dataProvider:(DataProvider *)dataProvider didLoadDataAtIndexes:(NSIndexSet *)indexes {
     
-    [self.tableView beginUpdates];
+    NSMutableArray *indexPathsToReload = [NSMutableArray array];
+    
     [indexes enumerateIndexesUsingBlock:^(NSUInteger idx, BOOL *stop) {
-        [self.tableView reloadRowsAtIndexPaths:@[[NSIndexPath indexPathForRow:idx inSection:0]] withRowAnimation:UITableViewRowAnimationFade];
+        
+        NSIndexPath *indexPath = [NSIndexPath indexPathForRow:idx inSection:0];
+        
+        if ([self.tableView.indexPathsForVisibleRows containsObject:indexPath]) {
+            [indexPathsToReload addObject:indexPath];
+        }
     }];
-    [self.tableView endUpdates];
+
+    if (indexPathsToReload.count > 0) {
+        [self.tableView reloadRowsAtIndexPaths:indexPathsToReload withRowAnimation:UITableViewRowAnimationFade];
+    }
+}
+
+#pragma mark - Private methods
+- (void)_configureCell:(UITableViewCell *)cell forDataObject:(id)dataObject {
+    
+    if ([dataObject isKindOfClass:[NSNull class]]) {
+        cell.textLabel.text = nil;
+    } else {
+        cell.textLabel.text = [dataObject description];
+    }
 }
 
 @end
