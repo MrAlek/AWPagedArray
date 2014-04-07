@@ -15,7 +15,7 @@
 		93262EA7186E457C00B05C01 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 93262EA6186E457C00B05C01 /* AppDelegate.m */; };
 		93262EA9186E457C00B05C01 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 93262EA8186E457C00B05C01 /* Images.xcassets */; };
 		93262EC6186E45CC00B05C01 /* MainStoryboard.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 93262EC5186E45CC00B05C01 /* MainStoryboard.storyboard */; };
-		93262EC9186E4CFE00B05C01 /* DataController.m in Sources */ = {isa = PBXBuildFile; fileRef = 93262EC8186E4CFE00B05C01 /* DataController.m */; };
+		93262EC9186E4CFE00B05C01 /* DataProvider.m in Sources */ = {isa = PBXBuildFile; fileRef = 93262EC8186E4CFE00B05C01 /* DataProvider.m */; };
 		93262ECC186E5B0700B05C01 /* ClassicPagingViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 93262ECB186E5B0700B05C01 /* ClassicPagingViewController.m */; };
 		93262ECF186E731A00B05C01 /* FluentPagingTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 93262ECE186E731A00B05C01 /* FluentPagingTableViewController.m */; };
 		93848026186E75B80006006E /* FluentPagingCollectionViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 93848025186E75B80006006E /* FluentPagingCollectionViewController.m */; };
@@ -52,8 +52,8 @@
 		93262EA8186E457C00B05C01 /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
 		93262EAF186E457C00B05C01 /* XCTest.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = XCTest.framework; path = Library/Frameworks/XCTest.framework; sourceTree = DEVELOPER_DIR; };
 		93262EC5186E45CC00B05C01 /* MainStoryboard.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = MainStoryboard.storyboard; sourceTree = "<group>"; };
-		93262EC7186E4CFE00B05C01 /* DataController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DataController.h; sourceTree = "<group>"; };
-		93262EC8186E4CFE00B05C01 /* DataController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DataController.m; sourceTree = "<group>"; };
+		93262EC7186E4CFE00B05C01 /* DataProvider.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DataProvider.h; sourceTree = "<group>"; };
+		93262EC8186E4CFE00B05C01 /* DataProvider.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DataProvider.m; sourceTree = "<group>"; };
 		93262ECA186E5B0700B05C01 /* ClassicPagingViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ClassicPagingViewController.h; sourceTree = "<group>"; };
 		93262ECB186E5B0700B05C01 /* ClassicPagingViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ClassicPagingViewController.m; sourceTree = "<group>"; };
 		93262ECD186E731A00B05C01 /* FluentPagingTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FluentPagingTableViewController.h; sourceTree = "<group>"; };
@@ -134,8 +134,8 @@
 				93262EA6186E457C00B05C01 /* AppDelegate.m */,
 				93A4038818E48FFC00640CAD /* AWPagedArray.h */,
 				93A4038918E48FFC00640CAD /* AWPagedArray.m */,
-				93262EC7186E4CFE00B05C01 /* DataController.h */,
-				93262EC8186E4CFE00B05C01 /* DataController.m */,
+				93262EC7186E4CFE00B05C01 /* DataProvider.h */,
+				93262EC8186E4CFE00B05C01 /* DataProvider.m */,
 				93262ECA186E5B0700B05C01 /* ClassicPagingViewController.h */,
 				93262ECB186E5B0700B05C01 /* ClassicPagingViewController.m */,
 				93262ECD186E731A00B05C01 /* FluentPagingTableViewController.h */,
@@ -282,7 +282,7 @@
 				9384802C186E767E0006006E /* LabelCollectionViewCell.m in Sources */,
 				93848026186E75B80006006E /* FluentPagingCollectionViewController.m in Sources */,
 				93A4038A18E48FFC00640CAD /* AWPagedArray.m in Sources */,
-				93262EC9186E4CFE00B05C01 /* DataController.m in Sources */,
+				93262EC9186E4CFE00B05C01 /* DataProvider.m in Sources */,
 				93262ECC186E5B0700B05C01 /* ClassicPagingViewController.m in Sources */,
 				93262ECF186E731A00B05C01 /* FluentPagingTableViewController.m in Sources */,
 			);

@@ -7,26 +7,26 @@
 //
 
 #import "FluentPagingCollectionViewController.h"
-#import "DataController.h"
+#import "DataProvider.h"
 #import "LabelCollectionViewCell.h"
 
 const NSUInteger FluentPagingCollectionViewPreloadMargin = 10;
 
-@interface FluentPagingCollectionViewController ()<DataControllerDelegate>
+@interface FluentPagingCollectionViewController ()<DataProviderDelegate>
 @property (weak, nonatomic) IBOutlet UISwitch *preloadSwitch;
 @end
 
 @implementation FluentPagingCollectionViewController
-@synthesize dataController = _dataController;
+@synthesize dataProvider = _dataProvider;
 
 #pragma mark - Accessors
-- (void)setDataController:(DataController *)dataController {
+- (void)setDataProvider:(DataProvider *)dataProvider {
     
-    if (dataController != _dataController) {
-        _dataController = dataController;
-        _dataController.delegate = self;
-        _dataController.shouldLoadAutomatically = YES;
-        _dataController.automaticPreloadMargin = self.preloadSwitch.on ? FluentPagingCollectionViewPreloadMargin : 0;
+    if (dataProvider != _dataProvider) {
+        _dataProvider = dataProvider;
+        _dataProvider.delegate = self;
+        _dataProvider.shouldLoadAutomatically = YES;
+        _dataProvider.automaticPreloadMargin = self.preloadSwitch.on ? FluentPagingCollectionViewPreloadMargin : 0;
         
         if ([self isViewLoaded]) {
             [self.collectionView reloadData];
@@ -36,7 +36,7 @@ const NSUInteger FluentPagingCollectionViewPreloadMargin = 10;
 
 #pragma mark - User interaction
 - (IBAction)preloadSwitchChanged:(UISwitch *)sender {
-    self.dataController.automaticPreloadMargin = sender.on ? FluentPagingCollectionViewPreloadMargin : 0;
+    self.dataProvider.automaticPreloadMargin = sender.on ? FluentPagingCollectionViewPreloadMargin : 0;
 }
 
 #pragma mark - Collection view data source
@@ -44,7 +44,7 @@ const NSUInteger FluentPagingCollectionViewPreloadMargin = 10;
     return 1;
 }
 - (NSInteger)collectionView:(UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section {
-    return self.dataController.dataObjects.count;
+    return self.dataProvider.dataObjects.count;
 }
 - (UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath {
     
@@ -52,17 +52,17 @@ const NSUInteger FluentPagingCollectionViewPreloadMargin = 10;
     
     LabelCollectionViewCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:CellIdentifier forIndexPath:indexPath];
     
-    id data = self.dataController.dataObjects[indexPath.row];
+    id data = self.dataProvider.dataObjects[indexPath.row];
     [self _configureCell:cell forData:data animated:NO];
     
     return cell;
 }
 
 #pragma mark - Data controller delegate
-- (void)dataController:(DataController *)dataController willLoadDataAtIndexes:(NSIndexSet *)indexes {
+- (void)dataProvider:(DataProvider *)dataProvider willLoadDataAtIndexes:(NSIndexSet *)indexes {
     
 }
-- (void)dataController:(DataController *)dataController didLoadDataAtIndexes:(NSIndexSet *)indexes {
+- (void)dataProvider:(DataProvider *)dataProvider didLoadDataAtIndexes:(NSIndexSet *)indexes {
     
     [indexes enumerateIndexesUsingBlock:^(NSUInteger index, BOOL *stop) {
         
@@ -71,7 +71,7 @@ const NSUInteger FluentPagingCollectionViewPreloadMargin = 10;
         if ([self.collectionView.indexPathsForVisibleItems containsObject:indexPath]) {
             
             LabelCollectionViewCell *cell = (LabelCollectionViewCell *)[self.collectionView cellForItemAtIndexPath:indexPath];
-            [self _configureCell:cell forData:dataController.dataObjects[index] animated:YES];
+            [self _configureCell:cell forData:dataProvider.dataObjects[index] animated:YES];
         }
     }];
 }

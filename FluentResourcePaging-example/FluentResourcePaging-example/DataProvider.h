@@ -1,5 +1,5 @@
 //
-//  DataController.h
+//  DataProvider.h
 //  FluentResourcePaging-example
 //
 //  Created by Alek Astrom on 2013-12-28.
@@ -8,20 +8,20 @@
 
 @import Foundation;
 
-@class DataController;
-@protocol DataControllerDelegate<NSObject>
+@class DataProvider;
+@protocol DataProviderDelegate<NSObject>
 
 @optional
-- (void)dataController:(DataController *)dataController willLoadDataAtIndexes:(NSIndexSet *)indexes;
-- (void)dataController:(DataController *)dataController didLoadDataAtIndexes:(NSIndexSet *)indexes;
+- (void)dataProvider:(DataProvider *)dataProvider willLoadDataAtIndexes:(NSIndexSet *)indexes;
+- (void)dataProvider:(DataProvider *)dataProvider didLoadDataAtIndexes:(NSIndexSet *)indexes;
 
 @end
 
-@interface DataController : NSObject
+@interface DataProvider : NSObject
 
 - (instancetype)initWithPageSize:(NSUInteger)pageSize;
 
-@property (nonatomic, weak) id<DataControllerDelegate> delegate;
+@property (nonatomic, weak) id<DataProviderDelegate> delegate;
 
 /**
  * The array returned will be a proxy object containing

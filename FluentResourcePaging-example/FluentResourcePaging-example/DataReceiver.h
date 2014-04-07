@@ -8,9 +8,9 @@
 
 #import <Foundation/Foundation.h>
 
-@class DataController;
+@class DataProvider;
 @protocol DataReceiver <NSObject>
 
-@property (nonatomic) DataController *dataController;
+@property (nonatomic) DataProvider *dataProvider;
 
 @end

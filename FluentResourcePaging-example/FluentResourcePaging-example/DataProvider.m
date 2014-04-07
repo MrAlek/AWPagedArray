@@ -1,21 +1,21 @@
 //
-//  DataController.m
+//  DataProvider.m
 //  FluentResourcePaging-example
 //
 //  Created by Alek Astrom on 2013-12-28.
 //  Copyright (c) 2013 Alek Åström. All rights reserved.
 //
 
-#import "DataController.h"
+#import "DataProvider.h"
 #import "AWPagedArray.h"
 
-const NSUInteger DataControllerDefaultPageSize = 20;
-const NSUInteger DataControllerDataCount = 200;
-const NSTimeInterval DataControllerOperationDuration = 0.3;
+const NSUInteger DataProviderDefaultPageSize = 20;
+const NSUInteger DataProviderDataCount = 200;
+const NSTimeInterval DataProviderOperationDuration = 0.3;
 
-@interface DataController () <AWPagedArrayDelegate> @end
+@interface DataProvider () <AWPagedArrayDelegate> @end
 
-@implementation DataController {
+@implementation DataProvider {
     AWPagedArray *_pagedArray;
     NSOperationQueue *_operationQueue;
     NSMutableDictionary *_dataLoadingOperations;
@@ -28,13 +28,13 @@ const NSTimeInterval DataControllerOperationDuration = 0.3;
 
 #pragma mark - Initialization
 - (instancetype)init {
-    return [self initWithPageSize:DataControllerDefaultPageSize];
+    return [self initWithPageSize:DataProviderDefaultPageSize];
 }
 - (instancetype)initWithPageSize:(NSUInteger)pageSize {
 
     self = [super init];
     if (self) {
-        _pagedArray = [[AWPagedArray alloc] initWithCount:DataControllerDataCount objectsPerPage:DataControllerDefaultPageSize];
+        _pagedArray = [[AWPagedArray alloc] initWithCount:DataProviderDataCount objectsPerPage:DataProviderDefaultPageSize];
         _pagedArray.delegate = self;
         _dataLoadingOperations = [NSMutableDictionary dictionary];
         _operationQueue = [NSOperationQueue new];
@@ -79,8 +79,8 @@ const NSTimeInterval DataControllerOperationDuration = 0.3;
     NSOperation *loadingOperation = [self loadingOperationForPage:page indexes:indexes];
     _dataLoadingOperations[@(page)] = loadingOperation;
     
-    if ([self.delegate respondsToSelector:@selector(dataController:willLoadDataAtIndexes:)]) {
-        [self.delegate dataController:self willLoadDataAtIndexes:indexes];
+    if ([self.delegate respondsToSelector:@selector(dataProvider:willLoadDataAtIndexes:)]) {
+        [self.delegate dataProvider:self willLoadDataAtIndexes:indexes];
     }
     [_operationQueue addOperation:loadingOperation];
 }
@@ -90,7 +90,7 @@ const NSTimeInterval DataControllerOperationDuration = 0.3;
     NSOperation *loadingOperation = [NSBlockOperation blockOperationWithBlock:^{
         
         // Simulate waiting (in background)
-        [NSThread sleepForTimeInterval:DataControllerOperationDuration];
+        [NSThread sleepForTimeInterval:DataProviderOperationDuration];
         
         // Now go to main queue and deliver
         [[NSOperationQueue mainQueue] addOperationWithBlock:^{
@@ -105,8 +105,8 @@ const NSTimeInterval DataControllerOperationDuration = 0.3;
             }];
             [strongSelf->_pagedArray setObjects:dataPage forPage:page];
             
-            if ([strongSelf.delegate respondsToSelector:@selector(dataController:didLoadDataAtIndexes:)]) {
-                [strongSelf.delegate dataController:self didLoadDataAtIndexes:indexes];
+            if ([strongSelf.delegate respondsToSelector:@selector(dataProvider:didLoadDataAtIndexes:)]) {
+                [strongSelf.delegate dataProvider:self didLoadDataAtIndexes:indexes];
             }
         }];
     }];

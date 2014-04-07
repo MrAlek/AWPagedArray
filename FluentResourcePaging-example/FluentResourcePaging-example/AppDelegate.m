@@ -8,7 +8,7 @@
 
 #import "AppDelegate.h"
 #import "DataReceiver.h"
-#import "DataController.h"
+#import "DataProvider.h"
 
 @interface AppDelegate() <UITabBarControllerDelegate>
 
@@ -21,17 +21,17 @@
     [self.window makeKeyAndVisible];
     
     [[self _tabBarController] setDelegate:self];
-    [self _setDataControllerForViewController:[self _tabBarController].selectedViewController];
+    [self _setDataProviderForViewController:[self _tabBarController].selectedViewController];
     
     return YES;
 }
 
-- (void)_setDataControllerForViewController:(UIViewController *)viewController {
+- (void)_setDataProviderForViewController:(UIViewController *)viewController {
     
     if ([viewController isKindOfClass:[UINavigationController class]]) {
         id <DataReceiver> dataViewController = (id<DataReceiver>)[((UINavigationController *)viewController) topViewController];
         if ([dataViewController conformsToProtocol:@protocol(DataReceiver) ]) {
-            [dataViewController setDataController:[DataController new]];
+            [dataViewController setDataProvider:[DataProvider new]];
         }
     }
 }
@@ -42,7 +42,7 @@
 
 #pragma mark - Tab bar controller delegate
 - (void)tabBarController:(UITabBarController *)tabBarController didSelectViewController:(UIViewController *)viewController {
-    [self _setDataControllerForViewController:viewController];
+    [self _setDataProviderForViewController:viewController];
 }
 
 @end

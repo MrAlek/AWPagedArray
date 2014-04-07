@@ -7,25 +7,25 @@
 //
 
 #import "FluentPagingTableViewController.h"
-#import "DataController.h"
+#import "DataProvider.h"
 
 const NSUInteger FluentPagingTablePreloadMargin = 5;
 
-@interface FluentPagingTableViewController ()<DataControllerDelegate>
+@interface FluentPagingTableViewController ()<DataProviderDelegate>
 @property (weak, nonatomic) IBOutlet UISwitch *preloadSwitch;
 @end
 
 @implementation FluentPagingTableViewController
-@synthesize dataController = _dataController;
+@synthesize dataProvider = _dataProvider;
 
 #pragma mark - Accessors
-- (void)setDataController:(DataController *)dataController {
+- (void)setDataProvider:(DataProvider *)dataProvider {
     
-    if (dataController != _dataController) {
-        _dataController = dataController;
-        _dataController.delegate = self;
-        _dataController.shouldLoadAutomatically = YES;
-        _dataController.automaticPreloadMargin = self.preloadSwitch.on ? FluentPagingTablePreloadMargin : 0;
+    if (dataProvider != _dataProvider) {
+        _dataProvider = dataProvider;
+        _dataProvider.delegate = self;
+        _dataProvider.shouldLoadAutomatically = YES;
+        _dataProvider.automaticPreloadMargin = self.preloadSwitch.on ? FluentPagingTablePreloadMargin : 0;
         
         if ([self isViewLoaded]) {
             [self.tableView reloadData];
@@ -35,7 +35,7 @@ const NSUInteger FluentPagingTablePreloadMargin = 5;
 
 #pragma mark - User interaction
 - (IBAction)preloadSwitchChanged:(UISwitch *)sender {
-    self.dataController.automaticPreloadMargin = sender.on ? FluentPagingTablePreloadMargin : 0;
+    self.dataProvider.automaticPreloadMargin = sender.on ? FluentPagingTablePreloadMargin : 0;
 }
 
 #pragma mark - Table view data source
@@ -43,7 +43,7 @@ const NSUInteger FluentPagingTablePreloadMargin = 5;
     return 1;
 }
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
-    return self.dataController.dataObjects.count;
+    return self.dataProvider.dataObjects.count;
 }
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     
@@ -51,7 +51,7 @@ const NSUInteger FluentPagingTablePreloadMargin = 5;
     
     UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier forIndexPath:indexPath];
     
-    id data = self.dataController.dataObjects[indexPath.row];
+    id data = self.dataProvider.dataObjects[indexPath.row];
     
     if ([data isKindOfClass:[NSNumber class]]) {
         cell.textLabel.text = [data description];
@@ -63,7 +63,7 @@ const NSUInteger FluentPagingTablePreloadMargin = 5;
 }
 
 #pragma mark - Data controller delegate
-- (void)dataController:(DataController *)dataController didLoadDataAtIndexes:(NSIndexSet *)indexes {
+- (void)dataProvider:(DataProvider *)dataProvider didLoadDataAtIndexes:(NSIndexSet *)indexes {
     
     [self.tableView beginUpdates];
     [indexes enumerateIndexesUsingBlock:^(NSUInteger idx, BOOL *stop) {
