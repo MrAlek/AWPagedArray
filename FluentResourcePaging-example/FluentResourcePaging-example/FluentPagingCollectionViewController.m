@@ -40,9 +40,6 @@ const NSUInteger FluentPagingCollectionViewPreloadMargin = 10;
 }
 
 #pragma mark - Collection view data source
-- (NSInteger)numberOfSectionsInCollectionView:(UICollectionView *)collectionView {
-    return 1;
-}
 - (NSInteger)collectionView:(UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section {
     return self.dataProvider.dataObjects.count;
 }
