@@ -26,6 +26,7 @@
 		93A8208018E477AD002F6E66 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 93262E9A186E457C00B05C01 /* UIKit.framework */; };
 		93A8208618E477AD002F6E66 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 93A8208418E477AD002F6E66 /* InfoPlist.strings */; };
 		93A8209018E477DA002F6E66 /* AWPagedArrayTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 93A8208F18E477DA002F6E66 /* AWPagedArrayTests.m */; };
+		93D9254818F84DA700A72AEF /* DataLoadingOperation.m in Sources */ = {isa = PBXBuildFile; fileRef = 93D9254718F84DA700A72AEF /* DataLoadingOperation.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -70,6 +71,8 @@
 		93A8208518E477AD002F6E66 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		93A8208918E477AD002F6E66 /* FluentResourcePaging-example Tests-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "FluentResourcePaging-example Tests-Prefix.pch"; sourceTree = "<group>"; };
 		93A8208F18E477DA002F6E66 /* AWPagedArrayTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AWPagedArrayTests.m; sourceTree = "<group>"; };
+		93D9254618F84DA700A72AEF /* DataLoadingOperation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DataLoadingOperation.h; sourceTree = "<group>"; };
+		93D9254718F84DA700A72AEF /* DataLoadingOperation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DataLoadingOperation.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -134,6 +137,8 @@
 				93262EA6186E457C00B05C01 /* AppDelegate.m */,
 				93A4038818E48FFC00640CAD /* AWPagedArray.h */,
 				93A4038918E48FFC00640CAD /* AWPagedArray.m */,
+				93D9254618F84DA700A72AEF /* DataLoadingOperation.h */,
+				93D9254718F84DA700A72AEF /* DataLoadingOperation.m */,
 				93262EC7186E4CFE00B05C01 /* DataProvider.h */,
 				93262EC8186E4CFE00B05C01 /* DataProvider.m */,
 				93262ECA186E5B0700B05C01 /* ClassicPagingViewController.h */,
@@ -283,6 +288,7 @@
 				93848026186E75B80006006E /* FluentPagingCollectionViewController.m in Sources */,
 				93A4038A18E48FFC00640CAD /* AWPagedArray.m in Sources */,
 				93262EC9186E4CFE00B05C01 /* DataProvider.m in Sources */,
+				93D9254818F84DA700A72AEF /* DataLoadingOperation.m in Sources */,
 				93262ECC186E5B0700B05C01 /* ClassicPagingViewController.m in Sources */,
 				93262ECF186E731A00B05C01 /* FluentPagingTableViewController.m in Sources */,
 			);

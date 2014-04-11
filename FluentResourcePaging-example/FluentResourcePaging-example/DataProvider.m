@@ -8,10 +8,10 @@
 
 #import "DataProvider.h"
 #import "AWPagedArray.h"
+#import "DataLoadingOperation.h"
 
 const NSUInteger DataProviderDefaultPageSize = 20;
 const NSUInteger DataProviderDataCount = 200;
-const NSTimeInterval DataProviderOperationDuration = 0.3;
 
 @interface DataProvider () <AWPagedArrayDelegate> @end
 
@@ -58,25 +58,25 @@ const NSTimeInterval DataProviderOperationDuration = 0.3;
     return (_dataLoadingOperations[@([_pagedArray pageForIndex:index])]);
 }
 - (void)loadDataForIndex:(NSUInteger)index {
-    [self setShouldLoadDataForPage:[_pagedArray pageForIndex:index]];
+    [self _setShouldLoadDataForPage:[_pagedArray pageForIndex:index]];
 }
 
 #pragma mark - Private methods
-- (NSIndexSet *)indexSetForPage:(NSUInteger)page {
+- (NSIndexSet *)_indexSetForPage:(NSUInteger)page {
     return [NSIndexSet indexSetWithIndexesInRange:NSMakeRange((page-1)*_pagedArray.objectsPerPage, _pagedArray.objectsPerPage)];
 }
-- (void)setShouldLoadDataForPage:(NSUInteger)page {
+- (void)_setShouldLoadDataForPage:(NSUInteger)page {
     
     if (!_pagedArray.pages[@(page)] && !_dataLoadingOperations[@(page)]) {
         // Don't load data if there already is a loading operation in progress
-        [self loadDataForPage:page];
+        [self _loadDataForPage:page];
     }
 }
-- (void)loadDataForPage:(NSUInteger)page {
+- (void)_loadDataForPage:(NSUInteger)page {
     
-    NSIndexSet *indexes = [self indexSetForPage:page];
+    NSIndexSet *indexes = [self _indexSetForPage:page];
     
-    NSOperation *loadingOperation = [self loadingOperationForPage:page indexes:indexes];
+    NSOperation *loadingOperation = [self _loadingOperationForPage:page indexes:indexes];
     _dataLoadingOperations[@(page)] = loadingOperation;
     
     if ([self.delegate respondsToSelector:@selector(dataProvider:willLoadDataAtIndexes:)]) {
@@ -84,36 +84,22 @@ const NSTimeInterval DataProviderOperationDuration = 0.3;
     }
     [_operationQueue addOperation:loadingOperation];
 }
-- (NSOperation *)loadingOperationForPage:(NSUInteger)page indexes:(NSIndexSet *)indexes {
-    // Load new data, remember to not retain self in block since we store the operation
+- (NSOperation *)_loadingOperationForPage:(NSUInteger)page indexes:(NSIndexSet *)indexes {
+    
+    DataLoadingOperation *operation = [[DataLoadingOperation alloc] initWithIndexes:indexes];
+    
+    // Remember to not retain self in block since we store the operation
     __weak typeof(self) weakSelf = self;
-    NSOperation *loadingOperation = [NSBlockOperation blockOperationWithBlock:^{
-        
-        // Simulate waiting (in background)
-        [NSThread sleepForTimeInterval:DataProviderOperationDuration];
-        
-        // Now go to main queue and deliver
+    __weak typeof(operation) weakOperation = operation;
+    operation.completionBlock = ^{
         [[NSOperationQueue mainQueue] addOperationWithBlock:^{
-            typeof(self) strongSelf = weakSelf;
-
-            [strongSelf->_dataLoadingOperations removeObjectForKey:@(page)];
-            
-            // Generate data
-            NSMutableArray *dataPage = [NSMutableArray array];
-            [indexes enumerateIndexesUsingBlock:^(NSUInteger idx, BOOL *stop) {
-                [dataPage addObject:@(idx+1)];
-            }];
-            [strongSelf->_pagedArray setObjects:dataPage forPage:page];
-            
-            if ([strongSelf.delegate respondsToSelector:@selector(dataProvider:didLoadDataAtIndexes:)]) {
-                [strongSelf.delegate dataProvider:self didLoadDataAtIndexes:indexes];
-            }
+            [weakSelf _dataOperation:weakOperation finishedLoadingForPage:page];
         }];
-    }];
+    };
 
-    return loadingOperation;
+    return operation;
 }
-- (void)preloadNextPageIfNeededForIndex:(NSUInteger)index {
+- (void)_preloadNextPageIfNeededForIndex:(NSUInteger)index {
     
     if (!self.shouldLoadAutomatically) {
         return;
@@ -123,7 +109,16 @@ const NSTimeInterval DataProviderOperationDuration = 0.3;
     NSUInteger preloadPage = [_pagedArray pageForIndex:index+self.automaticPreloadMargin];
     
     if (preloadPage > currentPage && preloadPage < _pagedArray.numberOfPages) {
-        [self setShouldLoadDataForPage:preloadPage];
+        [self _setShouldLoadDataForPage:preloadPage];
+    }
+}
+- (void)_dataOperation:(DataLoadingOperation *)operation finishedLoadingForPage:(NSUInteger)page {
+    
+    [_dataLoadingOperations removeObjectForKey:@(page)];
+    [_pagedArray setObjects:operation.dataPage forPage:page];
+    
+    if ([self.delegate respondsToSelector:@selector(dataProvider:didLoadDataAtIndexes:)]) {
+        [self.delegate dataProvider:self didLoadDataAtIndexes:operation.indexes];
     }
 }
 
@@ -131,9 +126,9 @@ const NSTimeInterval DataProviderOperationDuration = 0.3;
 - (void)pagedArray:(AWPagedArray *)pagedArray willAccessIndex:(NSUInteger)index value:(id)value {
 
     if ([value isKindOfClass:[NSNull class]] && self.shouldLoadAutomatically) {
-        [self setShouldLoadDataForPage:[pagedArray pageForIndex:index]];
+        [self _setShouldLoadDataForPage:[pagedArray pageForIndex:index]];
     } else {
-        [self preloadNextPageIfNeededForIndex:index];
+        [self _preloadNextPageIfNeededForIndex:index];
     }
 }
 
