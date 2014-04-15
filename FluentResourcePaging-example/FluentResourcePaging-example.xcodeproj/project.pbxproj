@@ -64,8 +64,8 @@
 		93848025186E75B80006006E /* FluentPagingCollectionViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FluentPagingCollectionViewController.m; sourceTree = "<group>"; };
 		9384802A186E767E0006006E /* LabelCollectionViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LabelCollectionViewCell.h; sourceTree = "<group>"; };
 		9384802B186E767E0006006E /* LabelCollectionViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LabelCollectionViewCell.m; sourceTree = "<group>"; };
-		93A4038818E48FFC00640CAD /* AWPagedArray.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AWPagedArray.h; sourceTree = "<group>"; };
-		93A4038918E48FFC00640CAD /* AWPagedArray.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AWPagedArray.m; sourceTree = "<group>"; };
+		93A4038818E48FFC00640CAD /* AWPagedArray.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = AWPagedArray.h; path = ../AWPagedArray.h; sourceTree = "<group>"; };
+		93A4038918E48FFC00640CAD /* AWPagedArray.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = AWPagedArray.m; path = ../AWPagedArray.m; sourceTree = "<group>"; };
 		93A8207D18E477AD002F6E66 /* FluentResourcePaging-example Tests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "FluentResourcePaging-example Tests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
 		93A8208318E477AD002F6E66 /* FluentResourcePaging-example Tests-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "FluentResourcePaging-example Tests-Info.plist"; sourceTree = "<group>"; };
 		93A8208518E477AD002F6E66 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
@@ -102,6 +102,8 @@
 		93262E8A186E457C00B05C01 = {
 			isa = PBXGroup;
 			children = (
+				93A4038818E48FFC00640CAD /* AWPagedArray.h */,
+				93A4038918E48FFC00640CAD /* AWPagedArray.m */,
 				93262E9C186E457C00B05C01 /* FluentResourcePaging-example */,
 				93A8208118E477AD002F6E66 /* FluentResourcePaging-example Tests */,
 				93262E95186E457C00B05C01 /* Frameworks */,
@@ -135,8 +137,6 @@
 				9345345218EF4F3000A23A35 /* DataReceiver.h */,
 				93262EA5186E457C00B05C01 /* AppDelegate.h */,
 				93262EA6186E457C00B05C01 /* AppDelegate.m */,
-				93A4038818E48FFC00640CAD /* AWPagedArray.h */,
-				93A4038918E48FFC00640CAD /* AWPagedArray.m */,
 				93D9254618F84DA700A72AEF /* DataLoadingOperation.h */,
 				93D9254718F84DA700A72AEF /* DataLoadingOperation.m */,
 				93262EC7186E4CFE00B05C01 /* DataProvider.h */,
