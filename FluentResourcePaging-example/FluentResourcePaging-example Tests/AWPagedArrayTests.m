@@ -59,6 +59,7 @@ const NSUInteger MutablePagedArrayObjectsPerPage = 6;
     return (NSArray *)_pagedArray;
 }
 
+#pragma mark - Tests
 - (void)testSizeIsCorrect {
     XCTAssertEqual([self array].count, MutablePagedArraySize, @"Paged array has wrong size");
 }
@@ -167,5 +168,59 @@ const NSUInteger MutablePagedArrayObjectsPerPage = 6;
     
     XCTAssertEqual([_pagedArray numberOfPages], 9, @"Wrong number of pages");
 }
-
 @end
+
+#pragma mark Delegate tests
+@interface AWPagedArrayTestsTestingDelegate : NSObject <AWPagedArrayDelegate> {
+    @public
+    NSUInteger _accessIndex;
+    id _returnedObject;
+}
+@end
+@implementation AWPagedArrayTestsTestingDelegate
+- (void)pagedArray:(AWPagedArray *)pagedArray willAccessIndex:(NSUInteger)index returnObject:(__autoreleasing id *)returnObject {
+    _accessIndex = index;
+    _returnedObject = *returnObject;
+}
+@end
+
+@interface AWPagedArrayTestsReturnObjectChangingDelegate : AWPagedArrayTestsTestingDelegate {
+    @public
+    id _objectToChangeReturnValueTo;
+}
+@end
+@implementation AWPagedArrayTestsReturnObjectChangingDelegate
+- (void)pagedArray:(AWPagedArray *)pagedArray willAccessIndex:(NSUInteger)index returnObject:(__autoreleasing id *)returnObject {
+    *returnObject = @"test";
+    [super pagedArray:pagedArray willAccessIndex:index returnObject:returnObject];
+}
+@end
+
+@implementation AWPagedArrayTests (DelegateTests)
+- (void)testReturnValuesAreCorrectForDelegateCall {
+    
+    AWPagedArrayTestsTestingDelegate *delegate = [AWPagedArrayTestsTestingDelegate new];
+    _pagedArray.delegate = delegate;
+    
+    NSUInteger index = 5;
+    id object = [self array][index];
+    
+    XCTAssertEqual(delegate->_accessIndex, index, @"Delegate's returned index doesn't match index accessed from array");
+    XCTAssertEqualObjects(delegate->_returnedObject, object, @"Delegate's returnObject doesn't match returned object from array");
+}
+- (void)testDelegateCanChangeReturnedObject {
+    
+    AWPagedArrayTestsReturnObjectChangingDelegate *delegate = [AWPagedArrayTestsReturnObjectChangingDelegate new];
+    _pagedArray.delegate = delegate;
+    id objectToChangeTo = @"test";
+    
+    delegate->_objectToChangeReturnValueTo = objectToChangeTo;
+    
+    id returnedObject = [self array][0];
+    
+    XCTAssertEqual(returnedObject, objectToChangeTo, @"Delegate couldn't replace object returned by array");
+    
+}
+@end
+
+
