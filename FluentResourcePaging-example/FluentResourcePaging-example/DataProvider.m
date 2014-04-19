@@ -123,9 +123,9 @@ const NSUInteger DataProviderDataCount = 200;
 }
 
 #pragma mark - Paged array delegate
-- (void)pagedArray:(AWPagedArray *)pagedArray willAccessIndex:(NSUInteger)index value:(id)value {
+- (void)pagedArray:(AWPagedArray *)pagedArray willAccessIndex:(NSUInteger)index returnObject:(__autoreleasing id *)returnObject {
 
-    if ([value isKindOfClass:[NSNull class]] && self.shouldLoadAutomatically) {
+    if ([*returnObject isKindOfClass:[NSNull class]] && self.shouldLoadAutomatically) {
         [self _setShouldLoadDataForPage:[pagedArray pageForIndex:index]];
     } else {
         [self _preloadNextPageIfNeededForIndex:index];

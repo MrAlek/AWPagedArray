@@ -68,6 +68,6 @@ FOUNDATION_EXPORT NSString *const AWPagedArrayObjectsPerPageMismatchException;
 
 @protocol AWPagedArrayDelegate <NSObject>
 
-- (void)pagedArray:(AWPagedArray *)pagedArray willAccessIndex:(NSUInteger)index value:(id)value;
+- (void)pagedArray:(AWPagedArray *)pagedArray willAccessIndex:(NSUInteger)index returnObject:(__autoreleasing id *)returnObject;
 
 @end
