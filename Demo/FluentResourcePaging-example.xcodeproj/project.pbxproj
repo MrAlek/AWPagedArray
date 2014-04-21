@@ -21,23 +21,8 @@
 		93848026186E75B80006006E /* FluentPagingCollectionViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 93848025186E75B80006006E /* FluentPagingCollectionViewController.m */; };
 		9384802C186E767E0006006E /* LabelCollectionViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 9384802B186E767E0006006E /* LabelCollectionViewCell.m */; };
 		93A4038A18E48FFC00640CAD /* AWPagedArray.m in Sources */ = {isa = PBXBuildFile; fileRef = 93A4038918E48FFC00640CAD /* AWPagedArray.m */; };
-		93A8207E18E477AD002F6E66 /* XCTest.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 93262EAF186E457C00B05C01 /* XCTest.framework */; };
-		93A8207F18E477AD002F6E66 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 93262E96186E457C00B05C01 /* Foundation.framework */; };
-		93A8208018E477AD002F6E66 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 93262E9A186E457C00B05C01 /* UIKit.framework */; };
-		93A8208618E477AD002F6E66 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 93A8208418E477AD002F6E66 /* InfoPlist.strings */; };
-		93A8209018E477DA002F6E66 /* AWPagedArrayTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 93A8208F18E477DA002F6E66 /* AWPagedArrayTests.m */; };
 		93D9254818F84DA700A72AEF /* DataLoadingOperation.m in Sources */ = {isa = PBXBuildFile; fileRef = 93D9254718F84DA700A72AEF /* DataLoadingOperation.m */; };
 /* End PBXBuildFile section */
-
-/* Begin PBXContainerItemProxy section */
-		93A8208A18E477AD002F6E66 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 93262E8B186E457C00B05C01 /* Project object */;
-			proxyType = 1;
-			remoteGlobalIDString = 93262E92186E457C00B05C01;
-			remoteInfo = "FluentResourcePaging-example";
-		};
-/* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
 		93262E93186E457C00B05C01 /* FluentResourcePaging-example.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "FluentResourcePaging-example.app"; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -66,11 +51,6 @@
 		9384802B186E767E0006006E /* LabelCollectionViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LabelCollectionViewCell.m; sourceTree = "<group>"; };
 		93A4038818E48FFC00640CAD /* AWPagedArray.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = AWPagedArray.h; path = ../AWPagedArray.h; sourceTree = "<group>"; };
 		93A4038918E48FFC00640CAD /* AWPagedArray.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = AWPagedArray.m; path = ../AWPagedArray.m; sourceTree = "<group>"; };
-		93A8207D18E477AD002F6E66 /* FluentResourcePaging-example Tests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "FluentResourcePaging-example Tests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
-		93A8208318E477AD002F6E66 /* FluentResourcePaging-example Tests-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "FluentResourcePaging-example Tests-Info.plist"; sourceTree = "<group>"; };
-		93A8208518E477AD002F6E66 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
-		93A8208918E477AD002F6E66 /* FluentResourcePaging-example Tests-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "FluentResourcePaging-example Tests-Prefix.pch"; sourceTree = "<group>"; };
-		93A8208F18E477DA002F6E66 /* AWPagedArrayTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AWPagedArrayTests.m; sourceTree = "<group>"; };
 		93D9254618F84DA700A72AEF /* DataLoadingOperation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DataLoadingOperation.h; sourceTree = "<group>"; };
 		93D9254718F84DA700A72AEF /* DataLoadingOperation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DataLoadingOperation.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -86,16 +66,6 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		93A8207A18E477AD002F6E66 /* Frameworks */ = {
-			isa = PBXFrameworksBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-				93A8207E18E477AD002F6E66 /* XCTest.framework in Frameworks */,
-				93A8208018E477AD002F6E66 /* UIKit.framework in Frameworks */,
-				93A8207F18E477AD002F6E66 /* Foundation.framework in Frameworks */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
@@ -105,7 +75,6 @@
 				93A4038818E48FFC00640CAD /* AWPagedArray.h */,
 				93A4038918E48FFC00640CAD /* AWPagedArray.m */,
 				93262E9C186E457C00B05C01 /* FluentResourcePaging-example */,
-				93A8208118E477AD002F6E66 /* FluentResourcePaging-example Tests */,
 				93262E95186E457C00B05C01 /* Frameworks */,
 				93262E94186E457C00B05C01 /* Products */,
 			);
@@ -115,7 +84,6 @@
 			isa = PBXGroup;
 			children = (
 				93262E93186E457C00B05C01 /* FluentResourcePaging-example.app */,
-				93A8207D18E477AD002F6E66 /* FluentResourcePaging-example Tests.xctest */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -167,25 +135,6 @@
 			name = "Supporting Files";
 			sourceTree = "<group>";
 		};
-		93A8208118E477AD002F6E66 /* FluentResourcePaging-example Tests */ = {
-			isa = PBXGroup;
-			children = (
-				93A8208F18E477DA002F6E66 /* AWPagedArrayTests.m */,
-				93A8208218E477AD002F6E66 /* Supporting Files */,
-			);
-			path = "FluentResourcePaging-example Tests";
-			sourceTree = "<group>";
-		};
-		93A8208218E477AD002F6E66 /* Supporting Files */ = {
-			isa = PBXGroup;
-			children = (
-				93A8208318E477AD002F6E66 /* FluentResourcePaging-example Tests-Info.plist */,
-				93A8208418E477AD002F6E66 /* InfoPlist.strings */,
-				93A8208918E477AD002F6E66 /* FluentResourcePaging-example Tests-Prefix.pch */,
-			);
-			name = "Supporting Files";
-			sourceTree = "<group>";
-		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -206,24 +155,6 @@
 			productReference = 93262E93186E457C00B05C01 /* FluentResourcePaging-example.app */;
 			productType = "com.apple.product-type.application";
 		};
-		93A8207C18E477AD002F6E66 /* FluentResourcePaging-example Tests */ = {
-			isa = PBXNativeTarget;
-			buildConfigurationList = 93A8208C18E477AD002F6E66 /* Build configuration list for PBXNativeTarget "FluentResourcePaging-example Tests" */;
-			buildPhases = (
-				93A8207918E477AD002F6E66 /* Sources */,
-				93A8207A18E477AD002F6E66 /* Frameworks */,
-				93A8207B18E477AD002F6E66 /* Resources */,
-			);
-			buildRules = (
-			);
-			dependencies = (
-				93A8208B18E477AD002F6E66 /* PBXTargetDependency */,
-			);
-			name = "FluentResourcePaging-example Tests";
-			productName = "FluentResourcePaging-example Tests";
-			productReference = 93A8207D18E477AD002F6E66 /* FluentResourcePaging-example Tests.xctest */;
-			productType = "com.apple.product-type.bundle.unit-test";
-		};
 /* End PBXNativeTarget section */
 
 /* Begin PBXProject section */
@@ -232,11 +163,6 @@
 			attributes = {
 				LastUpgradeCheck = 0510;
 				ORGANIZATIONNAME = "Alek Åström";
-				TargetAttributes = {
-					93A8207C18E477AD002F6E66 = {
-						TestTargetID = 93262E92186E457C00B05C01;
-					};
-				};
 			};
 			buildConfigurationList = 93262E8E186E457C00B05C01 /* Build configuration list for PBXProject "FluentResourcePaging-example" */;
 			compatibilityVersion = "Xcode 3.2";
@@ -251,7 +177,6 @@
 			projectRoot = "";
 			targets = (
 				93262E92186E457C00B05C01 /* FluentResourcePaging-example */,
-				93A8207C18E477AD002F6E66 /* FluentResourcePaging-example Tests */,
 			);
 		};
 /* End PBXProject section */
@@ -264,14 +189,6 @@
 				93262EC6186E45CC00B05C01 /* MainStoryboard.storyboard in Resources */,
 				93262EA1186E457C00B05C01 /* InfoPlist.strings in Resources */,
 				93262EA9186E457C00B05C01 /* Images.xcassets in Resources */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		93A8207B18E477AD002F6E66 /* Resources */ = {
-			isa = PBXResourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-				93A8208618E477AD002F6E66 /* InfoPlist.strings in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -294,37 +211,13 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		93A8207918E477AD002F6E66 /* Sources */ = {
-			isa = PBXSourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-				93A8209018E477DA002F6E66 /* AWPagedArrayTests.m in Sources */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
 /* End PBXSourcesBuildPhase section */
-
-/* Begin PBXTargetDependency section */
-		93A8208B18E477AD002F6E66 /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			target = 93262E92186E457C00B05C01 /* FluentResourcePaging-example */;
-			targetProxy = 93A8208A18E477AD002F6E66 /* PBXContainerItemProxy */;
-		};
-/* End PBXTargetDependency section */
 
 /* Begin PBXVariantGroup section */
 		93262E9F186E457C00B05C01 /* InfoPlist.strings */ = {
 			isa = PBXVariantGroup;
 			children = (
 				93262EA0186E457C00B05C01 /* en */,
-			);
-			name = InfoPlist.strings;
-			sourceTree = "<group>";
-		};
-		93A8208418E477AD002F6E66 /* InfoPlist.strings */ = {
-			isa = PBXVariantGroup;
-			children = (
-				93A8208518E477AD002F6E66 /* en */,
 			);
 			name = InfoPlist.strings;
 			sourceTree = "<group>";
@@ -428,50 +321,6 @@
 			};
 			name = Release;
 		};
-		93A8208D18E477AD002F6E66 /* Debug */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				BUNDLE_LOADER = "$(BUILT_PRODUCTS_DIR)/FluentResourcePaging-example.app/FluentResourcePaging-example";
-				FRAMEWORK_SEARCH_PATHS = (
-					"$(SDKROOT)/Developer/Library/Frameworks",
-					"$(inherited)",
-					"$(DEVELOPER_FRAMEWORKS_DIR)",
-				);
-				GCC_PRECOMPILE_PREFIX_HEADER = YES;
-				GCC_PREFIX_HEADER = "FluentResourcePaging-example Tests/FluentResourcePaging-example Tests-Prefix.pch";
-				GCC_PREPROCESSOR_DEFINITIONS = (
-					"DEBUG=1",
-					"$(inherited)",
-				);
-				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
-				INFOPLIST_FILE = "FluentResourcePaging-example Tests/FluentResourcePaging-example Tests-Info.plist";
-				IPHONEOS_DEPLOYMENT_TARGET = 7.1;
-				PRODUCT_NAME = "$(TARGET_NAME)";
-				TEST_HOST = "$(BUNDLE_LOADER)";
-				WRAPPER_EXTENSION = xctest;
-			};
-			name = Debug;
-		};
-		93A8208E18E477AD002F6E66 /* Release */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				BUNDLE_LOADER = "$(BUILT_PRODUCTS_DIR)/FluentResourcePaging-example.app/FluentResourcePaging-example";
-				FRAMEWORK_SEARCH_PATHS = (
-					"$(SDKROOT)/Developer/Library/Frameworks",
-					"$(inherited)",
-					"$(DEVELOPER_FRAMEWORKS_DIR)",
-				);
-				GCC_PRECOMPILE_PREFIX_HEADER = YES;
-				GCC_PREFIX_HEADER = "FluentResourcePaging-example Tests/FluentResourcePaging-example Tests-Prefix.pch";
-				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
-				INFOPLIST_FILE = "FluentResourcePaging-example Tests/FluentResourcePaging-example Tests-Info.plist";
-				IPHONEOS_DEPLOYMENT_TARGET = 7.1;
-				PRODUCT_NAME = "$(TARGET_NAME)";
-				TEST_HOST = "$(BUNDLE_LOADER)";
-				WRAPPER_EXTENSION = xctest;
-			};
-			name = Release;
-		};
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
@@ -489,15 +338,6 @@
 			buildConfigurations = (
 				93262EC0186E457C00B05C01 /* Debug */,
 				93262EC1186E457C00B05C01 /* Release */,
-			);
-			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = Release;
-		};
-		93A8208C18E477AD002F6E66 /* Build configuration list for PBXNativeTarget "FluentResourcePaging-example Tests" */ = {
-			isa = XCConfigurationList;
-			buildConfigurations = (
-				93A8208D18E477AD002F6E66 /* Debug */,
-				93A8208E18E477AD002F6E66 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
