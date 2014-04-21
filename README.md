@@ -78,4 +78,4 @@ There are currently `19` tests implemented.
 
 ## Licence
 
-This code is distributed under the terms and conditions of the MIT license.
+This code is distributed under the terms and conditions of the [MIT license](LICENSE).
