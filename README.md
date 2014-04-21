@@ -63,6 +63,19 @@ Through the `AWPagedArrayDelegate` protocol, the data provider gets callbacks wh
     
 Since the delegate is provided with a reference pointer to the return object, it can also dynamically change what gets returned to the consumer. For instance, replace the `NSNull` placeholder object with something else.
 
+## Demo
+
+The included demo project shows an example implementation of a data provider using an `AWPagedArray`, populating a UITableViewController and a UICollectionViewController with the fluent pagination technique as described in [this blogpost](http://www.iosnomad.com/blog/2014/4/21/fluent-pagination).
+
+![UITableView example](GitHub/PreloadFluentPaging.gif)
+![UITableView example](GitHub/PreloadFluentCollectionView.gif)
+
+## Tests
+
+AWPagedArray is covered with XCUnit tests which can be found in the `Tests` folder.
+
+There are currently `19` tests implemented.
+
 ## Licence
 
 This code is distributed under the terms and conditions of the MIT license.
