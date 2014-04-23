@@ -21,6 +21,7 @@
 		93848026186E75B80006006E /* FluentPagingCollectionViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 93848025186E75B80006006E /* FluentPagingCollectionViewController.m */; };
 		9384802C186E767E0006006E /* LabelCollectionViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 9384802B186E767E0006006E /* LabelCollectionViewCell.m */; };
 		93A4038A18E48FFC00640CAD /* AWPagedArray.m in Sources */ = {isa = PBXBuildFile; fileRef = 93A4038918E48FFC00640CAD /* AWPagedArray.m */; };
+		93BEE49D1907C403008B4694 /* LICENSE in Resources */ = {isa = PBXBuildFile; fileRef = 93BEE49C1907C403008B4694 /* LICENSE */; };
 		93D9254818F84DA700A72AEF /* DataLoadingOperation.m in Sources */ = {isa = PBXBuildFile; fileRef = 93D9254718F84DA700A72AEF /* DataLoadingOperation.m */; };
 /* End PBXBuildFile section */
 
@@ -51,6 +52,7 @@
 		9384802B186E767E0006006E /* LabelCollectionViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LabelCollectionViewCell.m; sourceTree = "<group>"; };
 		93A4038818E48FFC00640CAD /* AWPagedArray.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = AWPagedArray.h; path = ../AWPagedArray.h; sourceTree = "<group>"; };
 		93A4038918E48FFC00640CAD /* AWPagedArray.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = AWPagedArray.m; path = ../AWPagedArray.m; sourceTree = "<group>"; };
+		93BEE49C1907C403008B4694 /* LICENSE */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = LICENSE; path = ../LICENSE; sourceTree = "<group>"; };
 		93D9254618F84DA700A72AEF /* DataLoadingOperation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DataLoadingOperation.h; sourceTree = "<group>"; };
 		93D9254718F84DA700A72AEF /* DataLoadingOperation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DataLoadingOperation.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -74,6 +76,7 @@
 			children = (
 				93A4038818E48FFC00640CAD /* AWPagedArray.h */,
 				93A4038918E48FFC00640CAD /* AWPagedArray.m */,
+				93BEE49C1907C403008B4694 /* LICENSE */,
 				93262E9C186E457C00B05C01 /* FluentResourcePaging-example */,
 				93262E95186E457C00B05C01 /* Frameworks */,
 				93262E94186E457C00B05C01 /* Products */,
@@ -188,6 +191,7 @@
 			files = (
 				93262EC6186E45CC00B05C01 /* MainStoryboard.storyboard in Resources */,
 				93262EA1186E457C00B05C01 /* InfoPlist.strings in Resources */,
+				93BEE49D1907C403008B4694 /* LICENSE in Resources */,
 				93262EA9186E457C00B05C01 /* Images.xcassets in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
