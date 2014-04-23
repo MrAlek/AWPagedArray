@@ -48,6 +48,7 @@ FOUNDATION_EXPORT NSString *const AWPagedArrayObjectsPerPageMismatchException;
  * @param objects The objects in the page
  * @param page The page which these objects should be set for, pages start with index 1
  * @throws AWPagedArrayObjectsPerPageMismatchException when page size mismatch the initialized objectsPerPage property
+ * for any page other than the last.
  */
 - (void)setObjects:(NSArray *)objects forPage:(NSUInteger)page;
 
@@ -68,6 +69,16 @@ FOUNDATION_EXPORT NSString *const AWPagedArrayObjectsPerPageMismatchException;
 
 @protocol AWPagedArrayDelegate <NSObject>
 
+/**
+ * Called when the an object is accessed by index
+ *
+ * @param pagedArray the paged array being accessed
+ * @param index the index in the paged array
+ * @param returnObject an id pointer to the object which will be returned to the receiver of the accessor being called.
+ *
+ * @discussion This delegate method is only called when the paged array is accessed by the objectAtIndex: method or by subscripting.
+ * The returnObject pointer can be changed in order to change which object will be returned.
+ */
 - (void)pagedArray:(AWPagedArray *)pagedArray willAccessIndex:(NSUInteger)index returnObject:(__autoreleasing id *)returnObject;
 
 @end
