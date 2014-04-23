@@ -51,7 +51,7 @@ NSString *const AWPagedArrayObjectsPerPageMismatchException = @"AWPagedArrayObje
         _pages[@(page)] = objects;
         _needsUpdateProxiedArray = YES;
     } else {
-        [NSException raise:AWPagedArrayObjectsPerPageMismatchException format:@"Expected object count per page: %ld received: %ld", _objectsPerPage, objects.count];
+        [NSException raise:AWPagedArrayObjectsPerPageMismatchException format:@"Expected object count per page: %ld received: %ld", (unsigned long)_objectsPerPage, (unsigned long)objects.count];
     }
 }
 - (NSUInteger)pageForIndex:(NSUInteger)index {
