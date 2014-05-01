@@ -34,7 +34,7 @@ _pagedArray.delegate = self;
 [_pagedArray setObjects:objects forPage:1];
 ```
     
-After instanciating the paged array, you set pages with the `setObjects:forPage:` method, while casting the paged array back as an `NSArray` to the data consumer (for example a `UITableViewController`).
+After instantiating the paged array, you set pages with the `setObjects:forPage:` method, while casting the paged array back as an `NSArray` to the data consumer (for example a `UITableViewController`).
 
 ```objective-c
 // DataProvider.h
