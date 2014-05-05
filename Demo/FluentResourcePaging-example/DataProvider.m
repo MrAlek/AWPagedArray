@@ -34,7 +34,7 @@ const NSUInteger DataProviderDataCount = 200;
 
     self = [super init];
     if (self) {
-        _pagedArray = [[AWPagedArray alloc] initWithCount:DataProviderDataCount objectsPerPage:DataProviderDefaultPageSize];
+        _pagedArray = [[AWPagedArray alloc] initWithCount:DataProviderDataCount objectsPerPage:pageSize];
         _pagedArray.delegate = self;
         _dataLoadingOperations = [NSMutableDictionary dictionary];
         _operationQueue = [NSOperationQueue new];
@@ -55,7 +55,7 @@ const NSUInteger DataProviderDataCount = 200;
 
 #pragma mark - Other public methods
 - (BOOL)isLoadingDataAtIndex:(NSUInteger)index {
-    return (_dataLoadingOperations[@([_pagedArray pageForIndex:index])]);
+    return _dataLoadingOperations[@([_pagedArray pageForIndex:index])] != nil;
 }
 - (void)loadDataForIndex:(NSUInteger)index {
     [self _setShouldLoadDataForPage:[_pagedArray pageForIndex:index]];
@@ -108,7 +108,7 @@ const NSUInteger DataProviderDataCount = 200;
     NSUInteger currentPage = [_pagedArray pageForIndex:index];
     NSUInteger preloadPage = [_pagedArray pageForIndex:index+self.automaticPreloadMargin];
     
-    if (preloadPage > currentPage && preloadPage < _pagedArray.numberOfPages) {
+    if (preloadPage > currentPage && preloadPage <= _pagedArray.numberOfPages) {
         [self _setShouldLoadDataForPage:preloadPage];
     }
 }

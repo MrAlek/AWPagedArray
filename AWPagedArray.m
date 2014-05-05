@@ -68,7 +68,7 @@ NSString *const AWPagedArrayObjectsPerPageMismatchException = @"AWPagedArrayObje
     
     [self.delegate pagedArray:self
               willAccessIndex:index
-                        returnObject:&object];
+                 returnObject:&object];
     
     return object;
 }
