@@ -62,9 +62,6 @@ const NSUInteger DataProviderDataCount = 200;
 }
 
 #pragma mark - Private methods
-- (NSIndexSet *)_indexSetForPage:(NSUInteger)page {
-    return [NSIndexSet indexSetWithIndexesInRange:NSMakeRange((page-1)*_pagedArray.objectsPerPage, _pagedArray.objectsPerPage)];
-}
 - (void)_setShouldLoadDataForPage:(NSUInteger)page {
     
     if (!_pagedArray.pages[@(page)] && !_dataLoadingOperations[@(page)]) {
@@ -74,7 +71,7 @@ const NSUInteger DataProviderDataCount = 200;
 }
 - (void)_loadDataForPage:(NSUInteger)page {
     
-    NSIndexSet *indexes = [self _indexSetForPage:page];
+    NSIndexSet *indexes = [_pagedArray indexSetForPage:page];
     
     NSOperation *loadingOperation = [self _loadingOperationForPage:page indexes:indexes];
     _dataLoadingOperations[@(page)] = loadingOperation;

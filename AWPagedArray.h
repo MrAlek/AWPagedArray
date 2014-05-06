@@ -53,6 +53,7 @@ FOUNDATION_EXPORT NSString *const AWPagedArrayObjectsPerPageMismatchException;
 - (void)setObjects:(NSArray *)objects forPage:(NSUInteger)page;
 
 - (NSUInteger)pageForIndex:(NSUInteger)index;
+- (NSIndexSet *)indexSetForPage:(NSUInteger)page;
 
 @property (nonatomic, readonly) NSUInteger objectsPerPage;
 @property (nonatomic, readonly) NSUInteger numberOfPages;
