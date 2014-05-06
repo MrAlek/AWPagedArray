@@ -57,6 +57,13 @@ NSString *const AWPagedArrayObjectsPerPageMismatchException = @"AWPagedArrayObje
 - (NSUInteger)pageForIndex:(NSUInteger)index {
     return index/_objectsPerPage + 1;
 }
+- (NSIndexSet *)indexSetForPage:(NSUInteger)page {
+    NSUInteger rangeLength = _objectsPerPage;
+    if (page == [self numberOfPages]) {
+        rangeLength = (_totalCount % _objectsPerPage) ?: _objectsPerPage;
+    }
+    return [NSIndexSet indexSetWithIndexesInRange:NSMakeRange((page - 1) * _objectsPerPage, rangeLength)];
+}
 - (NSDictionary *)pages {
     return _pages;
 }
@@ -68,7 +75,7 @@ NSString *const AWPagedArrayObjectsPerPageMismatchException = @"AWPagedArrayObje
     
     [self.delegate pagedArray:self
               willAccessIndex:index
-                        returnObject:&object];
+                 returnObject:&object];
     
     return object;
 }
@@ -126,13 +133,12 @@ NSString *const AWPagedArrayObjectsPerPageMismatchException = @"AWPagedArrayObje
     
     _proxiedArray = objects;
 }
-- (NSArray *)_emptyPageForIndex:(NSUInteger)index {
+- (NSArray *)_emptyPageForIndex:(NSUInteger)pageIndex {
     
     NSMutableArray *emptyPage = [[NSMutableArray alloc] initWithCapacity:_objectsPerPage];
     
-    NSUInteger pageLimit = (index == [self numberOfPages]) ? _totalCount%_objectsPerPage : _objectsPerPage;
-    
-    for (int i = 0; i < pageLimit; i++) {
+    NSUInteger pageLimit = [[self indexSetForPage:pageIndex] count];
+    for (NSUInteger i = 0; i < pageLimit; ++i) {
         [emptyPage addObject:[NSNull null]];
     }
     

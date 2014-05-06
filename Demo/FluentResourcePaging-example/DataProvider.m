@@ -34,7 +34,7 @@ const NSUInteger DataProviderDataCount = 200;
 
     self = [super init];
     if (self) {
-        _pagedArray = [[AWPagedArray alloc] initWithCount:DataProviderDataCount objectsPerPage:DataProviderDefaultPageSize];
+        _pagedArray = [[AWPagedArray alloc] initWithCount:DataProviderDataCount objectsPerPage:pageSize];
         _pagedArray.delegate = self;
         _dataLoadingOperations = [NSMutableDictionary dictionary];
         _operationQueue = [NSOperationQueue new];
@@ -55,16 +55,13 @@ const NSUInteger DataProviderDataCount = 200;
 
 #pragma mark - Other public methods
 - (BOOL)isLoadingDataAtIndex:(NSUInteger)index {
-    return (_dataLoadingOperations[@([_pagedArray pageForIndex:index])]);
+    return _dataLoadingOperations[@([_pagedArray pageForIndex:index])] != nil;
 }
 - (void)loadDataForIndex:(NSUInteger)index {
     [self _setShouldLoadDataForPage:[_pagedArray pageForIndex:index]];
 }
 
 #pragma mark - Private methods
-- (NSIndexSet *)_indexSetForPage:(NSUInteger)page {
-    return [NSIndexSet indexSetWithIndexesInRange:NSMakeRange((page-1)*_pagedArray.objectsPerPage, _pagedArray.objectsPerPage)];
-}
 - (void)_setShouldLoadDataForPage:(NSUInteger)page {
     
     if (!_pagedArray.pages[@(page)] && !_dataLoadingOperations[@(page)]) {
@@ -74,7 +71,7 @@ const NSUInteger DataProviderDataCount = 200;
 }
 - (void)_loadDataForPage:(NSUInteger)page {
     
-    NSIndexSet *indexes = [self _indexSetForPage:page];
+    NSIndexSet *indexes = [_pagedArray indexSetForPage:page];
     
     NSOperation *loadingOperation = [self _loadingOperationForPage:page indexes:indexes];
     _dataLoadingOperations[@(page)] = loadingOperation;
@@ -108,7 +105,7 @@ const NSUInteger DataProviderDataCount = 200;
     NSUInteger currentPage = [_pagedArray pageForIndex:index];
     NSUInteger preloadPage = [_pagedArray pageForIndex:index+self.automaticPreloadMargin];
     
-    if (preloadPage > currentPage && preloadPage < _pagedArray.numberOfPages) {
+    if (preloadPage > currentPage && preloadPage <= _pagedArray.numberOfPages) {
         [self _setShouldLoadDataForPage:preloadPage];
     }
 }
