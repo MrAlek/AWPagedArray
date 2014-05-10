@@ -116,23 +116,23 @@ NSString *const AWPagedArrayObjectsPerPageMismatchException = @"AWPagedArrayObje
     NSMutableArray *objects = [[NSMutableArray alloc] initWithCapacity:_totalCount];
     
     for (NSInteger pageIndex = 1; pageIndex <= [self numberOfPages]; pageIndex++) {
+        
         NSArray *page = _pages[@(pageIndex)];
-        if (page) {
-            [objects addObjectsFromArray:page];
-        } else {
-            [objects addObjectsFromArray:[self _emptyPageForIndex:pageIndex]];
-        }
+        if (!page) page = [self _placeholdersForPage:pageIndex];
+        
+        [objects addObjectsFromArray:page];
     }
     
     _proxiedArray = objects;
 }
-- (NSArray *)_emptyPageForIndex:(NSUInteger)index {
+- (NSArray *)_placeholdersForPage:(NSUInteger)page {
     
     NSMutableArray *emptyPage = [[NSMutableArray alloc] initWithCapacity:_objectsPerPage];
     
-    NSUInteger pageLimit = (index == [self numberOfPages]) ? _totalCount%_objectsPerPage : _objectsPerPage;
+    NSUInteger pageModulus = _totalCount%_objectsPerPage;
+    NSUInteger pageLimit = (page == [self numberOfPages] && pageModulus > 0) ? pageModulus : _objectsPerPage;
     
-    for (int i = 0; i < pageLimit; i++) {
+    for (NSUInteger i = 0; i < pageLimit; i++) {
         [emptyPage addObject:[NSNull null]];
     }
     
