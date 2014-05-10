@@ -63,6 +63,11 @@ const NSUInteger MutablePagedArrayObjectsPerPage = 6;
 - (void)testSizeIsCorrect {
     XCTAssertEqual([self array].count, MutablePagedArraySize, @"Paged array has wrong size");
 }
+- (void)testSizeIsCorrectWithEvenPagePartitioning {
+    
+    AWPagedArray *pagedArray = [[AWPagedArray alloc] initWithCount:10 objectsPerPage:1];
+    XCTAssertEqual([(NSArray *)pagedArray count], 10, @"Paged array has wrong size");
+}
 - (void)testObjectsPerPageIsCorrect {
     XCTAssertEqual(_pagedArray.objectsPerPage, MutablePagedArrayObjectsPerPage, @"Paged array has wrong objects per page count");
 }
