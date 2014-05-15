@@ -228,4 +228,17 @@ const NSUInteger MutablePagedArrayObjectsPerPage = 6;
 }
 @end
 
-
+@implementation AWPagedArrayTests (CopyTests)
+- (void)testCopy {
+    AWPagedArray *copy = [_pagedArray copy];
+    XCTAssertEqual(copy.numberOfPages, _pagedArray.numberOfPages, @"They should have the same number of pages.");
+    XCTAssertEqual(copy.objectsPerPage, _pagedArray.objectsPerPage, @"They should have the same number of objects per page.");
+    XCTAssertEqualObjects(copy.pages, _pagedArray.pages, @"They should have the same pages.");
+    XCTAssertEqualObjects(copy, _pagedArray, @"They should have the same generated array.");
+    
+    NSInteger lastPage = MutablePagedArraySize/MutablePagedArrayObjectsPerPage+1;
+    [copy setObjects:@[@"Test"] forPage:lastPage];
+    XCTAssertNotEqualObjects(copy.pages, _pagedArray.pages, @"The copy should be detatched from the original.");
+    XCTAssertNotEqualObjects(copy, _pagedArray, @"The generated arrays should no longer be the same.");
+}
+@end

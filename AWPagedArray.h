@@ -35,11 +35,16 @@ FOUNDATION_EXPORT NSString *const AWPagedArrayObjectsPerPageMismatchException;
  * This class is inspired by NSFetchRequest's batching mechanism which returns a custom NSArray subclass.
  * @see NSFetchRequest fetchBatchSize
  */
-@interface AWPagedArray : NSProxy
+@interface AWPagedArray : NSProxy <NSCopying>
 
 /**
  * The designated initializer for this class
  * Note that the parameters are part of immutable state
+ */
+- (instancetype)initWithCount:(NSUInteger)count objectsPerPage:(NSUInteger)objectsPerPage placeholderObject:(id)placeholderObject;
+
+/**
+ *  Convenience initializer which uses NSNull as the placeholder.
  */
 - (instancetype)initWithCount:(NSUInteger)count objectsPerPage:(NSUInteger)objectsPerPage;
 
@@ -57,6 +62,7 @@ FOUNDATION_EXPORT NSString *const AWPagedArrayObjectsPerPageMismatchException;
 
 @property (nonatomic, readonly) NSUInteger objectsPerPage;
 @property (nonatomic, readonly) NSUInteger numberOfPages;
+@property (nonatomic, readonly) id placeholderObject;
 
 /**
  * Contains NSArray instances of pages, backing the data
@@ -64,6 +70,8 @@ FOUNDATION_EXPORT NSString *const AWPagedArrayObjectsPerPageMismatchException;
 @property (nonatomic, readonly) NSDictionary *pages;
 
 @property (nonatomic, weak) id<AWPagedArrayDelegate> delegate;
+
+- (id)copy;
 
 @end
 

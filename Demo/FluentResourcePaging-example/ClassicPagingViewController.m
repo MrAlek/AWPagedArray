@@ -8,6 +8,7 @@
 
 #import "ClassicPagingViewController.h"
 #import "DataProvider.h"
+#import "AWPagedArray.h"
 
 typedef NS_ENUM(NSInteger, ClassicPagingViewControllerLoadingStyle) {
     ClassicPagingViewControllerLoadingStyleManual,
@@ -16,7 +17,7 @@ typedef NS_ENUM(NSInteger, ClassicPagingViewControllerLoadingStyle) {
 
 const NSUInteger ClassicPagingTablePreloadMargin = 5;
 
-@interface ClassicPagingViewController ()<DataProviderDelegate>
+@interface ClassicPagingViewController ()<AWPagedArrayControllerDelegate>
 @property (nonatomic) ClassicPagingViewControllerLoadingStyle loadingStyle;
 @property (weak, nonatomic) IBOutlet UISwitch *preloadSwitch;
 @end
@@ -32,13 +33,13 @@ const NSUInteger ClassicPagingTablePreloadMargin = 5;
     if (dataProvider != _dataProvider) {
         
         _dataProvider = dataProvider;
-        [_dataProvider loadDataForIndex:0];
+        [_dataProvider loadObjectAtIndex:0];
         _dataProvider.delegate = self;
         
         if ([self isViewLoaded]) {
             
-            _dataProvider.shouldLoadAutomatically = self.preloadSwitch.on;
-            _dataProvider.automaticPreloadMargin = self.preloadSwitch.on ? ClassicPagingTablePreloadMargin : 0;
+            _dataProvider.shouldLoadPagesAutomatically = self.preloadSwitch.on;
+            _dataProvider.automaticPreloadIndexMargin = self.preloadSwitch.on ? ClassicPagingTablePreloadMargin : 0;
             
             [self.tableView reloadData];
         }
@@ -48,7 +49,7 @@ const NSUInteger ClassicPagingTablePreloadMargin = 5;
     
     _loadingStyle = loadingStyle;
     self.preloadSwitch.enabled = (loadingStyle == ClassicPagingViewControllerLoadingStyleAutomatic);
-    self.dataProvider.shouldLoadAutomatically = (loadingStyle == ClassicPagingViewControllerLoadingStyleAutomatic);
+    self.dataProvider.shouldLoadPagesAutomatically = (loadingStyle == ClassicPagingViewControllerLoadingStyleAutomatic);
     
     [self.tableView reloadData];
 }
@@ -58,7 +59,7 @@ const NSUInteger ClassicPagingTablePreloadMargin = 5;
     self.loadingStyle = sender.selectedSegmentIndex;
 }
 - (IBAction)preloadSwitchChanged:(UISwitch *)sender {
-    self.dataProvider.automaticPreloadMargin = sender.on ? ClassicPagingTablePreloadMargin : 0;
+    self.dataProvider.automaticPreloadIndexMargin = sender.on ? ClassicPagingTablePreloadMargin : 0;
 }
 
 #pragma mark - Table view
@@ -67,7 +68,7 @@ const NSUInteger ClassicPagingTablePreloadMargin = 5;
     return 1;
 }
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
-    return MIN(self.dataProvider.loadedCount+1, self.dataProvider.dataObjects.count);
+    return MIN(self.dataProvider.loadedObjectCount+1, self.dataProvider.allObjects.count);
 }
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     
@@ -78,9 +79,9 @@ const NSUInteger ClassicPagingTablePreloadMargin = 5;
     NSString *cellIdentifier;
     NSUInteger index = indexPath.row;
     
-    if (index < self.dataProvider.loadedCount) {
+    if (index < self.dataProvider.loadedObjectCount) {
         cellIdentifier = DataCellIdentifier;
-    } else if ([self.dataProvider isLoadingDataAtIndex:index] || self.loadingStyle == ClassicPagingViewControllerLoadingStyleAutomatic) {
+    } else if ([self.dataProvider isLoadingObjectAtIndex:index] || self.loadingStyle == ClassicPagingViewControllerLoadingStyleAutomatic) {
         cellIdentifier = LoaderCellIdentifier;
         _loaderCellIndexPath = indexPath;
     } else {
@@ -90,7 +91,7 @@ const NSUInteger ClassicPagingTablePreloadMargin = 5;
     UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:cellIdentifier forIndexPath:indexPath];
     
     if (cellIdentifier == DataCellIdentifier) {
-        id data = self.dataProvider.dataObjects[indexPath.row];
+        id data = self.dataProvider.allObjects[indexPath.row];
         
         if ([data isKindOfClass:[NSNumber class]]) {
             cell.textLabel.text = [data description];
@@ -104,32 +105,33 @@ const NSUInteger ClassicPagingTablePreloadMargin = 5;
 
 #pragma mark delegate
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
-    
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
     
-    if (indexPath.row == self.dataProvider.loadedCount) {
-        [self.dataProvider loadDataForIndex:indexPath.row];
+    if (indexPath.row == self.dataProvider.loadedObjectCount) {
+        [self.dataProvider loadObjectAtIndex:indexPath.row];
     }
 }
 - (void)tableView:(UITableView *)tableView willDisplayCell:(UITableViewCell *)cell forRowAtIndexPath:(NSIndexPath *)indexPath {
     if (self.loadingStyle == ClassicPagingViewControllerLoadingStyleAutomatic && [indexPath isEqual:_loaderCellIndexPath]) {
-        [self.dataProvider loadDataForIndex:indexPath.row];
+        [self.dataProvider loadObjectAtIndex:indexPath.row];
     }
 }
 
 #pragma mark - Data controller delegate
-- (void)dataProvider:(DataProvider *)dataProvider willLoadDataAtIndexes:(NSIndexSet *)indexes {
-    
+- (void)controller:(AWPagedArrayController *)controller willLoadObjectsAtIndexes:(NSIndexSet *)indexes {
     if (self.loadingStyle == ClassicPagingViewControllerLoadingStyleManual) {
-        [self.tableView reloadRowsAtIndexPaths:@[[NSIndexPath indexPathForRow:dataProvider.loadedCount inSection:0]] withRowAnimation:UITableViewRowAnimationFade];
+        [self.tableView reloadRowsAtIndexPaths:@[[NSIndexPath indexPathForRow:controller.loadedObjectCount inSection:0]] withRowAnimation:UITableViewRowAnimationFade];
     }
 }
-- (void)dataProvider:(DataProvider *)dataProvider didLoadDataAtIndexes:(NSIndexSet *)indexes {
+- (void)controller:(AWPagedArrayController *)controller didLoadObjectsAtIndexes:(NSIndexSet *)indexes error:(NSError *)error {
+    if (error) {
+        return;
+    }
     
     [self.tableView beginUpdates];
     [self.tableView reloadRowsAtIndexPaths:@[_loaderCellIndexPath] withRowAnimation:UITableViewRowAnimationFade];
     [indexes enumerateIndexesUsingBlock:^(NSUInteger idx, BOOL *stop) {
-        if (idx < dataProvider.dataObjects.count-1) {
+        if (idx < controller.allObjects.count-1) {
             [self.tableView insertRowsAtIndexPaths:@[[NSIndexPath indexPathForRow:idx+1 inSection:0]] withRowAnimation:UITableViewRowAnimationFade];
         }
     }];

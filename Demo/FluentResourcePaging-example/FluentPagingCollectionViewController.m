@@ -8,11 +8,12 @@
 
 #import "FluentPagingCollectionViewController.h"
 #import "DataProvider.h"
+#import "AWPagedArray.h"
 #import "LabelCollectionViewCell.h"
 
 const NSUInteger FluentPagingCollectionViewPreloadMargin = 10;
 
-@interface FluentPagingCollectionViewController ()<DataProviderDelegate>
+@interface FluentPagingCollectionViewController ()<AWPagedArrayControllerDelegate>
 @property (weak, nonatomic) IBOutlet UISwitch *preloadSwitch;
 @end
 
@@ -24,9 +25,9 @@ const NSUInteger FluentPagingCollectionViewPreloadMargin = 10;
     
     if (dataProvider != _dataProvider) {
         _dataProvider = dataProvider;
-        _dataProvider.delegate = self;
-        _dataProvider.shouldLoadAutomatically = YES;
-        _dataProvider.automaticPreloadMargin = self.preloadSwitch.on ? FluentPagingCollectionViewPreloadMargin : 0;
+        _dataProvider.delegate = self;;
+        _dataProvider.shouldLoadPagesAutomatically = YES;
+        _dataProvider.automaticPreloadIndexMargin = self.preloadSwitch.on ? FluentPagingCollectionViewPreloadMargin : 0;
         
         if ([self isViewLoaded]) {
             [self.collectionView reloadData];
@@ -36,12 +37,12 @@ const NSUInteger FluentPagingCollectionViewPreloadMargin = 10;
 
 #pragma mark - User interaction
 - (IBAction)preloadSwitchChanged:(UISwitch *)sender {
-    self.dataProvider.automaticPreloadMargin = sender.on ? FluentPagingCollectionViewPreloadMargin : 0;
+    self.dataProvider.automaticPreloadIndexMargin = sender.on ? FluentPagingCollectionViewPreloadMargin : 0;
 }
 
 #pragma mark - Collection view data source
 - (NSInteger)collectionView:(UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section {
-    return self.dataProvider.dataObjects.count;
+    return self.dataProvider.allObjects.count;
 }
 - (UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath {
     
@@ -49,17 +50,17 @@ const NSUInteger FluentPagingCollectionViewPreloadMargin = 10;
     
     LabelCollectionViewCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:CellIdentifier forIndexPath:indexPath];
     
-    id data = self.dataProvider.dataObjects[indexPath.row];
+    id data = self.dataProvider.allObjects[indexPath.row];
     [self _configureCell:cell forDataObject:data animated:NO];
     
     return cell;
 }
 
 #pragma mark - Data controller delegate
-- (void)dataProvider:(DataProvider *)dataProvider willLoadDataAtIndexes:(NSIndexSet *)indexes {
-    
-}
-- (void)dataProvider:(DataProvider *)dataProvider didLoadDataAtIndexes:(NSIndexSet *)indexes {
+- (void)controller:(AWPagedArrayController *)controller didLoadObjectsAtIndexes:(NSIndexSet *)indexes error:(NSError *)error {
+    if (error) {
+        return;
+    }
     
     [indexes enumerateIndexesUsingBlock:^(NSUInteger index, BOOL *stop) {
         
@@ -68,7 +69,7 @@ const NSUInteger FluentPagingCollectionViewPreloadMargin = 10;
         if ([self.collectionView.indexPathsForVisibleItems containsObject:indexPath]) {
             
             LabelCollectionViewCell *cell = (LabelCollectionViewCell *)[self.collectionView cellForItemAtIndexPath:indexPath];
-            [self _configureCell:cell forDataObject:dataProvider.dataObjects[index] animated:YES];
+            [self _configureCell:cell forDataObject:controller.allObjects[index] animated:YES];
         }
     }];
 }
