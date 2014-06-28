@@ -77,7 +77,7 @@ const NSUInteger MutablePagedArrayObjectsPerPage = 6;
 }
 - (void)testThrowsExceptionWhenSettingPageWithWrongSize {
     
-    XCTAssertThrowsSpecificNamed([_pagedArray setObjects:@[@1] forPage:1], NSException, AWPagedArrayObjectsPerPageMismatchException, @"Paged array throws wrong exception");
+    XCTAssertThrowsSpecificNamed([_pagedArray setObjects:@[@1] forPage:1], NSException, NSInternalInconsistencyException, @"Paged array throws wrong exception");
 }
 - (void)testDoesNotThrowExceptionWhenSettingLastPageWithOddSize {
     

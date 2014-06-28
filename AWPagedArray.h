@@ -24,8 +24,6 @@
 
 #import <Foundation/Foundation.h>
 
-FOUNDATION_EXPORT NSString *const AWPagedArrayObjectsPerPageMismatchException;
-
 @protocol AWPagedArrayDelegate;
 
 /**

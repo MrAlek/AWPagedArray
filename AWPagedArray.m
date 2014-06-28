@@ -24,8 +24,6 @@
 
 #import "AWPagedArray.h"
 
-NSString *const AWPagedArrayObjectsPerPageMismatchException = @"AWPagedArrayObjectsPerPageMismatchException";
-
 @implementation AWPagedArray {
     NSUInteger _totalCount;
     NSUInteger _objectsPerPage;
@@ -46,13 +44,11 @@ NSString *const AWPagedArrayObjectsPerPageMismatchException = @"AWPagedArrayObje
 }
 - (void)setObjects:(NSArray *)objects forPage:(NSUInteger)page {
     
-    if (objects.count == _objectsPerPage || page == self.numberOfPages) {
-        
-        _pages[@(page)] = objects;
-        _needsUpdateProxiedArray = YES;
-    } else {
-        [NSException raise:AWPagedArrayObjectsPerPageMismatchException format:@"Expected object count per page: %ld received: %ld", (unsigned long)_objectsPerPage, (unsigned long)objects.count];
-    }
+    // Make sure object count is correct
+    NSAssert((objects.count == _objectsPerPage || page == self.numberOfPages), @"Expected object count per page: %ld received: %ld", (unsigned long)_objectsPerPage, (unsigned long)objects.count);
+    
+    _pages[@(page)] = objects;
+    _needsUpdateProxiedArray = YES;
 }
 - (NSUInteger)pageForIndex:(NSUInteger)index {
     return index/_objectsPerPage + 1;
