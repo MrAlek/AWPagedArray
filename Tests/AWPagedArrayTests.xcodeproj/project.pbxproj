@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		747142691925770F00206B3D /* AWPagedArrayController.m in Sources */ = {isa = PBXBuildFile; fileRef = 747142671925770F00206B3D /* AWPagedArrayController.m */; };
+		7471426B1925772300206B3D /* AWPagedArrayControllerTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 7471426A1925772300206B3D /* AWPagedArrayControllerTests.m */; };
 		93E0475F19056F750065900E /* XCTest.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 93E0475E19056F750065900E /* XCTest.framework */; };
 		93E0476119056F750065900E /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 93E0476019056F750065900E /* Foundation.framework */; };
 		93E0476319056F750065900E /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 93E0476219056F750065900E /* UIKit.framework */; };
@@ -16,6 +18,9 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		747142671925770F00206B3D /* AWPagedArrayController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = AWPagedArrayController.m; path = ../AWPagedArrayController.m; sourceTree = "<group>"; };
+		747142681925770F00206B3D /* AWPagedArrayController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = AWPagedArrayController.h; path = ../AWPagedArrayController.h; sourceTree = "<group>"; };
+		7471426A1925772300206B3D /* AWPagedArrayControllerTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AWPagedArrayControllerTests.m; sourceTree = "<group>"; };
 		93E0475B19056F750065900E /* AWPagedArray tests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "AWPagedArray tests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
 		93E0475E19056F750065900E /* XCTest.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = XCTest.framework; path = Library/Frameworks/XCTest.framework; sourceTree = DEVELOPER_DIR; };
 		93E0476019056F750065900E /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = Library/Frameworks/Foundation.framework; sourceTree = DEVELOPER_DIR; };
@@ -47,6 +52,8 @@
 			children = (
 				93E0477219056FEE0065900E /* AWPagedArray.h */,
 				93E0477319056FEE0065900E /* AWPagedArray.m */,
+				747142681925770F00206B3D /* AWPagedArrayController.h */,
+				747142671925770F00206B3D /* AWPagedArrayController.m */,
 				93E0476419056F750065900E /* AWPagedArray tests */,
 				93E0475D19056F750065900E /* Frameworks */,
 				93E0475C19056F750065900E /* Products */,
@@ -75,6 +82,7 @@
 			isa = PBXGroup;
 			children = (
 				93E0477019056FC30065900E /* AWPagedArrayTests.m */,
+				7471426A1925772300206B3D /* AWPagedArrayControllerTests.m */,
 				93E0476519056F750065900E /* Supporting Files */,
 			);
 			path = "AWPagedArray tests";
@@ -153,6 +161,8 @@
 			files = (
 				93E0477119056FC30065900E /* AWPagedArrayTests.m in Sources */,
 				93E0477419056FEE0065900E /* AWPagedArray.m in Sources */,
+				747142691925770F00206B3D /* AWPagedArrayController.m in Sources */,
+				7471426B1925772300206B3D /* AWPagedArrayControllerTests.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

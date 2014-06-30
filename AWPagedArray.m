@@ -34,13 +34,18 @@
 }
 
 #pragma mark - Public methods
-- (instancetype)initWithCount:(NSUInteger)count objectsPerPage:(NSUInteger)objectsPerPage {
+- (instancetype)initWithCount:(NSUInteger)count objectsPerPage:(NSUInteger)objectsPerPage placeholderObject:(id)placeholderObject {
+    NSParameterAssert(placeholderObject);
     
     _totalCount = count;
     _objectsPerPage = objectsPerPage;
-    _pages = [[NSMutableDictionary alloc] initWithCapacity:[self numberOfPages]];
+    _pages = [NSMutableDictionary dictionary];
+    _placeholderObject = placeholderObject;
     
     return self;
+}
+- (instancetype)initWithCount:(NSUInteger)count objectsPerPage:(NSUInteger)objectsPerPage {
+    return [self initWithCount:count objectsPerPage:objectsPerPage placeholderObject:[NSNull null]];
 }
 - (void)setObjects:(NSArray *)objects forPage:(NSUInteger)page {
     
@@ -62,6 +67,19 @@
 }
 - (NSDictionary *)pages {
     return _pages;
+}
+
+#pragma mark - Copying
+- (id)copy {
+    AWPagedArray *copy = [[AWPagedArray alloc] initWithCount:_totalCount objectsPerPage:_objectsPerPage placeholderObject:_placeholderObject];
+    copy->_pages = [NSMutableDictionary dictionaryWithDictionary:_pages];
+    copy->_needsUpdateProxiedArray = YES;
+    copy.delegate = self.delegate;
+    
+    return copy;
+}
+- (id)copyWithZone:(NSZone *)zone {
+    return [self copy];
 }
 
 #pragma mark - NSArray overrides
@@ -99,6 +117,12 @@
 - (NSString *)description {
     return [[self _proxiedArray] description];
 }
+- (BOOL)isEqual:(id)object {
+    return [[self _proxiedArray] isEqual:object];
+}
+- (NSUInteger)hash {
+    return [[self _proxiedArray] hash];
+}
 
 #pragma mark - Private methods
 - (NSUInteger)numberOfPages {
@@ -129,12 +153,11 @@
     _proxiedArray = objects;
 }
 - (NSArray *)_placeholdersForPage:(NSUInteger)page {
-    
     NSMutableArray *placeholders = [[NSMutableArray alloc] initWithCapacity:_objectsPerPage];
     
     NSUInteger pageLimit = [[self indexSetForPage:page] count];
     for (NSUInteger i = 0; i < pageLimit; ++i) {
-        [placeholders addObject:[NSNull null]];
+        [placeholders addObject:_placeholderObject];
     }
     
     return placeholders;

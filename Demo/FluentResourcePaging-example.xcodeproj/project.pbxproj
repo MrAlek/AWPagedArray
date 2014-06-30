@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		744C4E9D19252C4700325F16 /* AWPagedArrayController.m in Sources */ = {isa = PBXBuildFile; fileRef = 744C4E9C19252C4700325F16 /* AWPagedArrayController.m */; };
 		93262E97186E457C00B05C01 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 93262E96186E457C00B05C01 /* Foundation.framework */; };
 		93262E99186E457C00B05C01 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 93262E98186E457C00B05C01 /* CoreGraphics.framework */; };
 		93262E9B186E457C00B05C01 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 93262E9A186E457C00B05C01 /* UIKit.framework */; };
@@ -26,6 +27,8 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		744C4E9B19252C4700325F16 /* AWPagedArrayController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = AWPagedArrayController.h; path = ../AWPagedArrayController.h; sourceTree = "<group>"; };
+		744C4E9C19252C4700325F16 /* AWPagedArrayController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = AWPagedArrayController.m; path = ../AWPagedArrayController.m; sourceTree = "<group>"; };
 		93262E93186E457C00B05C01 /* FluentResourcePaging-example.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "FluentResourcePaging-example.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		93262E96186E457C00B05C01 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		93262E98186E457C00B05C01 /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
@@ -76,6 +79,8 @@
 			children = (
 				93A4038818E48FFC00640CAD /* AWPagedArray.h */,
 				93A4038918E48FFC00640CAD /* AWPagedArray.m */,
+				744C4E9B19252C4700325F16 /* AWPagedArrayController.h */,
+				744C4E9C19252C4700325F16 /* AWPagedArrayController.m */,
 				93BEE49C1907C403008B4694 /* LICENSE */,
 				93262E9C186E457C00B05C01 /* FluentResourcePaging-example */,
 				93262E95186E457C00B05C01 /* Frameworks */,
@@ -206,6 +211,7 @@
 				93262EA7186E457C00B05C01 /* AppDelegate.m in Sources */,
 				93262EA3186E457C00B05C01 /* main.m in Sources */,
 				9384802C186E767E0006006E /* LabelCollectionViewCell.m in Sources */,
+				744C4E9D19252C4700325F16 /* AWPagedArrayController.m in Sources */,
 				93848026186E75B80006006E /* FluentPagingCollectionViewController.m in Sources */,
 				93A4038A18E48FFC00640CAD /* AWPagedArray.m in Sources */,
 				93262EC9186E4CFE00B05C01 /* DataProvider.m in Sources */,
