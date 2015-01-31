@@ -39,6 +39,11 @@
  * The designated initializer for this class
  * Note that the parameters are part of immutable state
  */
+- (instancetype)initWithCount:(NSUInteger)count objectsPerPage:(NSUInteger)objectsPerPage initialPageIndex:(NSInteger)initialPageIndex;
+
+/**
+ * Convenience initializer with initialPageIndex = 1
+ */
 - (instancetype)initWithCount:(NSUInteger)count objectsPerPage:(NSUInteger)objectsPerPage;
 
 /**
@@ -55,6 +60,7 @@
 
 @property (nonatomic, readonly) NSUInteger objectsPerPage;
 @property (nonatomic, readonly) NSUInteger numberOfPages;
+@property (nonatomic, readonly) NSInteger initialPageIndex;
 
 /**
  * Contains NSArray instances of pages, backing the data

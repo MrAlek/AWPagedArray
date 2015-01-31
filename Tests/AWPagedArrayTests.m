@@ -30,6 +30,7 @@
 
 const NSUInteger MutablePagedArraySize = 50;
 const NSUInteger MutablePagedArrayObjectsPerPage = 6;
+const NSUInteger MutablePagedArrayInitialPageIndex = 1;
 
 @implementation AWPagedArrayTests {
     AWPagedArray *_pagedArray;
@@ -40,19 +41,19 @@ const NSUInteger MutablePagedArrayObjectsPerPage = 6;
 - (void)setUp {
     [super setUp];
 
-    _pagedArray = [[AWPagedArray alloc] initWithCount:MutablePagedArraySize objectsPerPage:MutablePagedArrayObjectsPerPage];
+    _pagedArray = [[AWPagedArray alloc] initWithCount:MutablePagedArraySize objectsPerPage:MutablePagedArrayObjectsPerPage initialPageIndex:MutablePagedArrayInitialPageIndex];
     
     _firstPage = [NSMutableArray array];
     for (NSInteger i = 1; i <= MutablePagedArrayObjectsPerPage; i++) {
         [_firstPage addObject:@(i)];
     }
-    [_pagedArray setObjects:_firstPage forPage:1];
+    [_pagedArray setObjects:_firstPage forPage:MutablePagedArrayInitialPageIndex];
     
     _secondPage = [NSMutableArray array];
     for (NSInteger i = MutablePagedArrayObjectsPerPage+1; i <= MutablePagedArrayObjectsPerPage*2; i++) {
         [_secondPage addObject:@(i)];
     }
-    [_pagedArray setObjects:_secondPage forPage:2];
+    [_pagedArray setObjects:_secondPage forPage:MutablePagedArrayInitialPageIndex+1];
     
 }
 - (NSArray *)array {
@@ -65,14 +66,13 @@ const NSUInteger MutablePagedArrayObjectsPerPage = 6;
 }
 - (void)testSizeIsCorrectWithEvenPagePartitioning {
     
-    AWPagedArray *pagedArray = [[AWPagedArray alloc] initWithCount:10 objectsPerPage:1];
+    AWPagedArray *pagedArray = [[AWPagedArray alloc] initWithCount:10 objectsPerPage:1 initialPageIndex:5];
     XCTAssertEqual([(NSArray *)pagedArray count], 10, @"Paged array has wrong size");
 }
 - (void)testObjectsPerPageIsCorrect {
     XCTAssertEqual(_pagedArray.objectsPerPage, MutablePagedArrayObjectsPerPage, @"Paged array has wrong objects per page count");
 }
 - (void)testReturnsRightObject {
-    
     XCTAssertEqualObjects([self array][0], _firstPage[0], @"Returns wrong object!");
 }
 - (void)testThrowsExceptionWhenSettingPageWithWrongSize {
@@ -81,7 +81,7 @@ const NSUInteger MutablePagedArrayObjectsPerPage = 6;
 }
 - (void)testDoesNotThrowExceptionWhenSettingLastPageWithOddSize {
     
-    NSInteger lastPage = MutablePagedArraySize/MutablePagedArrayObjectsPerPage+1;
+    NSInteger lastPage = MutablePagedArrayInitialPageIndex+[_pagedArray numberOfPages]-1;
     
     XCTAssertNoThrow([_pagedArray setObjects:@[@(1)] forPage:lastPage], @"Paged array throws exception on last page!");
 }
@@ -105,7 +105,7 @@ const NSUInteger MutablePagedArrayObjectsPerPage = 6;
         [beforeObjects addObject:object];
     }
     
-    [_pagedArray setObjects:_firstPage forPage:3];
+    [_pagedArray setObjects:_firstPage forPage:MutablePagedArrayInitialPageIndex+2];
     
     NSMutableArray *afterObjects = [NSMutableArray array];
     for (id object in [self array]) {
@@ -170,8 +170,7 @@ const NSUInteger MutablePagedArrayObjectsPerPage = 6;
     XCTAssertEqual(objects.count, [[self array] count], @"Real count doesn't match proxy count");
 }
 - (void)testNumberOfPages {
-    
-    XCTAssertEqual([_pagedArray numberOfPages], 9, @"Wrong number of pages");
+    XCTAssertEqual([_pagedArray numberOfPages], ceil((CGFloat)MutablePagedArraySize/MutablePagedArrayObjectsPerPage), @"Wrong number of pages");
 }
 @end
 

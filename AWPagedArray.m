@@ -34,34 +34,46 @@
 }
 
 #pragma mark - Public methods
-- (instancetype)initWithCount:(NSUInteger)count objectsPerPage:(NSUInteger)objectsPerPage {
+#pragma mark Initialization
+- (instancetype)initWithCount:(NSUInteger)count objectsPerPage:(NSUInteger)objectsPerPage initialPageIndex:(NSInteger)initialPageIndex {
     
     _totalCount = count;
     _objectsPerPage = objectsPerPage;
     _pages = [[NSMutableDictionary alloc] initWithCapacity:[self numberOfPages]];
+    _initialPageIndex = initialPageIndex;
     
     return self;
 }
+- (instancetype)initWithCount:(NSUInteger)count objectsPerPage:(NSUInteger)objectsPerPage {
+    return [self initWithCount:count objectsPerPage:objectsPerPage initialPageIndex:1];
+}
+
+#pragma mark Accessing data
 - (void)setObjects:(NSArray *)objects forPage:(NSUInteger)page {
     
     // Make sure object count is correct
-    NSAssert((objects.count == _objectsPerPage || page == self.numberOfPages), @"Expected object count per page: %ld received: %ld", (unsigned long)_objectsPerPage, (unsigned long)objects.count);
+    NSAssert((objects.count == _objectsPerPage || page == [self _lastPageIndex]), @"Expected object count per page: %ld received: %ld", (unsigned long)_objectsPerPage, (unsigned long)objects.count);
     
     _pages[@(page)] = objects;
     _needsUpdateProxiedArray = YES;
 }
 - (NSUInteger)pageForIndex:(NSUInteger)index {
-    return index/_objectsPerPage + 1;
+    return index/_objectsPerPage + _initialPageIndex;
 }
 - (NSIndexSet *)indexSetForPage:(NSUInteger)page {
+    NSParameterAssert(page < _initialPageIndex+[self numberOfPages]);
+    
     NSUInteger rangeLength = _objectsPerPage;
-    if (page == [self numberOfPages]) {
+    if (page == [self _lastPageIndex]) {
         rangeLength = (_totalCount % _objectsPerPage) ?: _objectsPerPage;
     }
-    return [NSIndexSet indexSetWithIndexesInRange:NSMakeRange((page - 1) * _objectsPerPage, rangeLength)];
+    return [NSIndexSet indexSetWithIndexesInRange:NSMakeRange((page - _initialPageIndex) * _objectsPerPage, rangeLength)];
 }
 - (NSDictionary *)pages {
     return _pages;
+}
+- (NSUInteger)numberOfPages {
+    return ceil((CGFloat)_totalCount/_objectsPerPage);
 }
 
 #pragma mark - NSArray overrides
@@ -101,9 +113,6 @@
 }
 
 #pragma mark - Private methods
-- (NSUInteger)numberOfPages {
-    return ceil((CGFloat)_totalCount/_objectsPerPage);
-}
 - (NSArray *)_proxiedArray {
     
     if (!_proxiedArray || _needsUpdateProxiedArray) {
@@ -118,7 +127,7 @@
     
     NSMutableArray *objects = [[NSMutableArray alloc] initWithCapacity:_totalCount];
     
-    for (NSInteger pageIndex = 1; pageIndex <= [self numberOfPages]; pageIndex++) {
+    for (NSInteger pageIndex = _initialPageIndex; pageIndex < [self numberOfPages]+_initialPageIndex; pageIndex++) {
         
         NSArray *page = _pages[@(pageIndex)];
         if (!page) page = [self _placeholdersForPage:pageIndex];
@@ -138,6 +147,9 @@
     }
     
     return placeholders;
+}
+- (NSInteger)_lastPageIndex {
+    return [self numberOfPages]+_initialPageIndex-1;
 }
 
 @end
