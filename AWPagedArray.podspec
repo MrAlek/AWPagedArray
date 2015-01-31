@@ -1,6 +1,6 @@
 Pod::Spec.new do |s|
   s.name         = 'AWPagedArray'
-  s.version      = '0.2.0'
+  s.version      = '0.3.0'
   s.summary      = 'An Objective-C proxy class for creating paged arrays'
   s.description  = <<-DESC
                        AWPagedArray is an Objective-C class which acts as an NSArray proxy
