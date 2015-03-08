@@ -8,6 +8,8 @@ This means a data provider object can internally populate pages, while the recei
 
 The class is especially useful for `UITableView`s and `UICollectionView`s which contain paged data from external API's.
 
+There is now a Swift equivalent to this data structure simply called [`PagedArray`](https://github.com/MrAlek/PagedArray). Check it out if you're looking to add some fluent paging to your Swift app!
+
 ## Installation
 
 ### Cocoapods
