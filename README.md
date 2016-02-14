@@ -13,7 +13,7 @@ There is now a Swift equivalent to this data structure simply called [`PagedArra
 
 ## Installation
 
-### Cocoapods
+### CocoaPods
 [CocoaPods](http://cocoapods.org) is the recommended way to add AWPagedArray to your project.
 
 1. Add a pod entry for AWPagedArray to your Podfile `pod 'AWPagedArray', '~> 0.1'`
