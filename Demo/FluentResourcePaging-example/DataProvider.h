@@ -24,10 +24,9 @@
 @property (nonatomic, weak) id<DataProviderDelegate> delegate;
 
 /**
- * The array returned will be a proxy object containing
- * NSNull values for data objects not yet loaded. As data
- * loads, the proxy updates automatically to include
- * the newly loaded objects.
+ * The array returned contains NSNull values for data
+ * objects not yet loaded. As data loads, the array updates
+ * automatically to include the newly loaded objects.
  *
  * @see shouldLoadAutomatically
  */
